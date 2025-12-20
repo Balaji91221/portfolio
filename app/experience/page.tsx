@@ -7,6 +7,21 @@ import { Briefcase, Calendar, MapPin, TrendingUp } from "lucide-react"
 
 const experiences = [
   {
+    "title": "AI/ML Engineer",
+    "company": "Samco Securities Pvt Ltd",
+    "location": "offline",
+    "period": "Jul 21, 2025 - Present",
+    "type": "Full-time",
+    "description": "Working as an AI/ML Engineer at Samco Securities, contributing to multiple production ML projects for trading analytics, recommendation systems, and automation.",
+    "achievements": [
+      "Joined Samco on Jul 21, 2025 and have been leading multiple AI/ML initiatives across the organization",
+      "Designed and deployed production ML pipelines for trading analytics and risk assessment",
+      "Implemented model monitoring and CI/CD for ML models, improving reliability and deployment speed",
+      "Collaborated closely with product and engineering teams to translate business requirements into ML solutions",
+      "Mentored interns and new engineers, helping ramp up ML best practices"
+    ]
+  },
+  {
     "title": "Full-Stack Developer",
     "company": "DigitalFortress Private Limited",
     "location": "Remote",
@@ -20,6 +35,7 @@ const experiences = [
       "Optimized frontend performance through WebSocket implementation and strategic lazy loading"
     ]
   },
+
   {
     "title": "Frontend Developer",
     "company": "VTBIF Incubation Center",
@@ -49,12 +65,19 @@ const experiences = [
   }
 ]
 const techStack = [
+
+  "Python",
+  "TensorFlow",
+  "PyTorch",
+  "Scikit-learn",
+  "Pandas",
+  "NumPy",
+  "NLP",
   "JavaScript",
   "TypeScript",
   "React",
   "Next.js",
   "Node.js",
-  "Python",
   "Django",
   "PostgreSQL",
   "MongoDB",

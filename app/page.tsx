@@ -15,12 +15,11 @@ import jobtracker from './projects/jobtracker.png'
 import exploreease from './projects/travel .png'
 
 const typingTexts = [
+
+  "AI/ML Engineer",
   "Full-Stack Developer",
-  "React Specialist",
-  "Node.js Expert",
-  "UI/UX Enthusiast",
+  "Mentor & Team Player",
   "Problem Solver",
-  "Tech Innovator",
 ]
 
 const featuredProjects = [
@@ -35,7 +34,7 @@ const featuredProjects = [
     githubUrl: "https://github.com/Balaji91221/Food-delivery-App",
     featured: true,
   },
-   {
+  {
     "id": 1,
     "title": "Job Tracker – Application Management System",
     "description": "A full-stack job tracking app built with Next.js and Firebase. Enables users to track job applications, statuses, and insights through a clean UI and real-time updates.",
@@ -106,9 +105,9 @@ export default function HomePage() {
                   />
                 </div>
                 <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-                  CSE Graduate from VIT-AP (2025), passionate about creating innovative web solutions that bridge the
-                  gap between design and functionality. Specialized in modern JavaScript frameworks and scalable backend
-                  architectures.
+                  AI/ML Engineer and Full‑Stack Developer (VIT‑AP, 2025) focused on building scalable, production‑grade
+                  web and machine learning systems. I design and deploy ML models and data‑driven applications with a product
+                  mindset — emphasizing reliability...
                 </p>
               </motion.div>
 
