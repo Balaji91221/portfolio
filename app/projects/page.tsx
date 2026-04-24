@@ -2,10 +2,9 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, Filter } from "lucide-react"
+import { ExternalLink, Github, Lock, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
 import resume from './resume.png';
 import crypto from './crypto.png';
@@ -19,8 +18,220 @@ import jobtracker from './jobtracker.png'
 import exploreease from './travel .png'
 import dashboard from './mauth.png'
 
-const projects = 
+const projects =
   [
+  // ═══════════════════════ AI INFRA / PLATFORM ═══════════════════════
+  {
+    "id": 501,
+    "title": "LLM Platform — Multi-Project LLM Gateway",
+    "description": "Internal LLM gateway sitting between apps and providers (OpenAI · Anthropic · Gemini · Groq · Ollama). One OpenAI-compatible endpoint with per-project cost tracking, budget limits, circuit breakers with auto-failover, API key management, prompt template versioning, and a full analytics dashboard + playground.",
+    "image": "/projects/generated-v2/llm-platform-gateway.png",
+    "tech": ["FastAPI", "Python", "React", "TypeScript", "SQLite", "Tailwind", "JWT"],
+    "category": "AI Infra",
+    "liveUrl": "#",
+    "githubUrl": "#",
+    "featured": true,
+    "private": true
+  },
+  {
+    "id": 502,
+    "title": "Coder Agent",
+    "description": "Autonomous coding agent that plans, writes, and iterates on code using tool use and a structured reasoning loop. Built for real developer workflows — not demos.",
+    "image": "/projects/generated-v2/coder-agent.png",
+    "tech": ["Python", "LLMs", "Agents", "Tool Use"],
+    "category": "Agentic AI",
+    "liveUrl": "#",
+    "githubUrl": "#",
+    "featured": true,
+    "private": true
+  },
+  {
+    "id": 503,
+    "title": "AI Coder Reviewer",
+    "description": "LLM-powered code review agent that inspects diffs, flags regressions, and suggests fixes with context from the surrounding codebase. Integrates into the PR workflow.",
+    "image": "/projects/generated-v2/ai-coder-reviewer.png",
+    "tech": ["Python", "LLMs", "Agents", "Code Analysis"],
+    "category": "Agentic AI",
+    "liveUrl": "#",
+    "githubUrl": "#",
+    "featured": true,
+    "private": true
+  },
+
+  // ═══════════════════════ AGENTIC AI ═══════════════════════
+  {
+    "id": 101,
+    "title": "Agent2Agent — Multi-Agent Orchestration",
+    "description": "Python-based agentic AI system exploring agent-to-agent communication, tool use, and autonomous task delegation between cooperating LLM agents.",
+    "image": "/projects/generated-v2/agent2agent.png",
+    "tech": ["Python", "Agents", "LLMs", "Tool Use"],
+    "category": "Agentic AI",
+    "liveUrl": "https://github.com/Balaji91221/Agent2Agent-project",
+    "githubUrl": "https://github.com/Balaji91221/Agent2Agent-project",
+    "featured": true
+  },
+  {
+    "id": 102,
+    "title": "Voice Agent — Retell AI",
+    "description": "Real-time voice AI agent built on Retell AI's LLM-voice platform. Conversational agent that handles phone-style interactions end-to-end.",
+    "image": "/projects/generated-v2/voice-agent-retell.png",
+    "tech": ["TypeScript", "Retell AI", "Voice", "LLMs"],
+    "category": "Agentic AI",
+    "liveUrl": "https://retellai-six.vercel.app",
+    "githubUrl": "https://github.com/Balaji91221/voiceagent-",
+    "featured": true
+  },
+
+  // ═══════════════════════ LLM / RAG ═══════════════════════
+  {
+    "id": 201,
+    "title": "Semantic Search Engine",
+    "description": "Search by meaning, not keywords. Built with vector embeddings and Next.js — the foundation of a production RAG pipeline.",
+    "image": "/projects/generated-v2/semantic-search-engine.png",
+    "tech": ["Next.js", "Vector DB", "Embeddings", "RAG"],
+    "category": "LLM / RAG",
+    "liveUrl": "https://search-with-semantic.vercel.app",
+    "githubUrl": "https://github.com/Balaji91221/Search-with-Semantic",
+    "featured": true
+  },
+  {
+    "id": 202,
+    "title": "AI Mock Interviews",
+    "description": "LLM-powered mock interview platform that generates role-specific questions, scores responses, and delivers actionable feedback.",
+    "image": "/projects/generated-v2/ai-mock-interviews.png",
+    "tech": ["Next.js", "LLMs", "TypeScript", "AI SDK"],
+    "category": "LLM / RAG",
+    "liveUrl": "https://aimockinterviews-five.vercel.app",
+    "githubUrl": "https://github.com/Balaji91221/ai_mock_interviews",
+    "featured": true
+  },
+  {
+    "id": 203,
+    "title": "Qwen 3.6 Plus",
+    "description": "Experimental JS-based LLM interface exploring Qwen model capabilities and integration patterns for modern web apps.",
+    "image": "/projects/generated-v2/qwen-36-plus.png",
+    "tech": ["JavaScript", "LLMs", "Qwen"],
+    "category": "LLM / RAG",
+    "liveUrl": "https://github.com/Balaji91221/qwen3.6-plus",
+    "githubUrl": "https://github.com/Balaji91221/qwen3.6-plus",
+    "featured": false
+  },
+  {
+    "id": 204,
+    "title": "AI/ML + GenAI Roadmap",
+    "description": "Structured AI/ML learning repo with GenAI experiments, prompt engineering patterns, and best practices for production-ready ML.",
+    "image": "/projects/generated-v2/ai-ml-genai-roadmap.png",
+    "tech": ["Python", "GenAI", "Prompt Eng", "Jupyter"],
+    "category": "LLM / RAG",
+    "liveUrl": "https://github.com/Balaji91221/ai-ml-genai-roadmap",
+    "githubUrl": "https://github.com/Balaji91221/ai-ml-genai-roadmap",
+    "featured": false
+  },
+
+  // ═══════════════════════ ML / DL / CV ═══════════════════════
+  {
+    "id": 301,
+    "title": "Snake AI — Reinforcement Learning",
+    "description": "Trains an RL agent to play Snake using PyTorch + Pygame. Deep Q-learning with reward shaping and real-time training visualization.",
+    "image": "/projects/generated-v2/snake-ai-rl.png",
+    "tech": ["PyTorch", "RL", "Python", "Pygame"],
+    "category": "ML / DL",
+    "liveUrl": "https://github.com/Balaji91221/snake-ai-pytorch",
+    "githubUrl": "https://github.com/Balaji91221/snake-ai-pytorch",
+    "featured": true
+  },
+  {
+    "id": 302,
+    "title": "Face AI — Image Completion",
+    "description": "AI-driven face completion web app. Demonstrates deep-learning inpainting with a modern Next.js UI and Firebase auth.",
+    "image": "/projects/generated-v2/face-ai-image-completion.png",
+    "tech": ["Next.js", "Computer Vision", "Firebase", "TypeScript"],
+    "category": "ML / DL",
+    "liveUrl": "https://face-ai-lemon.vercel.app",
+    "githubUrl": "https://github.com/Balaji91221/faceAi",
+    "featured": false
+  },
+  {
+    "id": 303,
+    "title": "Document ID Detection",
+    "description": "Computer-vision pipeline for detecting and extracting ID fields from document scans using deep learning.",
+    "image": "/projects/generated-v2/document-id-detection.png",
+    "tech": ["Python", "CV", "Deep Learning", "Jupyter"],
+    "category": "ML / DL",
+    "liveUrl": "https://github.com/Balaji91221/doc-id-detection",
+    "githubUrl": "https://github.com/Balaji91221/doc-id-detection",
+    "featured": false
+  },
+  {
+    "id": 304,
+    "title": "Image Caption Generator (CNN + LSTM)",
+    "description": "Generates natural-language captions for images using CNN feature extraction + LSTM decoding. Flask-served API.",
+    "image": "/projects/generated/image-caption-generator.png",
+    "tech": ["CNN", "LSTM", "Python", "Flask"],
+    "category": "ML / DL",
+    "liveUrl": "https://github.com/Balaji91221/Image-Caption-Generation-using-CNN",
+    "githubUrl": "https://github.com/Balaji91221/Image-Caption-Generation-using-CNN",
+    "featured": false
+  },
+  {
+    "id": 305,
+    "title": "IPL Win Predictor",
+    "description": "ML model predicting IPL match outcomes based on historical match data. End-to-end feature engineering + classification.",
+    "image": "/projects/generated/ipl-win-predictor.png",
+    "tech": ["Python", "Scikit-learn", "Pandas", "Jupyter"],
+    "category": "ML / DL",
+    "liveUrl": "https://github.com/Balaji91221/ipl_win_predictor",
+    "githubUrl": "https://github.com/Balaji91221/ipl_win_predictor",
+    "featured": false
+  },
+  {
+    "id": 306,
+    "title": "Medical Insurance Price Prediction",
+    "description": "Regression model predicting medical insurance premiums from demographic and health features.",
+    "image": "/projects/generated/medical-insurance-price-prediction.png",
+    "tech": ["Python", "Regression", "Scikit-learn"],
+    "category": "ML / DL",
+    "liveUrl": "https://github.com/Balaji91221/medical_insurance_price_prediction",
+    "githubUrl": "https://github.com/Balaji91221/medical_insurance_price_prediction",
+    "featured": false
+  },
+
+  // ═══════════════════════ NLP ═══════════════════════
+  {
+    "id": 401,
+    "title": "Resume Screening App",
+    "description": "Automated resume screening using NLP — classifies resumes into role categories to help recruiters filter at scale.",
+    "image": nlpres,
+    "tech": ["Python", "NLP", "Scikit-learn", "Flask"],
+    "category": "NLP",
+    "liveUrl": "https://github.com/Balaji91221/resume-screening-app",
+    "githubUrl": "https://github.com/Balaji91221/resume-screening-app",
+    "featured": true
+  },
+  {
+    "id": 402,
+    "title": "Emotion Classifier (Text)",
+    "description": "Text-based emotion detection across joy, sadness, anger, fear, surprise and more. NLP classification on labeled corpora.",
+    "image": emotion,
+    "tech": ["Python", "NLP", "Classification"],
+    "category": "NLP",
+    "liveUrl": "https://github.com/Balaji91221/emotion-based-text-classifier",
+    "githubUrl": "https://github.com/Balaji91221/emotion-based-text-classifier",
+    "featured": false
+  },
+  {
+    "id": 403,
+    "title": "Movie Recommender System",
+    "description": "Content-based movie recommendations using TMDb data. Built with Streamlit for an instant interactive UI.",
+    "image": movie,
+    "tech": ["Python", "NLP", "Streamlit", "TMDb"],
+    "category": "NLP",
+    "liveUrl": "https://github.com/Balaji91221/movies-recommder-system",
+    "githubUrl": "https://github.com/Balaji91221/movies-recommder-system",
+    "featured": false
+  },
+
+  // ═══════════════════════ FULL-STACK ═══════════════════════
   {
     "id": 1,
     "title": "Job Tracker – Application Management System",
@@ -109,42 +320,9 @@ const projects =
     "githubUrl": "https://github.com/Balaji91221/vtbif",
     "featured": true
   },
-  {
-    "id": 9,
-    "title": "Resume Screening App",
-    "description": "A web application designed to automate resume screening using NLP. It predicts the resume category to help recruiters filter applicants efficiently.",
-    "image": nlpres,
-    "tech": ["Python", "NLP"],
-    "category": "ML/NLP/DL",
-    "liveUrl": "https://github.com/Balaji91221/resume-screening-app",
-    "githubUrl": "https://github.com/Balaji91221/resume-screening-app",
-    "featured": false
-  },
-  {
-    "id": 10,
-    "title": "Text-based Emotion Detection",
-    "description": "This project classifies emotions in text using machine learning. It identifies emotions like joy, sadness, anger, and more from labeled datasets.",
-    "image": emotion,
-    "tech": ["Python", "NLP"],
-    "category": "ML/NLP/DL",
-    "liveUrl": "https://github.com/Balaji91221/emotion-based-text-classifier",
-    "githubUrl": "https://github.com/Balaji91221/emotion-based-text-classifier",
-    "featured": false
-  },
-  {
-    "id": 11,
-    "title": "Movie Recommender System",
-    "description": "Built using Streamlit and TMDb API, this app provides personalized movie recommendations based on user preferences.",
-    "image": movie,
-    "tech": ["Python", "NLP"],
-    "category": "ML/NLP/DL",
-    "liveUrl": "https://github.com/Balaji91221/movies-recommder-system",
-    "githubUrl": "https://github.com/Balaji91221/movies-recommder-system",
-    "featured": false
-  }
 ]
 
-const categories = ["All", "Full-Stack", "Frontend", "Backend"]
+const categories = ["All", "AI Infra", "Agentic AI", "LLM / RAG", "ML / DL", "NLP", "Full-Stack", "Frontend"]
 
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -153,116 +331,230 @@ export default function ProjectsPage() {
     selectedCategory === "All" ? projects : projects.filter((project) => project.category === selectedCategory)
 
   return (
-    <div className="min-h-screen pt-20">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen pt-28 md:pt-32 pb-20 px-4 md:px-6 lg:px-8 relative">
+      <div className="absolute inset-0 grid-pattern opacity-40 pointer-events-none" />
+
+      <div className="container mx-auto max-w-7xl relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          className="mb-12 md:mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Projects</h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            A collection of my work, showcasing my skills and experience in full-stack development.
-          </p>
+          <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+            — Selected Work
+          </div>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] max-w-4xl">
+              Projects across{" "}
+              <span className="font-serif italic font-normal gradient-text-vivid">AI, ML & the web.</span>
+            </h1>
+            <p className="text-base md:text-lg text-muted-foreground max-w-md">
+              Agentic systems, RAG pipelines, ML models, and the full-stack apps that wrap them.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Filter Buttons */}
+        {/* Filter pills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="flex flex-wrap gap-2 mb-10 md:mb-14"
         >
-          <div className="flex items-center gap-2 mb-4">
-            <Filter className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Filter by:</span>
-          </div>
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
-              className="transition-all duration-200"
-            >
-              {category}
-            </Button>
-          ))}
+          {categories.map((category) => {
+            const count =
+              category === "All" ? projects.length : projects.filter((p) => p.category === category).length
+            const active = selectedCategory === category
+            return (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`group relative px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border ${
+                  active
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-background/50 text-muted-foreground border-border/60 hover:border-foreground/40 hover:text-foreground"
+                }`}
+              >
+                {category}
+                <span
+                  className={`ml-2 text-[10px] ${
+                    active ? "text-background/70" : "text-muted-foreground/60"
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            )
+          })}
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              layout
-            >
-              <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card/50 backdrop-blur-sm border-border/50 h-full">
-                <CardContent className="p-0 h-full flex flex-col">
-                  <div className="relative overflow-hidden rounded-t-lg">
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      width={400}
-                      height={250}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      <Button size="icon" variant="secondary" className="backdrop-blur-sm" asChild>
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </Button>
-                      <Button size="icon" variant="secondary" className="backdrop-blur-sm" asChild>
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="h-4 w-4" />
-                        </a>
-                      </Button>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {filteredProjects.map((project, index) => {
+            const isLink = !project.private && project.liveUrl && project.liveUrl !== "#"
+            const CardTag: any = isLink ? "a" : "div"
+            const linkProps = isLink
+              ? { href: project.liveUrl, target: "_blank", rel: "noopener noreferrer" }
+              : {}
+
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.4) }}
+                layout
+              >
+                <CardTag
+                  {...linkProps}
+                  className="bento group block h-full flex flex-col cursor-pointer overflow-hidden"
+                >
+                  {/* Media */}
+                  <div className="relative overflow-hidden aspect-[16/10]">
+                    {project.image ? (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={600}
+                        height={375}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="w-full h-full relative bg-gradient-to-br from-primary/25 via-accent/15 to-background flex items-center justify-center">
+                        <div className="absolute inset-0 grid-pattern opacity-40" />
+                        <div className="relative text-center px-6">
+                          <div className="text-[10px] font-mono uppercase tracking-[0.3em] text-primary mb-2">
+                            {project.category}
+                          </div>
+                          <div className="font-serif italic text-2xl md:text-3xl leading-tight text-foreground/80">
+                            {project.title.split("—")[0].split("–")[0].trim()}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Badges */}
+                    <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+                      {project.featured && (
+                        <Badge className="bg-primary text-primary-foreground text-[10px] font-mono uppercase tracking-wider rounded-full px-2.5 py-0.5">
+                          ★ Featured
+                        </Badge>
+                      )}
+                      {project.private && (
+                        <Badge className="bg-background/90 text-foreground border border-border/60 backdrop-blur-sm text-[10px] font-mono uppercase tracking-wider rounded-full px-2.5 py-0.5 flex items-center gap-1">
+                          <Lock className="w-2.5 h-2.5" /> Private
+                        </Badge>
+                      )}
                     </div>
-                    {project.featured && (
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-primary/90 backdrop-blur-sm">Featured</Badge>
+
+                    {/* Hover overlay */}
+                    {isLink && (
+                      <div className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all translate-y-1 group-hover:translate-y-0">
+                        <ArrowUpRight className="h-4 w-4" />
                       </div>
                     )}
                   </div>
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
-                        {project.title}
-                      </h3>
-                      <Badge variant="outline" className="text-xs">
-                        {project.category}
-                      </Badge>
+
+                  {/* Body */}
+                  <div className="p-5 md:p-6 flex-1 flex flex-col">
+                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-1.5">
+                      {project.category}
                     </div>
-                    <p className="text-muted-foreground mb-4 text-sm leading-relaxed flex-1">{project.description}</p>
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {project.tech.map((tech) => (
-                        <Badge
+                    <h3 className="text-lg md:text-xl font-semibold leading-snug mb-2 group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1 line-clamp-3">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {project.tech.slice(0, 5).map((tech) => (
+                        <span
                           key={tech}
-                          variant="secondary"
-                          className="text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                          className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-muted/60 text-muted-foreground"
                         >
                           {tech}
-                        </Badge>
+                        </span>
                       ))}
                     </div>
+
+                    {/* Footer links */}
+                    <div className="flex items-center justify-between pt-3 border-t border-border/40">
+                      {project.private ? (
+                        <span className="text-[11px] font-mono text-muted-foreground flex items-center gap-1.5">
+                          <Lock className="h-3 w-3" />
+                          Available on request
+                        </span>
+                      ) : (
+                        <div className="flex gap-3">
+                          {project.liveUrl && project.liveUrl !== "#" && (
+                            <a
+                              href={project.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-[11px] font-mono text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+                            >
+                              <ExternalLink className="h-3 w-3" /> Live
+                            </a>
+                          )}
+                          {project.githubUrl && project.githubUrl !== "#" && (
+                            <a
+                              href={project.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-[11px] font-mono text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+                            >
+                              <Github className="h-3 w-3" /> Code
+                            </a>
+                          )}
+                        </div>
+                      )}
+                      <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                </CardTag>
+              </motion.div>
+            )
+          })}
         </div>
 
         {filteredProjects.length === 0 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12">
-            <p className="text-muted-foreground text-lg">No projects found for the selected category.</p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
+            <p className="text-muted-foreground">No projects in this category yet.</p>
           </motion.div>
         )}
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mt-20 md:mt-28 bento p-10 md:p-14 text-center relative overflow-hidden"
+        >
+          <div className="absolute inset-0 opacity-40">
+            <div className="aurora" />
+          </div>
+          <div className="relative">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
+              Need someone who ships{" "}
+              <span className="font-serif italic font-normal gradient-text-vivid">AI products end-to-end?</span>
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+              I architect LLM systems, build the models, and ship the product around them. Let&apos;s talk.
+            </p>
+            <Button
+              size="lg"
+              className="rounded-full bg-foreground text-background hover:bg-foreground/90"
+              asChild
+            >
+              <a href="/contact">Get in touch</a>
+            </Button>
+          </div>
+        </motion.div>
       </div>
     </div>
   )

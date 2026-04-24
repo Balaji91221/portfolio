@@ -1,66 +1,78 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send } from "lucide-react"
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  Send,
+  ArrowUpRight,
+  Calendar,
+  Briefcase,
+  Clock,
+} from "lucide-react"
+import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
-const contactInfo = [
+const channels = [
   {
     icon: Mail,
     label: "Email",
     value: "kbalaji15j@gmail.com",
-    href: "mailto:kbalaji15j@gmail.com",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+91 9398806613",
-    href: "tel:+919398806613",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Dharmavarm, India",
-    href: "#",
-  },
-]
-
-const socialLinks = [
-  {
-    icon: Github,
-    label: "GitHub",
-    href: "https://github.com/Balaji91221",
-    color: "hover:text-gray-900 dark:hover:text-gray-100",
+    sub: "Best for hiring conversations",
+    href: "mailto:kbalaji15j@gmail.com?subject=Hiring%20%E2%80%94%20Kelavath%20Balaji",
+    cta: "Send email",
   },
   {
     icon: Linkedin,
     label: "LinkedIn",
+    value: "/in/kelavathbalajinaik",
+    sub: "Quick intros and DMs",
     href: "https://www.linkedin.com/in/kelavathbalajinaik/",
-    color: "hover:text-blue-600",
+    cta: "Message",
+    external: true,
   },
   {
-    icon: Twitter,
-    label: "Twitter",
-    href: "https://x.com/KkBalaji91221",
-    color: "hover:text-blue-400",
+    icon: Phone,
+    label: "Phone",
+    value: "+91 93988 06613",
+    sub: "For scheduled calls",
+    href: "tel:+919398806613",
+    cta: "Call",
   },
 ]
 
+const socialLinks = [
+  { icon: Github, label: "GitHub", href: "https://github.com/Balaji91221" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/kelavathbalajinaik/" },
+  { icon: Twitter, label: "Twitter / X", href: "https://x.com/KkBalaji91221" },
+]
+
+const roles = [
+  "AI / ML Engineer",
+  "LLM & RAG Engineer",
+  "Agentic AI Engineer",
+  "Full-Stack Engineer (AI products)",
+]
+
+const quickFacts = [
+  { label: "Current", value: "Samco Securities · AI/ML Engineer" },
+  { label: "Location", value: "India · Open to remote & relocation" },
+  { label: "Notice period", value: "Negotiable" },
+  { label: "Response time", value: "Within 24 hours" },
+]
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  })
+  const [formData, setFormData] = useState({ name: "", email: "", company: "", subject: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
 
@@ -72,210 +84,272 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    toast({
-      title: "Message sent successfully!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    })
-
-    setFormData({ name: "", email: "", subject: "", message: "" })
+    const body = `Hi Balaji,\n\n${formData.message}\n\n— ${formData.name}${formData.company ? `, ${formData.company}` : ""}\n${formData.email}`
+    const mailto = `mailto:kbalaji15j@gmail.com?subject=${encodeURIComponent(formData.subject || "Hello")}&body=${encodeURIComponent(body)}`
+    window.location.href = mailto
+    await new Promise((r) => setTimeout(r, 600))
+    toast({ title: "Opening your email client…", description: "I'll reply within 24 hours." })
     setIsSubmitting(false)
   }
 
   return (
-    <div className="min-h-screen pt-20">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen pt-28 md:pt-32 pb-20 px-4 md:px-6 lg:px-8 relative overflow-hidden">
+      <div className="absolute inset-0 grid-pattern opacity-50 pointer-events-none" />
+      <div className="aurora opacity-60" />
+
+      <div className="container mx-auto max-w-6xl relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          className="mb-12 md:mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Let's Collaborate 🤝</h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Whether you're hiring, building, or just exploring ideas, I'm open to new challenges and conversations. Feel
-            free to reach out through any of the channels below.
+          <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+            — Let's talk
+          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6 max-w-4xl">
+            Hiring an{" "}
+            <span className="font-serif italic font-normal gradient-text-vivid">
+              AI engineer
+            </span>{" "}
+            who also ships the full-stack?
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+            I build production LLM systems, agentic AI, and the apps around them. If that sounds
+            useful to your team, the fastest way to reach me is below.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Information */}
+        <div className="grid lg:grid-cols-5 gap-5">
+          {/* Left — contact channels + quick facts */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="lg:col-span-2 flex flex-col gap-5"
           >
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                I'm always excited to discuss new opportunities, collaborate on interesting projects, or simply chat
-                about technology and innovation. Don't hesitate to reach out!
-              </p>
-            </div>
+            {/* Primary: Email CTA */}
+            <a
+              href={channels[0].href}
+              className="bento spotlight group p-8 block relative overflow-hidden"
+            >
+              <div className="flex items-start justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center">
+                  <Mail className="h-5 w-5" />
+                </div>
+                <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+              </div>
+              <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1.5">
+                Fastest way
+              </div>
+              <div className="text-2xl md:text-3xl font-semibold mb-1 break-all group-hover:text-primary transition-colors">
+                kbalaji15j@gmail.com
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Best for hiring, collaborations, and detailed project briefs.
+              </div>
+            </a>
 
-            {/* Contact Cards */}
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+            {/* Secondary channels */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {channels.slice(1).map((c) => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  {...(c.external && { target: "_blank", rel: "noopener noreferrer" })}
+                  className="bento p-5 group"
                 >
-                  <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-md hover:scale-105 transition-all duration-200">
-                    <CardContent className="p-4">
-                      <a
-                        href={info.href}
-                        className="flex items-center gap-4 group"
-                        {...(info.href.startsWith("http") && { target: "_blank", rel: "noopener noreferrer" })}
-                      >
-                        <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                          <info.icon className="w-6 h-6 text-primary" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-sm text-muted-foreground">{info.label}</p>
-                          <p className="font-semibold group-hover:text-primary transition-colors">{info.value}</p>
-                        </div>
-                      </a>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <c.icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1">
+                    {c.label}
+                  </div>
+                  <div className="text-sm font-semibold truncate">{c.value}</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">{c.sub}</div>
+                </a>
               ))}
             </div>
 
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <h3 className="text-lg font-semibold mb-4">Connect on Social</h3>
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    size="icon"
-                    asChild
-                    className={`hover:scale-110 transition-all duration-200 ${social.color}`}
-                  >
-                    <a href={social.href} target="_blank" rel="noopener noreferrer">
-                      <social.icon className="w-5 h-5" />
-                      <span className="sr-only">{social.label}</span>
-                    </a>
-                  </Button>
-                ))}
+            {/* Quick facts */}
+            <div className="bento p-6">
+              <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
+                For recruiters
               </div>
-            </motion.div>
-
-            {/* Availability Status */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-            >
-              <Card className="bg-green-500/10 border-green-500/20">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                    <p className="text-sm font-medium">
-                      <span className="text-green-600 dark:text-green-400">Available for new opportunities</span>
-                    </p>
+              <dl className="space-y-3">
+                {quickFacts.map((f) => (
+                  <div key={f.label} className="flex items-start justify-between gap-4 text-sm">
+                    <dt className="text-muted-foreground">{f.label}</dt>
+                    <dd className="font-medium text-right">{f.value}</dd>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Open to full-time roles, freelance projects, and collaborations
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+                ))}
+              </dl>
+            </div>
+
+            {/* Open to */}
+            <div className="bento p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                </span>
+                <div className="text-xs font-mono uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+                  Open to
+                </div>
+              </div>
+              <ul className="space-y-2">
+                {roles.map((r) => (
+                  <li key={r} className="flex items-center gap-2 text-sm">
+                    <Briefcase className="h-3.5 w-3.5 text-primary" />
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Socials */}
+            <div className="flex gap-2">
+              {socialLinks.map((s) => (
+                <Button key={s.label} variant="outline" size="icon" className="rounded-full flex-1" asChild>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
+                    <s.icon className="h-4 w-4" />
+                  </a>
+                </Button>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Right — form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-3"
           >
-            <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bento p-6 md:p-10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="relative">
+                <div className="flex items-center gap-2 mb-2">
+                  <Send className="h-4 w-4 text-primary" />
+                  <div className="text-xs font-mono uppercase tracking-widest text-primary">
+                    Send a message
+                  </div>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-2">Tell me about the role</h2>
+                <p className="text-sm text-muted-foreground mb-8">
+                  The more context you share, the faster I can get back with something useful.
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name *</Label>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="name" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                        Name
+                      </Label>
                       <Input
                         id="name"
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        placeholder="Your full name"
+                        placeholder="Jane Doe"
                         required
-                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email *</Label>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="email" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                        Email
+                      </Label>
                       <Input
                         id="email"
                         name="email"
                         type="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        placeholder="your.email@example.com"
+                        placeholder="jane@company.com"
                         required
-                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Subject *</Label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      placeholder="What's this about?"
-                      required
-                      className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
-                    />
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="company" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                        Company <span className="text-muted-foreground/60 normal-case">(optional)</span>
+                      </Label>
+                      <Input
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        placeholder="Acme AI"
+                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="subject" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                        Subject
+                      </Label>
+                      <Input
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        placeholder="Hiring AI/ML Engineer"
+                        required
+                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="message" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                      Message
+                    </Label>
                     <Textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Tell me about your project, idea, or just say hello..."
+                      placeholder="Role, team size, stack, timeline, compensation range if possible…"
                       required
                       rows={6}
-                      className="transition-all duration-200 focus:ring-2 focus:ring-primary/20 resize-none"
+                      className="rounded-xl bg-background/50 border-border/60 focus:border-primary resize-none"
                     />
                   </div>
 
-                  <Button type="submit" className="w-full group" size="lg" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={isSubmitting}
+                      className="rounded-full bg-foreground text-background hover:bg-foreground/90 group flex-1 sm:flex-none sm:px-8"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                          Sending…
+                        </>
+                      ) : (
+                        <>
+                          Send message
+                          <Send className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                        </>
+                      )}
+                    </Button>
+                    <div className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5" />
+                      Reply within 24 hours
+                    </div>
+                  </div>
                 </form>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

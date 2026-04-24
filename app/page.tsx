@@ -2,326 +2,379 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Github, Linkedin, Mail, ExternalLink, Code, Zap, Rocket } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail, ExternalLink, Sparkles, MapPin } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { TypingEffect } from "@/components/typing-effect"
-import { ParticleBackground } from "@/components/particle-background"
-import { HolographicAvatar } from "@/components/holographic-avatar"
-import Fooddel from './projects/Fooddel.png'
-import jobtracker from './projects/jobtracker.png'
-import exploreease from './projects/travel .png'
+import Fooddel from "./projects/Fooddel.png"
+import jobtracker from "./projects/jobtracker.png"
+import exploreease from "./projects/travel .png"
+import balaji from "../public/Balaji.jpg"
 
 const typingTexts = [
-
-  "AI/ML Engineer",
-  "Full-Stack Developer",
-  "Mentor & Team Player",
-  "Problem Solver",
+  "AI Engineer.",
+  "ML Engineer.",
+  "LLM & RAG Developer.",
+  "Agentic AI Builder.",
+  "Full-Stack Engineer.",
 ]
 
 const featuredProjects = [
   {
     id: 1,
-    title: "Food Ordering Application",
+    title: "LLM Platform — Multi-Project Gateway",
     description:
-      "Developed a comprehensive full-stack web application for online food ordering using React, Express.js, and MongoDB. The project features a responsive UI/UX for browsing food categories and managing carts, a robust admin dashboard for managing food items.",
-    image: Fooddel,
-    tech: ["React", "Node.js", "Express.js", "MongoDB"],
-    liveUrl: "https://github.com/Balaji91221/Food-delivery-App",
-    githubUrl: "https://github.com/Balaji91221/Food-delivery-App",
-    featured: true,
+      "Internal LLM gateway across OpenAI · Anthropic · Gemini · Groq · Ollama. Cost tracking, budget limits, circuit breakers, prompt versioning, and a full analytics dashboard.",
+    tech: ["FastAPI", "React", "TypeScript", "SQLite"],
+    category: "AI Infra · Private",
+    private: true,
   },
   {
-    "id": 1,
-    "title": "Job Tracker – Application Management System",
-    "description": "A full-stack job tracking app built with Next.js and Firebase. Enables users to track job applications, statuses, and insights through a clean UI and real-time updates.",
-    "image": jobtracker,
-    "tech": ["Next.js", "Firebase", "Tailwind CSS", "Framer Motion", "Lucide React"],
-    "category": "Full-Stack",
-    "liveUrl": "https://job-tracker-pro.vercel.app/",
-    "githubUrl": "https://github.com/Balaji91221/job-tracker/tree/master",
-    "featured": true
+    id: 2,
+    title: "Coder Agent",
+    description:
+      "Autonomous coding agent that plans, writes, and iterates on code using tool use and a structured reasoning loop. Built for real developer workflows.",
+    tech: ["Python", "LLMs", "Agents", "Tool Use"],
+    category: "Agentic AI · Private",
+    private: true,
   },
   {
-    "id": 2,
-    "title": "ExploreEase – ML-Powered Travel Planner",
-    "description": "A full-stack travel planner powered by Machine Learning to predict top destinations based on user preferences. It offers personalized itineraries, flexible planning, and real-time suggestions.",
-    "image": exploreease,
-    "tech": ["Next.js", "Tailwind CSS", "Lucide Icons", "Video.js", "ML", "TypeScript"],
-    "category": "Full-Stack",
-    "liveUrl": "https://exproseease.vercel.app/",
-    "githubUrl": "https://github.com/Balaji91221/travel-ExploreEase",
-    "featured": true
+    id: 3,
+    title: "AI Coder Reviewer",
+    description:
+      "LLM-powered code review agent that inspects diffs, flags regressions, and suggests fixes with context from the surrounding codebase.",
+    tech: ["Python", "LLMs", "Agents", "Code Analysis"],
+    category: "Agentic AI · Private",
+    private: true,
   },
-];
+]
 
-const stats = [
-  { label: "Projects Completed", value: "25+", icon: Code },
-  { label: "Technologies Mastered", value: "15+", icon: Zap },
-  { label: "Years of Experience", value: "3+", icon: Rocket },
+const marqueeItems = [
+  "LLMs", "RAG", "Agentic AI", "LangChain", "LangGraph", "Vector DBs", "Pinecone",
+  "PyTorch", "TensorFlow", "Python", "FastAPI", "Next.js", "React", "TypeScript",
+  "Node.js", "Docker", "PostgreSQL", "MongoDB", "Fine-tuning", "Prompt Engineering",
 ]
 
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 px-4 md:px-6 lg:px-8">
-        <ParticleBackground />
+      {/* ============ HERO ============ */}
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16 px-4 md:px-6 lg:px-8">
+        <div className="absolute inset-0 grid-pattern opacity-60" />
+        <div className="aurora" />
 
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/5" />
-
-        <div className="container mx-auto px-4 z-10 max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Left side - Text content */}
+        <div className="container mx-auto max-w-7xl relative z-10">
+          {/* Bento grid */}
+          <div className="grid grid-cols-12 gap-4 md:gap-5">
+            {/* Main intro — big tile */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center lg:text-left order-2 lg:order-1 py-8 lg:py-0"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="bento col-span-12 lg:col-span-8 p-8 md:p-10 lg:p-14 spotlight"
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="mb-8"
-              >
-                <Badge variant="outline" className="mb-6 px-4 py-2 text-sm font-medium border-primary/20 bg-primary/5">
-                  🚀 Available for new opportunities
-                </Badge>
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-                  Hi, I'm <span className="gradient-text">Kelavath Balaji Naik</span>
-                </h1>
-                <div className="text-xl md:text-2xl lg:text-3xl font-semibold text-muted-foreground mb-8 h-12 flex items-center justify-center lg:justify-start">
-                  <TypingEffect
-                    texts={typingTexts}
-                    speed={100}
-                    deleteSpeed={50}
-                    delayBetweenTexts={2000}
-                    className="text-primary"
-                  />
-                </div>
-                <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-                  AI/ML Engineer and Full‑Stack Developer (VIT‑AP, 2025) focused on building scalable, production‑grade
-                  web and machine learning systems. I design and deploy ML models and data‑driven applications with a product
-                  mindset — emphasizing reliability...
-                </p>
-              </motion.div>
+              <div className="flex items-center gap-2 mb-8">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary" />
+                </span>
+                <span className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+                  Available for new opportunities
+                </span>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center mb-10"
-              >
+              <h1 className="font-sans text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+                Kelavath{" "}
+                <span className="gradient-text-vivid">Balaji</span>{" "}
+                Naik
+                <br />
+                <span className="font-serif italic font-normal text-3xl md:text-5xl lg:text-6xl text-muted-foreground">
+                  —&nbsp;
+                </span>
+                <TypingEffect
+                  texts={typingTexts}
+                  speed={90}
+                  deleteSpeed={40}
+                  delayBetweenTexts={1800}
+                  className="text-primary text-3xl md:text-5xl lg:text-6xl"
+                />
+              </h1>
+
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed mb-8">
+                AI / ML Engineer and Full-Stack Developer. I build production-grade LLM systems,
+                RAG pipelines, and agentic AI — and the full-stack apps that wrap them. VIT-AP
+                2025 · currently at Samco Securities.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button
                   asChild
                   size="lg"
-                  className="group bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 w-full sm:w-auto"
+                  className="group rounded-full bg-foreground text-background hover:bg-foreground/90"
                 >
                   <Link href="/projects">
-                    View My Work
+                    View my work
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-primary/20 hover:bg-primary/5 w-full sm:w-auto">
-                  <Link href="/contact">Let's Connect</Link>
+                <Button asChild variant="outline" size="lg" className="rounded-full border-border/60">
+                  <Link href="/contact">Let&apos;s connect</Link>
                 </Button>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="flex justify-center lg:justify-start gap-6"
-              >
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:scale-110 transition-transform hover:bg-primary/10"
-                  asChild
-                >
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                    <Github className="h-6 w-6" />
-                  </a>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:scale-110 transition-transform hover:bg-primary/10"
-                  asChild
-                >
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-6 w-6" />
-                  </a>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:scale-110 transition-transform hover:bg-primary/10"
-                  asChild
-                >
-                  <a href="mailto:kelavath@example.com">
-                    <Mail className="h-6 w-6" />
-                  </a>
-                </Button>
-              </motion.div>
+              </div>
             </motion.div>
 
-            {/* Right side - Holographic Avatar */}
+            {/* Profile tile */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex justify-center lg:justify-end order-1 lg:order-2 py-8 lg:py-0"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="bento col-span-12 sm:col-span-6 lg:col-span-4 p-6 md:p-8 flex flex-col justify-between"
             >
-              <HolographicAvatar />
+              <div className="relative mb-6 aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-border/60">
+                <Image
+                  src={balaji}
+                  alt="Kelavath Balaji Naik"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-2">
+                  <MapPin className="h-3 w-3" /> India · Open to remote & relocation
+                </div>
+                <p className="text-sm leading-relaxed text-foreground/80">
+                  Research-grade ML, production-grade delivery.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Socials */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="bento col-span-6 sm:col-span-4 lg:col-span-3 p-6 flex flex-col justify-between"
+            >
+              <Sparkles className="h-5 w-5 text-primary mb-3" />
+              <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">
+                Connect
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="icon" className="rounded-full" asChild>
+                  <a href="https://github.com/Balaji91221" target="_blank" rel="noopener noreferrer">
+                    <Github className="h-4 w-4" />
+                  </a>
+                </Button>
+                <Button variant="outline" size="icon" className="rounded-full" asChild>
+                  <a href="https://www.linkedin.com/in/kelavathbalajinaik/" target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                </Button>
+                <Button variant="outline" size="icon" className="rounded-full" asChild>
+                  <a href="mailto:kbalaji15j@gmail.com">
+                    <Mail className="h-4 w-4" />
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
+
+            {/* Stat tiles */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25 }}
+              className="bento col-span-6 sm:col-span-4 lg:col-span-3 p-6"
+            >
+              <div className="text-5xl font-bold gradient-text-vivid">25+</div>
+              <div className="text-sm text-muted-foreground mt-2">Projects shipped</div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="bento col-span-12 sm:col-span-4 lg:col-span-3 p-6"
+            >
+              <div className="text-5xl font-bold gradient-text-vivid">3+</div>
+              <div className="text-sm text-muted-foreground mt-2">Years of experience</div>
+            </motion.div>
+
+            {/* Now building */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="bento col-span-12 lg:col-span-3 p-6"
+            >
+              <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3">
+                Currently
+              </div>
+              <div className="font-serif italic text-xl leading-snug">
+                AI/ML Engineer @ <span className="text-primary not-italic font-sans font-semibold">Samco Securities</span>
+              </div>
+              <div className="text-sm text-muted-foreground mt-2">
+                Shipping production ML for trading analytics.
+              </div>
             </motion.div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-muted-foreground"
-        >
-          <div className="w-6 h-10 border-2 border-current rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-current rounded-full mt-2 animate-pulse" />
-          </div>
-        </motion.div>
       </section>
 
-      {/* Featured Projects Section */}
-      <section className="py-24 px-4 md:px-6 lg:px-8">
+      {/* ============ MARQUEE ============ */}
+      <section className="py-10 border-y border-border/50 overflow-hidden">
+        <div className="marquee">
+          {[0, 1].map((i) => (
+            <div key={i} className="marquee-track" aria-hidden={i === 1}>
+              {marqueeItems.map((item) => (
+                <span
+                  key={`${i}-${item}`}
+                  className="font-serif italic text-2xl md:text-4xl text-muted-foreground/70 whitespace-nowrap"
+                >
+                  {item} <span className="text-primary not-italic">✦</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ============ FEATURED PROJECTS ============ */}
+      <section className="py-24 md:py-32 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-center mb-20"
+            className="flex items-end justify-between flex-wrap gap-6 mb-16"
           >
-            <Badge variant="outline" className="mb-6 px-4 py-2 border-primary/20 bg-primary/5">
-              💼 Portfolio Highlights
-            </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 gradient-text">Featured Projects</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              A showcase of my recent work, demonstrating expertise in modern web technologies and innovative
-              problem-solving
-            </p>
+            <div>
+              <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+                — Selected Work
+              </div>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
+                Things I&apos;ve{" "}
+                <span className="font-serif italic font-normal text-muted-foreground">built</span>
+              </h2>
+            </div>
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-2 text-sm font-mono text-muted-foreground hover:text-primary transition-colors"
+            >
+              All projects
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProjects.map((project, index) => {
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 glass border-border/50 overflow-hidden h-full">
-                    <CardContent className="p-0">
-                      <div className="relative overflow-hidden">
-                        <Image
-                          src={project.image || "/placeholder.svg"}
-                          alt={project.title}
-                          width={300}
-                          height={200}
-                          className="w-full h-48 object-contain group-hover:scale-105 transition-transform duration-500 bg-white" />
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                          <Button size="icon" variant="secondary" className="glass" asChild>
-                            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="h-4 w-4" />
-                            </a>
-                          </Button>
-                          <Button size="icon" variant="secondary" className="glass" asChild>
-                            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                              <Github className="h-4 w-4" />
-                            </a>
-                          </Button>
-                        </div>
-                        {project.featured && (
-                          <div className="absolute top-4 left-4">
-                            <Badge className="bg-gradient-to-r from-primary to-purple-600 text-white">⭐ Featured</Badge>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                          {project.title}
-                        </h3>
-                        <p className="text-muted-foreground mb-6 text-sm leading-relaxed">{project.description}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {project.tech.map((tech) => (
-                            <Badge
-                              key={tech}
-                              variant="secondary"
-                              className="text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-colors tech-icon"
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )
-            })}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bento group overflow-hidden"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/30 via-accent/20 to-background flex items-center justify-center">
+                  <div className="absolute inset-0 grid-pattern opacity-40" />
+                  <div className="relative text-center px-6">
+                    <div className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-2">
+                      {project.category}
+                    </div>
+                    <div className="font-serif italic text-3xl md:text-4xl leading-tight text-foreground/80">
+                      {project.title.split("—")[0].trim()}
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2">
+                    {project.category}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.tech.map((t) => (
+                      <Badge
+                        key={t}
+                        variant="outline"
+                        className="text-[10px] font-mono uppercase tracking-wider rounded-full border-border/60"
+                      >
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex gap-3">
+                    {project.private ? (
+                      <span className="inline-flex items-center gap-1 text-xs font-mono text-muted-foreground">
+                        🔒 Private repo · available on request
+                      </span>
+                    ) : (
+                      <>
+                    <a
+                      href={(project as any).liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <ExternalLink className="h-3 w-3" /> Live
+                    </a>
+                    <a
+                      href={(project as any).githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <Github className="h-3 w-3" /> Code
+                    </a>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="text-center mt-16"
-          >
-            <Button asChild size="lg" variant="outline" className="border-primary/20 hover:bg-primary/5">
-              <Link href="/projects">
-                Explore All Projects
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-4 md:px-6 lg:px-8 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5">
-        <div className="container mx-auto max-w-4xl">
+      {/* ============ CTA ============ */}
+      <section className="py-24 md:py-32 px-4 md:px-6 lg:px-8">
+        <div className="container mx-auto max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-center"
+            className="bento p-10 md:p-16 lg:p-20 text-center relative overflow-hidden"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 gradient-text">Ready to Build Something Amazing?</h2>
-            <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed max-w-3xl mx-auto">
-              I'm always excited to take on new challenges and collaborate on innovative projects. Whether you're a
-              startup looking to build your MVP or an enterprise seeking to modernize your tech stack, let's discuss how
-              we can work together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 px-8"
-              >
-                <Link href="/contact">Start a Conversation</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-primary/20 hover:bg-primary/5 px-8">
-                <Link href="/about">Learn More About Me</Link>
-              </Button>
+            <div className="absolute inset-0 opacity-40">
+              <div className="aurora" />
+            </div>
+            <div className="relative z-10">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.05]">
+                Let&apos;s build{" "}
+                <span className="font-serif italic font-normal gradient-text-vivid">
+                  something worth shipping.
+                </span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
+                Have an idea, a problem, or a project? I&apos;m always up for a conversation.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button asChild size="lg" className="rounded-full bg-foreground text-background hover:bg-foreground/90">
+                  <Link href="/contact">Start a conversation</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-full border-border/60">
+                  <Link href="/about">About me</Link>
+                </Button>
+              </div>
             </div>
           </motion.div>
         </div>
