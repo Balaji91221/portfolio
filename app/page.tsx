@@ -28,6 +28,7 @@ const featuredProjects = [
       "Internal LLM gateway across OpenAI · Anthropic · Gemini · Groq · Ollama. Cost tracking, budget limits, circuit breakers, prompt versioning, and a full analytics dashboard.",
     tech: ["FastAPI", "React", "TypeScript", "SQLite"],
     category: "AI Infra · Private",
+    image: "/projects/generated-v2/llm-platform-gateway.png",
     private: true,
   },
   {
@@ -37,6 +38,7 @@ const featuredProjects = [
       "Autonomous coding agent that plans, writes, and iterates on code using tool use and a structured reasoning loop. Built for real developer workflows.",
     tech: ["Python", "LLMs", "Agents", "Tool Use"],
     category: "Agentic AI · Private",
+    image: "/projects/generated-v2/coder-agent.png",
     private: true,
   },
   {
@@ -46,6 +48,7 @@ const featuredProjects = [
       "LLM-powered code review agent that inspects diffs, flags regressions, and suggests fixes with context from the surrounding codebase.",
     tech: ["Python", "LLMs", "Agents", "Code Analysis"],
     category: "Agentic AI · Private",
+    image: "/projects/generated-v2/ai-coder-reviewer.png",
     private: true,
   },
 ]
@@ -279,16 +282,36 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 className="bento group overflow-hidden"
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/30 via-accent/20 to-background flex items-center justify-center">
-                  <div className="absolute inset-0 grid-pattern opacity-40" />
-                  <div className="relative text-center px-6">
-                    <div className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-2">
-                      {project.category}
+                <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/30 via-accent/20 to-background">
+                  {(project as any).image ? (
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={(project as any).image}
+                        alt={project.title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      {project.private && (
+                        <div className="absolute top-3 left-3">
+                          <span className="inline-flex items-center gap-1 bg-background/90 text-foreground border border-border/60 backdrop-blur-sm text-[10px] font-mono uppercase tracking-wider rounded-full px-2.5 py-0.5">
+                            🔒 Private
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="absolute inset-0 grid-pattern opacity-40" />
+                      <div className="relative text-center px-6">
+                        <div className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-2">
+                          {project.category}
+                        </div>
+                        <div className="font-serif italic text-3xl md:text-4xl leading-tight text-foreground/80">
+                          {project.title.split("—")[0].trim()}
+                        </div>
+                      </div>
                     </div>
-                    <div className="font-serif italic text-3xl md:text-4xl leading-tight text-foreground/80">
-                      {project.title.split("—")[0].trim()}
-                    </div>
-                  </div>
+                  )}
                 </div>
                 <div className="p-6">
                   <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2">
