@@ -78,12 +78,8 @@ export default function HomePage() {
               className="bento col-span-12 lg:col-span-8 p-8 md:p-10 lg:p-14 spotlight"
             >
               <div className="flex items-center gap-2 mb-8">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary" />
-                </span>
                 <span className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-                  Available for new opportunities
+                  Portfolio · 2025
                 </span>
               </div>
 
@@ -146,7 +142,7 @@ export default function HomePage() {
               </div>
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-2">
-                  <MapPin className="h-3 w-3" /> India · Open to remote & relocation
+                  <MapPin className="h-3 w-3" /> India
                 </div>
                 <p className="text-sm leading-relaxed text-foreground/80">
                   Research-grade ML, production-grade delivery.

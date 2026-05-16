@@ -10,17 +10,13 @@ import { Label } from "@/components/ui/label"
 import {
   Mail,
   Phone,
-  MapPin,
   Github,
   Linkedin,
   Twitter,
   Send,
   ArrowUpRight,
-  Calendar,
-  Briefcase,
   Clock,
 } from "lucide-react"
-import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
 const channels = [
@@ -28,8 +24,8 @@ const channels = [
     icon: Mail,
     label: "Email",
     value: "kbalaji15j@gmail.com",
-    sub: "Best for hiring conversations",
-    href: "mailto:kbalaji15j@gmail.com?subject=Hiring%20%E2%80%94%20Kelavath%20Balaji",
+    sub: "Best for project briefs and detailed messages",
+    href: "mailto:kbalaji15j@gmail.com",
     cta: "Send email",
   },
   {
@@ -55,20 +51,6 @@ const socialLinks = [
   { icon: Github, label: "GitHub", href: "https://github.com/Balaji91221" },
   { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/kelavathbalajinaik/" },
   { icon: Twitter, label: "Twitter / X", href: "https://x.com/KkBalaji91221" },
-]
-
-const roles = [
-  "AI / ML Engineer",
-  "LLM & RAG Engineer",
-  "Agentic AI Engineer",
-  "Full-Stack Engineer (AI products)",
-]
-
-const quickFacts = [
-  { label: "Current", value: "Samco Securities · AI/ML Engineer" },
-  { label: "Location", value: "India · Open to remote & relocation" },
-  { label: "Notice period", value: "Negotiable" },
-  { label: "Response time", value: "Within 24 hours" },
 ]
 
 export default function ContactPage() {
@@ -109,15 +91,15 @@ export default function ContactPage() {
             — Let's talk
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6 max-w-4xl">
-            Hiring an{" "}
+            Let&apos;s build{" "}
             <span className="font-serif italic font-normal gradient-text-vivid">
-              AI engineer
-            </span>{" "}
-            who also ships the full-stack?
+              something together
+            </span>
+            .
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            I build production LLM systems, agentic AI, and the apps around them. If that sounds
-            useful to your team, the fastest way to reach me is below.
+            I build production LLM systems, agentic AI, and the apps around them. If you&apos;d like
+            to chat about a project or collaboration, the fastest way to reach me is below.
           </p>
         </motion.div>
 
@@ -147,7 +129,7 @@ export default function ContactPage() {
                 kbalaji15j@gmail.com
               </div>
               <div className="text-sm text-muted-foreground">
-                Best for hiring, collaborations, and detailed project briefs.
+                Best for collaborations, project briefs, and longer messages.
               </div>
             </a>
 
@@ -173,42 +155,6 @@ export default function ContactPage() {
                   <div className="text-xs text-muted-foreground mt-0.5">{c.sub}</div>
                 </a>
               ))}
-            </div>
-
-            {/* Quick facts */}
-            <div className="bento p-6">
-              <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
-                For recruiters
-              </div>
-              <dl className="space-y-3">
-                {quickFacts.map((f) => (
-                  <div key={f.label} className="flex items-start justify-between gap-4 text-sm">
-                    <dt className="text-muted-foreground">{f.label}</dt>
-                    <dd className="font-medium text-right">{f.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-
-            {/* Open to */}
-            <div className="bento p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-                </span>
-                <div className="text-xs font-mono uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-                  Open to
-                </div>
-              </div>
-              <ul className="space-y-2">
-                {roles.map((r) => (
-                  <li key={r} className="flex items-center gap-2 text-sm">
-                    <Briefcase className="h-3.5 w-3.5 text-primary" />
-                    {r}
-                  </li>
-                ))}
-              </ul>
             </div>
 
             {/* Socials */}
@@ -239,7 +185,7 @@ export default function ContactPage() {
                     Send a message
                   </div>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-2">Tell me about the role</h2>
+                <h2 className="text-2xl md:text-3xl font-bold mb-2">Tell me about it</h2>
                 <p className="text-sm text-muted-foreground mb-8">
                   The more context you share, the faster I can get back with something useful.
                 </p>
@@ -300,7 +246,7 @@ export default function ContactPage() {
                         name="subject"
                         value={formData.subject}
                         onChange={handleInputChange}
-                        placeholder="Hiring AI/ML Engineer"
+                        placeholder="Project idea or collaboration"
                         required
                         className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
                       />
@@ -316,7 +262,7 @@ export default function ContactPage() {
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Role, team size, stack, timeline, compensation range if possible…"
+                      placeholder="What you're building, the stack, timeline, and how I can help…"
                       required
                       rows={6}
                       className="rounded-xl bg-background/50 border-border/60 focus:border-primary resize-none"
