@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Menu, X, Github, Linkedin, Download, Mail } from "lucide-react"
+import { Magnetic } from "@/components/magnetic"
 import Image from "next/image"
 import balaji from "../public/profile-pic.png"
 
@@ -119,17 +120,19 @@ export function Navigation() {
               </a>
             </Button>
             <ThemeToggle />
-            <Button
-              size="sm"
-              className="h-8 rounded-full bg-foreground text-background hover:bg-foreground/90 font-medium text-xs px-3.5 gap-1.5"
-              asChild
-            >
-              <Link href="/contact">
-                <Mail className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Hire me</span>
-                <span className="sm:hidden">Hire</span>
-              </Link>
-            </Button>
+            <Magnetic as="span" strength={0.3} className="inline-block">
+              <Button
+                size="sm"
+                className="h-8 rounded-full bg-foreground text-background hover:bg-foreground/90 font-medium text-xs px-3.5 gap-1.5"
+                asChild
+              >
+                <Link href="/contact">
+                  <Mail className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Hire me</span>
+                  <span className="sm:hidden">Hire</span>
+                </Link>
+              </Button>
+            </Magnetic>
 
             {/* Mobile menu toggle */}
             <Button

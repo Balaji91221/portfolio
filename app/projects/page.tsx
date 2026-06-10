@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github, Lock, ArrowUpRight } from "lucide-react"
+import { TiltCard } from "@/components/tilt-card"
 import Image from "next/image"
 import resume from './resume.png';
 import crypto from './crypto.png';
@@ -394,10 +395,6 @@ export default function ProjectsPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {filteredProjects.map((project, index) => {
             const isLink = !project.private && project.liveUrl && project.liveUrl !== "#"
-            const CardTag: any = isLink ? "a" : "div"
-            const linkProps = isLink
-              ? { href: project.liveUrl, target: "_blank", rel: "noopener noreferrer" }
-              : {}
 
             return (
               <motion.div
@@ -407,10 +404,23 @@ export default function ProjectsPage() {
                 transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.4) }}
                 layout
               >
-                <CardTag
-                  {...linkProps}
-                  className="bento group block h-full flex flex-col cursor-pointer overflow-hidden"
+                <TiltCard className="h-full">
+                <div
+                  className={`bento spotlight group block h-full flex flex-col overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-300 ${
+                    isLink ? "cursor-pointer" : ""
+                  }`}
                 >
+                  {/* Stretched link: makes the whole card clickable without
+                      nesting <a> tags (the footer links sit above it). */}
+                  {isLink && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${project.title}`}
+                      className="absolute inset-0 z-10"
+                    />
+                  )}
                   {/* Media */}
                   <div className="relative overflow-hidden aspect-[16/10]">
                     {project.image ? (
@@ -479,8 +489,8 @@ export default function ProjectsPage() {
                       ))}
                     </div>
 
-                    {/* Footer links */}
-                    <div className="flex items-center justify-between pt-3 border-t border-border/40">
+                    {/* Footer links — above the stretched link so they're clickable */}
+                    <div className="relative z-20 flex items-center justify-between pt-3 border-t border-border/40">
                       {project.private ? (
                         <span className="text-[11px] font-mono text-muted-foreground flex items-center gap-1.5">
                           <Lock className="h-3 w-3" />
@@ -515,7 +525,8 @@ export default function ProjectsPage() {
                       <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
-                </CardTag>
+                </div>
+                </TiltCard>
               </motion.div>
             )
           })}

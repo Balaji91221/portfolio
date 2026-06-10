@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { CountUp } from "@/components/count-up"
+import { TiltCard } from "@/components/tilt-card"
 import {
   Briefcase,
   Calendar,
@@ -278,7 +280,7 @@ export default function ExperiencePage() {
             {impactMetrics.map((m) => (
               <div key={m.label} className="bento p-5">
                 <div className="text-2xl md:text-3xl lg:text-4xl font-bold gradient-text-vivid leading-none">
-                  {m.value}
+                  <CountUp value={m.value} />
                 </div>
                 <div className="text-[11px] text-muted-foreground mt-2 leading-tight">{m.label}</div>
               </div>
@@ -427,8 +429,12 @@ export default function ExperiencePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bento p-0 group flex flex-col overflow-hidden"
+                className="h-full"
               >
+                <TiltCard
+                  max={6}
+                  className="bento spotlight p-0 group flex flex-col overflow-hidden h-full hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-300"
+                >
                 {/* Poster */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -521,6 +527,7 @@ export default function ExperiencePage() {
                     </div>
                   )}
                 </div>
+                </TiltCard>
               </motion.div>
             ))}
           </div>

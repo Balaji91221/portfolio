@@ -7,6 +7,10 @@ import { ArrowRight, Github, Linkedin, Mail, ExternalLink, Sparkles, MapPin } fr
 import Link from "next/link"
 import Image from "next/image"
 import { TypingEffect } from "@/components/typing-effect"
+import { Parallax } from "@/components/parallax"
+import { TiltCard } from "@/components/tilt-card"
+import { CountUp } from "@/components/count-up"
+import { Magnetic } from "@/components/magnetic"
 import Fooddel from "./projects/Fooddel.png"
 import jobtracker from "./projects/jobtracker.png"
 import exploreease from "./projects/travel .png"
@@ -64,8 +68,11 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* ============ HERO ============ */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16 px-4 md:px-6 lg:px-8">
-        <div className="absolute inset-0 grid-pattern opacity-60" />
-        <div className="aurora" />
+        {/* Background layers drift slower than content on scroll → depth */}
+        <Parallax speed={140} className="absolute inset-0">
+          <div className="absolute inset-0 grid-pattern opacity-60" />
+          <div className="aurora" />
+        </Parallax>
 
         <div className="container mx-auto max-w-7xl relative z-10">
           {/* Bento grid */}
@@ -107,16 +114,18 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                <Button
-                  asChild
-                  size="lg"
-                  className="group rounded-full bg-foreground text-background hover:bg-foreground/90"
-                >
-                  <Link href="/projects">
-                    View my work
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
+                <Magnetic as="span" strength={0.35} className="inline-block">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="group rounded-full bg-foreground text-background hover:bg-foreground/90"
+                  >
+                    <Link href="/projects">
+                      View my work
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </Magnetic>
                 <Button asChild variant="outline" size="lg" className="rounded-full border-border/60">
                   <Link href="/contact">Let&apos;s connect</Link>
                 </Button>
@@ -187,7 +196,9 @@ export default function HomePage() {
               transition={{ duration: 0.7, delay: 0.25 }}
               className="bento col-span-6 sm:col-span-4 lg:col-span-3 p-6"
             >
-              <div className="text-5xl font-bold gradient-text-vivid">25+</div>
+              <div className="text-5xl font-bold gradient-text-vivid">
+                <CountUp value={25} suffix="+" />
+              </div>
               <div className="text-sm text-muted-foreground mt-2">Projects shipped</div>
             </motion.div>
 
@@ -197,7 +208,9 @@ export default function HomePage() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="bento col-span-12 sm:col-span-4 lg:col-span-3 p-6"
             >
-              <div className="text-5xl font-bold gradient-text-vivid">3+</div>
+              <div className="text-5xl font-bold gradient-text-vivid">
+                <CountUp value={3} suffix="+" />
+              </div>
               <div className="text-sm text-muted-foreground mt-2">Years of experience</div>
             </motion.div>
 
@@ -276,8 +289,9 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bento group overflow-hidden"
+                className="h-full"
               >
+                <TiltCard className="bento spotlight group overflow-hidden h-full hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-300">
                 <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/30 via-accent/20 to-background">
                   {(project as any).image ? (
                     <>
@@ -357,6 +371,7 @@ export default function HomePage() {
                     )}
                   </div>
                 </div>
+                </TiltCard>
               </motion.div>
             ))}
           </div>
@@ -387,9 +402,11 @@ export default function HomePage() {
                 Have an idea, a problem, or a project? I&apos;m always up for a conversation.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button asChild size="lg" className="rounded-full bg-foreground text-background hover:bg-foreground/90">
-                  <Link href="/contact">Start a conversation</Link>
-                </Button>
+                <Magnetic as="span" strength={0.35} className="inline-block">
+                  <Button asChild size="lg" className="rounded-full bg-foreground text-background hover:bg-foreground/90">
+                    <Link href="/contact">Start a conversation</Link>
+                  </Button>
+                </Magnetic>
                 <Button asChild variant="outline" size="lg" className="rounded-full border-border/60">
                   <Link href="/about">About me</Link>
                 </Button>

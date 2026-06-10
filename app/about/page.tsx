@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { CountUp } from "@/components/count-up"
+import { TiltCard } from "@/components/tilt-card"
 import {
   GraduationCap,
   Briefcase,
@@ -329,7 +331,7 @@ export default function AboutPage() {
               {heroStats.map((s) => (
                 <div key={s.label} className="bento p-4">
                   <div className="text-2xl md:text-3xl font-bold gradient-text-vivid leading-none">
-                    {s.value}
+                    <CountUp value={s.value} />
                   </div>
                   <div className="text-[11px] text-muted-foreground mt-1.5 leading-tight">{s.label}</div>
                 </div>
@@ -366,8 +368,12 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 viewport={{ once: true }}
-                className="bento p-6 md:p-8 group"
+                className="h-full"
               >
+                <TiltCard
+                  max={6}
+                  className="bento spotlight p-6 md:p-8 group h-full hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-300"
+                >
                 <div className="flex items-start gap-4">
                   <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                     <d.icon className="w-5 h-5 text-primary" />
@@ -389,6 +395,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </div>
+                </TiltCard>
               </motion.div>
             ))}
           </div>

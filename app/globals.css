@@ -192,6 +192,10 @@ html { scroll-behavior: smooth; }
   flex-shrink: 0;
   animation: marquee 40s linear infinite;
 }
+/* Pause the marquee while the row is hovered */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-100%); }
@@ -282,4 +286,32 @@ html { scroll-behavior: smooth; }
 @keyframes shimmer {
   0% { background-position: 0 0, 0% 50%; }
   100% { background-position: 0 0, 300% 50%; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Accessibility: honor the OS "reduce motion" setting.
+   Neutralizes the decorative keyframe animations above and the
+   JS-driven motion components fall back to static via
+   framer-motion's useReducedMotion(). Hover/focus affordances
+   still work — only continuous/auto motion is removed.
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .aurora,
+  .holographic,
+  .particle,
+  .marquee-track,
+  .shimmer-border {
+    animation: none !important;
+  }
 }
