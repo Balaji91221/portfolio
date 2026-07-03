@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 30 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 99%;
+    --foreground: 0 0% 7%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 7%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 24 95% 53%;
-    --primary-foreground: 30 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 280 90% 60%;
-    --accent-foreground: 210 40% 98%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 160 84% 33%;
+    --primary-foreground: 0 0% 99%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 7%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 42%;
+    --accent: 182 80% 34%;
+    --accent-foreground: 0 0% 99%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 24 95% 53%;
-    --radius: 1.25rem;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 160 84% 33%;
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 30 40% 98%;
-    --card: 240 10% 6%;
-    --card-foreground: 30 40% 98%;
-    --popover: 240 10% 6%;
-    --popover-foreground: 30 40% 98%;
-    --primary: 24 95% 60%;
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 30 40% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 280 90% 65%;
-    --accent-foreground: 30 40% 98%;
+    --background: 0 0% 3.5%;
+    --foreground: 40 20% 97%;
+    --card: 0 0% 6%;
+    --card-foreground: 40 20% 97%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 40 20% 97%;
+    --primary: 158 76% 52%;
+    --primary-foreground: 0 0% 3.5%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 40 20% 97%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 180 85% 55%;
+    --accent-foreground: 0 0% 3.5%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 30 40% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 24 95% 60%;
+    --destructive-foreground: 40 20% 97%;
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 158 76% 52%;
   }
 }
 
@@ -75,10 +75,11 @@
   position: absolute;
   inset: -20%;
   background:
-    radial-gradient(ellipse 50% 40% at 20% 30%, hsl(24 95% 60% / 0.35), transparent 60%),
-    radial-gradient(ellipse 40% 35% at 80% 20%, hsl(280 90% 65% / 0.3), transparent 60%),
-    radial-gradient(ellipse 45% 40% at 60% 80%, hsl(200 95% 55% / 0.25), transparent 60%);
-  filter: blur(40px);
+    radial-gradient(ellipse 50% 40% at 18% 30%, hsl(158 76% 45% / 0.20), transparent 60%),
+    radial-gradient(ellipse 40% 35% at 82% 18%, hsl(180 85% 50% / 0.14), transparent 60%),
+    radial-gradient(ellipse 40% 35% at 78% 70%, hsl(262 85% 60% / 0.13), transparent 60%),
+    radial-gradient(ellipse 35% 30% at 28% 85%, hsl(35 95% 55% / 0.08), transparent 60%);
+  filter: blur(48px);
   animation: aurora-drift 18s ease-in-out infinite;
   z-index: 0;
 }
@@ -122,11 +123,11 @@ html { scroll-behavior: smooth; }
 .holographic {
   background: linear-gradient(
     45deg,
-    hsl(24 95% 60% / 0.15) 0%,
-    hsl(280 90% 65% / 0.15) 25%,
-    hsl(200 95% 55% / 0.15) 50%,
-    hsl(24 95% 60% / 0.15) 75%,
-    hsl(280 90% 65% / 0.15) 100%
+    hsl(158 76% 50% / 0.12) 0%,
+    hsl(180 85% 50% / 0.12) 25%,
+    hsl(160 60% 45% / 0.12) 50%,
+    hsl(158 76% 50% / 0.12) 75%,
+    hsl(180 85% 50% / 0.12) 100%
   );
   background-size: 400% 400%;
   animation: holographic-shift 8s ease-in-out infinite;
@@ -139,9 +140,9 @@ html { scroll-behavior: smooth; }
 
 /* Particles */
 .particle { position: absolute; border-radius: 50%; pointer-events: none; }
-.particle-1 { width: 4px; height: 4px; background: hsl(24 95% 60% / 0.6); animation: particle-float 15s linear infinite; }
-.particle-2 { width: 6px; height: 6px; background: hsl(280 90% 65% / 0.4); animation: particle-float 20s linear infinite reverse; }
-.particle-3 { width: 3px; height: 3px; background: hsl(200 95% 55% / 0.5); animation: particle-float 25s linear infinite; }
+.particle-1 { width: 4px; height: 4px; background: hsl(158 76% 55% / 0.5); animation: particle-float 15s linear infinite; }
+.particle-2 { width: 6px; height: 6px; background: hsl(180 85% 55% / 0.35); animation: particle-float 20s linear infinite reverse; }
+.particle-3 { width: 3px; height: 3px; background: hsl(160 60% 50% / 0.4); animation: particle-float 25s linear infinite; }
 
 /* Glass */
 .glass {
@@ -151,7 +152,7 @@ html { scroll-behavior: smooth; }
 }
 
 .dark .glass {
-  background: hsl(240 10% 8% / 0.6);
+  background: hsl(0 0% 8% / 0.6);
   backdrop-filter: blur(16px) saturate(150%);
   border: 1px solid hsl(var(--border) / 0.6);
 }
@@ -165,10 +166,65 @@ html { scroll-behavior: smooth; }
 }
 
 .gradient-text-vivid {
-  background: linear-gradient(120deg, hsl(24 95% 55%) 0%, hsl(340 85% 55%) 50%, hsl(280 90% 60%) 100%);
+  background: linear-gradient(110deg, hsl(158 76% 55%) 0%, hsl(172 80% 50%) 50%, hsl(186 90% 55%) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Wider spectrum gradient — for hero moments that want more color */
+.gradient-text-aurora {
+  background: linear-gradient(
+    110deg,
+    hsl(158 76% 55%) 0%,
+    hsl(186 90% 55%) 35%,
+    hsl(262 85% 68%) 70%,
+    hsl(310 85% 64%) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Warm counterpart — amber → rose */
+.gradient-text-warm {
+  background: linear-gradient(110deg, hsl(35 95% 58%) 0%, hsl(0 85% 64%) 60%, hsl(330 85% 62%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated shimmering name — big footer signature. Thin stroke edge +
+   an aurora gradient that sweeps through the letters continuously. */
+.name-shine {
+  -webkit-text-stroke: 1px hsl(var(--foreground) / 0.12);
+  background: linear-gradient(
+    110deg,
+    hsl(158 76% 55%) 0%,
+    hsl(186 90% 55%) 25%,
+    hsl(262 85% 68%) 50%,
+    hsl(310 85% 64%) 75%,
+    hsl(158 76% 55%) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: name-shine 9s linear infinite;
+}
+@keyframes name-shine {
+  from { background-position: 0% 0; }
+  to { background-position: -300% 0; }
+}
+
+/* Outlined display type — hollow letters for oversized headlines/marquees */
+.text-stroke {
+  -webkit-text-stroke: 1.5px hsl(var(--foreground) / 0.35);
+  color: transparent;
+}
+.text-stroke-primary {
+  -webkit-text-stroke: 1.5px hsl(var(--primary) / 0.75);
+  color: transparent;
 }
 
 /* Tech icon hover */
@@ -288,6 +344,75 @@ html { scroll-behavior: smooth; }
   100% { background-position: 0 0, 300% 50%; }
 }
 
+/* Mouse-tracked glowing border — pair with <GlowCard> setting --mx/--my */
+.card-glow {
+  position: relative;
+}
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    280px circle at var(--mx, 50%) var(--my, 50%),
+    hsl(var(--primary) / 0.55),
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+/* Slowly rotating conic ring — sits behind the hero portrait */
+.orbit-ring {
+  position: absolute;
+  inset: -14px;
+  border-radius: 1.5rem;
+  background: conic-gradient(
+    from var(--ring-angle, 0deg),
+    hsl(var(--primary) / 0.5),
+    transparent 30%,
+    transparent 55%,
+    hsl(var(--accent) / 0.4),
+    transparent 85%,
+    hsl(var(--primary) / 0.5)
+  );
+  filter: blur(10px);
+  animation: ring-spin 9s linear infinite;
+  z-index: -1;
+}
+@property --ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes ring-spin {
+  to { --ring-angle: 360deg; }
+}
+
+/* Masked line reveal — wrap each line in .mask-line inside .mask-lines */
+.mask-lines .mask-line {
+  display: block;
+  overflow: hidden;
+}
+.mask-lines .mask-line > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: line-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--line-delay, 0s);
+}
+@keyframes line-rise {
+  to { transform: translateY(0); }
+}
+
 /* ─────────────────────────────────────────────────────────────
    Accessibility: honor the OS "reduce motion" setting.
    Neutralizes the decorative keyframe animations above and the
@@ -311,7 +436,13 @@ html { scroll-behavior: smooth; }
   .holographic,
   .particle,
   .marquee-track,
-  .shimmer-border {
+  .shimmer-border,
+  .orbit-ring,
+  .name-shine {
+    animation: none !important;
+  }
+  .mask-lines .mask-line > span {
+    transform: none;
     animation: none !important;
   }
 }

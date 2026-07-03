@@ -13,7 +13,7 @@ function parseValue(value: number | string) {
   if (typeof value === "number") {
     return { prefix: "", target: value, decimals: 0, grouping: false, suffix: "", numeric: true }
   }
-  const match = String(value).match(/^(.*?)([\d,]*\.?\d+)(.*)$/s)
+  const match = String(value).match(/^([\s\S]*?)([\d,]*\.?\d+)([\s\S]*)$/)
   if (!match) {
     return { prefix: value, target: 0, decimals: 0, grouping: false, suffix: "", numeric: false }
   }

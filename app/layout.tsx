@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { PageTransition } from "@/components/page-transition"
+import { ScrollProgress } from "@/components/scroll-progress"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${jetbrains.variable} ${instrument.variable} font-sans antialiased noise`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange={false}>
           <div className="min-h-screen bg-background text-foreground relative">
+            <ScrollProgress />
             <Navigation />
             <main>
               <PageTransition>{children}</PageTransition>

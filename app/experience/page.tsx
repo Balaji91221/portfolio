@@ -1,10 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { GlowCard } from "@/components/glow-card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { CountUp } from "@/components/count-up"
-import { TiltCard } from "@/components/tilt-card"
 import {
   Briefcase,
   Calendar,
@@ -14,15 +13,11 @@ import {
   GraduationCap,
   Users,
   Mail,
-  Building2,
-  Sparkles,
   Award,
   ArrowUpRight,
+  ChevronRight,
 } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
-import profilePic from "../../public/profile-pic.png"
-import { StaggerContainer, StaggerItem } from "@/components/stagger"
 import {
   SiPytorch,
   SiTensorflow,
@@ -58,6 +53,40 @@ import {
   SiJupyter,
 } from "react-icons/si"
 
+const ease = [0.22, 1, 0.36, 1] as const
+
+const fadeUp = (i = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.6, ease, delay: i * 0.06 },
+})
+
+// ─────────────── per-index literal color classes (Tailwind-safe) ───────────────
+const metricGradients = [
+  "gradient-text-vivid",
+  "gradient-text-aurora",
+  "gradient-text-warm",
+  "gradient-text-vivid",
+]
+const periodHues = ["text-emerald-400", "text-cyan-400", "text-violet-400", "text-amber-400"]
+const groupLabelHues = [
+  "text-emerald-400",
+  "text-violet-400",
+  "text-cyan-400",
+  "text-sky-400",
+  "text-amber-400",
+  "text-rose-400",
+]
+const groupChipHues = [
+  "hover:border-emerald-500/50 hover:text-emerald-400",
+  "hover:border-violet-500/50 hover:text-violet-400",
+  "hover:border-cyan-500/50 hover:text-cyan-400",
+  "hover:border-sky-500/50 hover:text-sky-400",
+  "hover:border-amber-500/50 hover:text-amber-400",
+  "hover:border-rose-500/50 hover:text-rose-400",
+]
+
 // ─────────────── headline impact stats (recruiter scan) ───────────────
 const impactMetrics = [
   { value: "3+", label: "Yrs building production systems" },
@@ -92,6 +121,7 @@ const experiences = [
     location: "Remote",
     period: "Aug 2024 — Nov 2024",
     type: "Full-time",
+    current: false,
     description:
       "Built responsive admin dashboards and real-time data integrations for enterprise clients.",
     achievements: [
@@ -108,6 +138,7 @@ const experiences = [
     location: "Hybrid",
     period: "Jan 2024 — Mar 2024",
     type: "Internship",
+    current: false,
     description:
       "Designed and optimized frontend web applications, enhancing user engagement and API performance.",
     achievements: [
@@ -124,6 +155,7 @@ const experiences = [
     location: "Remote",
     period: "Jan 2024 — Mar 2024",
     type: "Training & Project",
+    current: false,
     description:
       "4-month externship in Artificial Intelligence and Machine Learning, powered by Google Developers (Cert ID: Ext-AIML-2023-73316).",
     achievements: [
@@ -177,479 +209,427 @@ const guestLectures = [
 const techStack = [
   {
     title: "AI / ML",
-    primary: true,
     items: [
-      { name: "PyTorch", icon: SiPytorch, color: "#EE4C2C" },
-      { name: "TensorFlow", icon: SiTensorflow, color: "#FF6F00" },
-      { name: "Scikit-learn", icon: SiScikitlearn, color: "#F7931E" },
-      { name: "Pandas", icon: SiPandas, color: "#150458" },
-      { name: "NumPy", icon: SiNumpy, color: "#013243" },
-      { name: "Hugging Face", icon: SiHuggingface, color: "#FFD21E" },
-      { name: "Jupyter", icon: SiJupyter, color: "#F37626" },
+      { name: "PyTorch", icon: SiPytorch },
+      { name: "TensorFlow", icon: SiTensorflow },
+      { name: "Scikit-learn", icon: SiScikitlearn },
+      { name: "Pandas", icon: SiPandas },
+      { name: "NumPy", icon: SiNumpy },
+      { name: "Hugging Face", icon: SiHuggingface },
+      { name: "Jupyter", icon: SiJupyter },
     ],
   },
   {
     title: "LLMs · RAG · Agents",
-    primary: true,
     items: [
-      { name: "OpenAI", icon: SiOpenai, color: "#10A37F" },
-      { name: "Anthropic", icon: null, color: "#D97757" },
-      { name: "Gemini", icon: SiGooglegemini, color: "#4285F4" },
-      { name: "Ollama", icon: SiOllama, color: "#000000" },
-      { name: "LangChain", icon: null, color: "#1C3C3C" },
-      { name: "LangGraph", icon: null, color: "#1C3C3C" },
-      { name: "RAG", icon: null, color: "#6366F1" },
-      { name: "Vector DBs", icon: null, color: "#6366F1" },
-      { name: "Agents", icon: null, color: "#EC4899" },
-      { name: "Fine-tuning", icon: null, color: "#8B5CF6" },
+      { name: "OpenAI", icon: SiOpenai },
+      { name: "Anthropic", icon: null },
+      { name: "Gemini", icon: SiGooglegemini },
+      { name: "Ollama", icon: SiOllama },
+      { name: "LangChain", icon: null },
+      { name: "LangGraph", icon: null },
+      { name: "RAG", icon: null },
+      { name: "Vector DBs", icon: null },
+      { name: "Agents", icon: null },
+      { name: "Fine-tuning", icon: null },
     ],
   },
   {
     title: "Backend",
     items: [
-      { name: "Python", icon: SiPython, color: "#3776AB" },
-      { name: "FastAPI", icon: SiFastapi, color: "#009688" },
-      { name: "Flask", icon: SiFlask, color: "#000000" },
-      { name: "Django", icon: SiDjango, color: "#092E20" },
-      { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
-      { name: "Express", icon: SiExpress, color: "#000000" },
+      { name: "Python", icon: SiPython },
+      { name: "FastAPI", icon: SiFastapi },
+      { name: "Flask", icon: SiFlask },
+      { name: "Django", icon: SiDjango },
+      { name: "Node.js", icon: SiNodedotjs },
+      { name: "Express", icon: SiExpress },
     ],
   },
   {
     title: "Frontend",
     items: [
-      { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
-      { name: "React", icon: SiReact, color: "#61DAFB" },
-      { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-      { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
-      { name: "shadcn/ui", icon: SiShadcnui, color: "#000000" },
-      { name: "Framer Motion", icon: SiFramer, color: "#0055FF" },
+      { name: "Next.js", icon: SiNextdotjs },
+      { name: "React", icon: SiReact },
+      { name: "TypeScript", icon: SiTypescript },
+      { name: "Tailwind CSS", icon: SiTailwindcss },
+      { name: "shadcn/ui", icon: SiShadcnui },
+      { name: "Framer Motion", icon: SiFramer },
     ],
   },
   {
     title: "Data & Storage",
     items: [
-      { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
-      { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
-      { name: "MySQL", icon: SiMysql, color: "#4479A1" },
-      { name: "Redis", icon: SiRedis, color: "#DC382D" },
-      { name: "SQLite", icon: SiSqlite, color: "#003B57" },
+      { name: "PostgreSQL", icon: SiPostgresql },
+      { name: "MongoDB", icon: SiMongodb },
+      { name: "MySQL", icon: SiMysql },
+      { name: "Redis", icon: SiRedis },
+      { name: "SQLite", icon: SiSqlite },
     ],
   },
   {
     title: "DevOps & Tooling",
     items: [
-      { name: "Docker", icon: SiDocker, color: "#2496ED" },
-      { name: "Git", icon: SiGit, color: "#F05032" },
-      { name: "GitHub", icon: SiGithub, color: "#181717" },
-      { name: "Linux", icon: SiLinux, color: "#FCC624" },
-      { name: "Vercel", icon: SiVercel, color: "#000000" },
-      { name: "CI / CD", icon: null, color: "#6366F1" },
+      { name: "Docker", icon: SiDocker },
+      { name: "Git", icon: SiGit },
+      { name: "GitHub", icon: SiGithub },
+      { name: "Linux", icon: SiLinux },
+      { name: "Vercel", icon: SiVercel },
+      { name: "CI / CD", icon: null },
     ],
   },
 ]
 
 export default function ExperiencePage() {
   return (
-    <div className="min-h-screen pt-28 md:pt-32 pb-20 px-4 md:px-6 lg:px-8 relative">
-      <div className="absolute inset-0 grid-pattern opacity-40 pointer-events-none" />
-
-      <div className="container mx-auto max-w-7xl relative z-10">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="container mx-auto max-w-5xl px-4 md:px-6 lg:px-8">
         {/* ═══════════ HERO ═══════════ */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mb-16 md:mb-24"
-        >
-          <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
-            — Experience
+        <section className="relative pt-28 md:pt-32 pb-20 md:pb-24">
+          {/* Background layer */}
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div className="aurora opacity-50" />
+            <div className="grid-pattern absolute inset-0" />
           </div>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] max-w-4xl">
-              Built, shipped,{" "}
-              <span className="font-serif italic font-normal gradient-text-vivid">and invited to teach.</span>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
+          >
+            <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-5">
+              Experience
+            </p>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] max-w-3xl">
+              Built, shipped — and invited to{" "}
+              <span className="font-serif italic font-normal gradient-text-aurora">teach</span>.
             </h1>
-            <p className="text-base md:text-lg text-muted-foreground max-w-md">
+            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
               A compact view of the roles, outcomes, and invited talks that got me here.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Impact metrics strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            {impactMetrics.map((m) => (
-              <div key={m.label} className="bento p-5">
-                <div className="text-2xl md:text-3xl lg:text-4xl font-bold gradient-text-vivid leading-none">
-                  <CountUp value={m.value} />
+          {/* Impact metrics — hairline-divided row */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.12 }}
+            className="mt-14 grid grid-cols-2 md:grid-cols-4 border-t border-border/60"
+          >
+            {impactMetrics.map((m, i) => (
+              <div
+                key={m.label}
+                className={`pt-6 pr-6 ${i > 0 ? "md:border-l md:border-border/60 md:pl-6" : ""} ${
+                  i % 2 === 1 ? "border-l border-border/60 pl-6 md:pl-6" : ""
+                }`}
+              >
+                <div
+                  className={`text-2xl md:text-3xl font-bold tracking-tight leading-none ${
+                    metricGradients[i % metricGradients.length]
+                  }`}
+                >
+                  {m.value}
                 </div>
-                <div className="text-[11px] text-muted-foreground mt-2 leading-tight">{m.label}</div>
+                <div className="mt-3 text-[11px] font-mono uppercase tracking-wider text-muted-foreground leading-snug">
+                  {m.label}
+                </div>
               </div>
             ))}
-          </div>
-        </motion.section>
+          </motion.div>
+        </section>
 
-        {/* ═══════════ WORK EXPERIENCE ═══════════ */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-20 md:mb-28"
-        >
-          <div className="mb-10">
-            <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-3">
-              — Work
+        {/* ═══════════ WORK TIMELINE ═══════════ */}
+        <section className="py-24 md:py-32 border-t border-border/60">
+          <motion.div {...fadeUp()} className="mb-14 md:mb-16">
+            <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+              01 — Work
+            </p>
+            <div className="flex items-center gap-4 md:gap-5">
+              <span
+                aria-hidden
+                className="text-stroke select-none text-5xl md:text-7xl font-bold leading-none"
+              >
+                01
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+                Where I&apos;ve{" "}
+                <span className="font-serif italic font-normal">worked</span>
+              </h2>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-              Where I&apos;ve{" "}
-              <span className="font-serif italic font-normal text-muted-foreground">shipped.</span>
-            </h2>
-          </div>
+          </motion.div>
 
           <div className="relative">
-            {/* Vertical rail */}
-            <div className="absolute left-5 md:left-7 top-3 bottom-3 w-px bg-border/60" />
+            {/* Timeline rail */}
+            <div className="absolute left-[7px] top-1 bottom-1 w-px bg-gradient-to-b from-emerald-400 via-cyan-400/50 to-transparent" />
 
-            <div className="space-y-6">
-              {experiences.map((exp, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                  viewport={{ once: true }}
-                  className="relative pl-14 md:pl-20"
+            <div className="space-y-10 md:space-y-12">
+              {experiences.map((exp, index) => (
+                <motion.article
+                  key={exp.company + exp.period}
+                  {...fadeUp(index)}
+                  className="relative"
                 >
-                  {/* Node */}
-                  <div
-                    className={`absolute left-0 top-4 w-11 h-11 md:w-14 md:h-14 rounded-2xl flex items-center justify-center border ${
+                  {/* Dot marker */}
+                  <span
+                    className={`absolute left-0 top-1.5 block w-[15px] h-[15px] rounded-full border-2 ${
                       exp.current
-                        ? "bg-primary border-primary text-primary-foreground pulse-ring"
-                        : "bg-background border-border text-primary"
+                        ? "bg-primary border-primary pulse-ring"
+                        : "bg-background border-border"
                     }`}
-                  >
-                    <Building2 className="w-5 h-5 md:w-6 md:h-6" />
+                  />
+
+                  {/* Meta row */}
+                  <div className="pl-9 md:pl-12 mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <span
+                      className={`inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider ${
+                        periodHues[index % periodHues.length]
+                      }`}
+                    >
+                      <Calendar className="w-3.5 h-3.5" />
+                      {exp.period}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
+                      <MapPin className="w-3 h-3" /> {exp.location}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
+                      <Briefcase className="w-3 h-3" /> {exp.type}
+                    </span>
+                    {exp.current && (
+                      <Badge
+                        variant="outline"
+                        className="text-[10px] font-mono uppercase tracking-wider rounded-full border-primary/40 text-primary"
+                      >
+                        Current
+                      </Badge>
+                    )}
                   </div>
 
-                  <div className="bento p-6 md:p-8 group">
-                    {/* Header row */}
-                    <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-xl md:text-2xl font-bold">{exp.title}</h3>
-                          {exp.current && (
-                            <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-mono uppercase tracking-wider">
-                              Current
-                            </Badge>
-                          )}
-                        </div>
-                        <p className="text-sm md:text-base text-primary font-medium">
-                          {exp.company}
+                  {/* Role card */}
+                  <div className="pl-9 md:pl-12">
+                    <GlowCard className="card-glow rounded-2xl border border-border/60 bg-card p-5 md:p-7 transition-colors duration-300 hover:border-primary/40">
+                      <h3 className="text-lg md:text-xl font-bold tracking-tight leading-snug">
+                        {exp.title}
+                      </h3>
+                      <p className="mt-0.5 text-sm font-medium text-primary">{exp.company}</p>
+
+                      <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                        {exp.description}
+                      </p>
+
+                      <div className="mt-5">
+                        <p className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-2.5">
+                          <TrendingUp className="w-3 h-3" /> Impact
                         </p>
+                        <ul className="space-y-1.5">
+                          {exp.achievements.map((a) => (
+                            <li
+                              key={a}
+                              className="flex items-start gap-2 text-sm text-foreground/80 leading-relaxed"
+                            >
+                              <ChevronRight className="w-3.5 h-3.5 mt-1 shrink-0 text-primary" />
+                              <span>{a}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-muted-foreground bg-muted/50 px-2.5 py-1 rounded-full">
-                          <Calendar className="w-3 h-3" /> {exp.period}
-                        </span>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-muted-foreground bg-muted/50 px-2.5 py-1 rounded-full">
-                          <MapPin className="w-3 h-3" /> {exp.location}
-                        </span>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-muted-foreground bg-muted/50 px-2.5 py-1 rounded-full">
-                          {exp.type}
-                        </span>
-                      </div>
-                    </div>
 
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-5">
-                      {exp.description}
-                    </p>
-
-                    {/* Achievements */}
-                    <div className="mb-5">
-                      <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-1.5">
-                        <TrendingUp className="w-3 h-3" />
-                        Impact
-                      </div>
-                      <ul className="space-y-2">
-                        {exp.achievements.map((a, idx) => (
-                          <li key={idx} className="flex items-start gap-2.5 text-sm text-foreground/80">
-                            <span className="text-primary mt-1 text-xs">▸</span>
-                            <span className="leading-relaxed">{a}</span>
-                          </li>
+                      <div className="mt-5 pt-4 border-t border-border/60 flex flex-wrap gap-1.5">
+                        {exp.stack.map((s) => (
+                          <Badge
+                            key={s}
+                            variant="outline"
+                            className="text-[10px] font-mono uppercase tracking-wider rounded-full border-border/60 text-muted-foreground"
+                          >
+                            {s}
+                          </Badge>
                         ))}
-                      </ul>
-                    </div>
-
-                    {/* Stack */}
-                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border/40">
-                      {exp.stack.map((s) => (
-                        <span
-                          key={s}
-                          className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-primary/5 text-primary border border-primary/20"
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
+                      </div>
+                    </GlowCard>
                   </div>
-                </motion.div>
+                </motion.article>
               ))}
             </div>
           </div>
-        </motion.section>
+        </section>
 
         {/* ═══════════ GUEST LECTURES ═══════════ */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-20 md:mb-28"
-        >
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+        <section className="py-24 md:py-32 border-t border-border/60">
+          <motion.div
+            {...fadeUp()}
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-14 md:mb-16"
+          >
             <div>
-              <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-3">
-                — Speaking & Mentorship
+              <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+                02 — Speaking
+              </p>
+              <div className="flex items-center gap-4 md:gap-5">
+                <span
+                  aria-hidden
+                  className="text-stroke select-none text-5xl md:text-7xl font-bold leading-none"
+                >
+                  02
+                </span>
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+                  Guest <span className="font-serif italic font-normal">lectures</span>
+                </h2>
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-                Guest{" "}
-                <span className="font-serif italic font-normal text-muted-foreground">lectures.</span>
-              </h2>
             </div>
             <p className="text-sm md:text-base text-muted-foreground max-w-md">
               My first two invited talks — both at my alma mater, VIT-AP University.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-5 md:gap-6 items-stretch">
             {guestLectures.map((lecture, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="h-full"
+              <motion.article
+                key={lecture.title}
+                {...fadeUp(index)}
+                className="group h-full"
               >
-                <TiltCard
-                  max={6}
-                  className="bento spotlight p-0 group flex flex-col overflow-hidden h-full hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-300"
-                >
+                <GlowCard className="card-glow flex h-full flex-col rounded-2xl border border-border/60 bg-card p-5 md:p-6 transition-colors duration-300 hover:border-primary/40">
                 {/* Poster */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center">
+                <div className="relative aspect-[4/5] overflow-hidden group rounded-xl border border-border/60 bg-muted/30">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={lecture.poster}
                     alt={lecture.title}
-                    className="max-w-full max-h-full object-contain group-hover:scale-[1.02] transition-transform duration-700"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
 
-                {/* Header chip */}
-                <div className="p-6 md:p-8 pb-0 flex items-start gap-4">
-                  <div className="relative flex-shrink-0">
-                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl overflow-hidden ring-2 ring-primary/30 group-hover:ring-primary/60 transition-all">
-                      <Image
-                        src={profilePic}
-                        alt="Kelavath Balaji Naik"
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-xl bg-primary flex items-center justify-center ring-4 ring-background">
-                      <lecture.icon className="w-3.5 h-3.5 text-primary-foreground" />
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <Badge
-                      variant="outline"
-                      className="text-[10px] font-mono uppercase tracking-wider rounded-full mb-1.5 max-w-full truncate"
-                    >
-                      {lecture.event}
-                    </Badge>
-                    <div className="text-[11px] font-mono text-muted-foreground truncate">
-                      {lecture.role}
-                    </div>
-                  </div>
-                </div>
-
                 {/* Body */}
-                <div className="p-6 md:p-8 pt-5 flex-1 flex flex-col">
-                  <h3 className="text-xl md:text-2xl font-bold mb-2 leading-tight group-hover:text-primary transition-colors">
+                <div className="mt-6 flex flex-1 flex-col">
+                  <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-primary mb-3">
+                    <lecture.icon className="w-3.5 h-3.5" />
+                    <span className="truncate">{lecture.event}</span>
+                  </div>
+
+                  <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight">
                     {lecture.title}
                   </h3>
-                  <p className="text-sm text-primary font-medium mb-4 leading-snug">
+                  <p className="mt-1.5 text-sm text-muted-foreground leading-snug">
                     {lecture.host}
                   </p>
+                  <p className="mt-1 text-xs font-mono text-muted-foreground">{lecture.role}</p>
 
-                  <div className="flex flex-wrap gap-1.5 mb-4 text-[11px] font-mono text-muted-foreground">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/50">
+                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] font-mono uppercase tracking-wider text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5">
                       <Calendar className="w-3 h-3" /> {lecture.date}
                     </span>
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/50">
+                    <span className="inline-flex items-center gap-1.5">
                       <MapPin className="w-3 h-3" /> {lecture.venue}
                     </span>
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/50">
+                    <span className="inline-flex items-center gap-1.5">
                       <Users className="w-3 h-3" /> {lecture.audience}
                     </span>
                   </div>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                  <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
                     {lecture.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-1.5 mb-5">
+                  <div className="mt-4 flex flex-wrap gap-1.5">
                     {lecture.topics.map((t) => (
-                      <span
+                      <Badge
                         key={t}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-primary/5 text-primary border border-primary/20"
+                        variant="outline"
+                        className="text-[10px] font-mono uppercase tracking-wider rounded-full border-cyan-500/30 text-cyan-400"
                       >
                         {t}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
 
-                  {lecture.acknowledgments && (
-                    <div className="mt-auto pt-4 border-t border-border/50">
-                      <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-1.5">
-                        <Award className="w-3 h-3" />
-                        Grateful to
-                      </div>
+                  <div className="mt-auto pt-5">
+                    <div className="border-t border-border/60 pt-4">
+                      <p className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-2">
+                        <Award className="w-3 h-3" /> Grateful to
+                      </p>
                       <ul className="space-y-1">
                         {lecture.acknowledgments.map((ack) => (
-                          <li key={ack} className="text-xs text-muted-foreground flex items-start gap-2">
-                            <span className="text-primary mt-0.5">✦</span>
+                          <li
+                            key={ack}
+                            className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed"
+                          >
+                            <ChevronRight className="w-3 h-3 mt-0.5 shrink-0 text-primary" />
                             <span>{ack}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-                  )}
+                  </div>
                 </div>
-                </TiltCard>
-              </motion.div>
+                </GlowCard>
+              </motion.article>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ═══════════ TECH STACK ═══════════ */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-20 md:mb-28"
-        >
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-            <div>
-              <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-3">
-                — Technical Skills
-              </div>
+        <section className="py-24 md:py-32 border-t border-border/60">
+          <motion.div {...fadeUp()} className="mb-14 md:mb-16">
+            <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+              03 — Technical Skills
+            </p>
+            <div className="flex items-center gap-4 md:gap-5">
+              <span
+                aria-hidden
+                className="text-stroke select-none text-5xl md:text-7xl font-bold leading-none"
+              >
+                03
+              </span>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-                Tools I ship{" "}
-                <span className="font-serif italic font-normal text-muted-foreground">with.</span>
+                Tools I <span className="font-serif italic font-normal">ship</span> with
               </h2>
             </div>
-            <div className="flex items-center gap-5 text-[11px] font-mono text-muted-foreground">
-              <span className="inline-flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                Primary focus
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50" />
-                Supporting stack
-              </span>
-            </div>
-          </div>
+          </motion.div>
 
-          <div className="space-y-8 md:space-y-10">
-            {techStack.map((g, gi) => (
-              <motion.div
-                key={g.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: gi * 0.05 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className={`w-1.5 h-6 rounded-full ${g.primary ? "bg-primary" : "bg-muted-foreground/40"}`}
-                  />
-                  <h3 className="text-base md:text-lg font-semibold tracking-tight">{g.title}</h3>
-                  {g.primary && (
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded-full border border-primary/20">
-                      Core
-                    </span>
-                  )}
-                  <span className="ml-auto text-[11px] font-mono text-muted-foreground">
-                    {g.items.length.toString().padStart(2, "0")} tools
-                  </span>
-                </div>
-
-                <StaggerContainer className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2 md:gap-3">
-                  {g.items.map((s) => {
-                    const Icon = s.icon
+          <div className="space-y-10">
+            {techStack.map((group, index) => (
+              <motion.div key={group.title} {...fadeUp(index)}>
+                <p
+                  className={`text-xs font-mono uppercase tracking-[0.25em] mb-4 ${
+                    groupLabelHues[index % groupLabelHues.length]
+                  }`}
+                >
+                  {group.title}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((tool) => {
+                    const Icon = tool.icon
                     return (
-                      <StaggerItem key={s.name}>
-                        <div className="group relative aspect-[5/4] rounded-xl bg-card/40 border border-border/50 hover:border-primary/50 hover:bg-card/80 hover:-translate-y-0.5 hover:shadow-sm transition-all duration-[250ms] ease-out flex flex-col items-center justify-center p-3 gap-2 cursor-default overflow-hidden">
-                          <div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-[0.05] transition-opacity duration-300"
-                            style={{ backgroundColor: s.color }}
-                          />
-                          {Icon ? (
-                            <Icon
-                              className="w-6 h-6 md:w-7 md:h-7 shrink-0 group-hover:scale-110 transition-transform duration-300 ease-out"
-                              style={{ color: s.color }}
-                            />
-                          ) : (
-                            <div
-                              className="w-6 h-6 md:w-7 md:h-7 rounded-md flex items-center justify-center text-[11px] font-bold shrink-0 group-hover:scale-110 transition-transform duration-300 ease-out"
-                              style={{
-                                backgroundColor: `${s.color}18`,
-                                color: s.color,
-                              }}
-                            >
-                              {s.name
-                                .split(/[\s-]/)
-                                .slice(0, 2)
-                                .map((w) => w[0])
-                                .join("")
-                                .toUpperCase()}
-                            </div>
-                          )}
-                          <span className="text-[11px] font-medium text-center leading-tight text-foreground/85 line-clamp-1">
-                            {s.name}
-                          </span>
-                        </div>
-                      </StaggerItem>
+                      <span
+                        key={tool.name}
+                        className={`inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 py-1 text-xs font-mono text-muted-foreground transition-colors cursor-default ${
+                          groupChipHues[index % groupChipHues.length]
+                        }`}
+                      >
+                        {Icon && <Icon className="h-3.5 w-3.5 shrink-0" />}
+                        {tool.name}
+                      </span>
                     )
                   })}
-                </StaggerContainer>
+                </div>
               </motion.div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ═══════════ CTA ═══════════ */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="bento p-10 md:p-14 text-center relative overflow-hidden"
-        >
-          <div className="absolute inset-0 opacity-40">
-            <div className="aurora" />
+        <section className="relative py-24 md:py-32 border-t border-border/60">
+          {/* Background layer */}
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div className="aurora opacity-50" />
           </div>
-          <div className="relative">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
-              Ready to{" "}
-              <span className="font-serif italic font-normal gradient-text-vivid">work together?</span>
+          <motion.div {...fadeUp()} className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+              04 — Contact
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4">
+              Ready to work{" "}
+              <span className="font-serif italic font-normal gradient-text-aurora">together</span>?
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              I reply within 24 hours. Whether it&apos;s a full-time role, contract, or quick consult —
-              send a note with what you&apos;re building.
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              I reply within 24 hours. Whether it&apos;s a full-time role, contract, or quick
+              consult — send a note with what you&apos;re building.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
@@ -662,12 +642,17 @@ export default function ExperiencePage() {
                   <ArrowUpRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-border/60">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full border-border/60"
+              >
                 <Link href="/projects">See the work</Link>
               </Button>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </section>
       </div>
     </div>
   )

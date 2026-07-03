@@ -16,34 +16,48 @@ import {
   Send,
   ArrowUpRight,
   Clock,
+  MapPin,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { NeuralCanvas } from "@/components/neural-canvas"
+import { GlowCard } from "@/components/glow-card"
 
-const channels = [
+const EASE = [0.22, 1, 0.36, 1] as const
+
+const fadeUp = (i = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: EASE, delay: i * 0.06 },
+})
+
+const contactRows = [
   {
     icon: Mail,
     label: "Email",
     value: "kbalaji15j@gmail.com",
-    sub: "Best for project briefs and detailed messages",
     href: "mailto:kbalaji15j@gmail.com",
-    cta: "Send email",
+    chip: "bg-emerald-500/10 text-emerald-400",
   },
   {
     icon: Linkedin,
     label: "LinkedIn",
     value: "/in/kelavathbalajinaik",
-    sub: "Quick intros and DMs",
     href: "https://www.linkedin.com/in/kelavathbalajinaik/",
-    cta: "Message",
     external: true,
+    chip: "bg-cyan-500/10 text-cyan-400",
   },
   {
     icon: Phone,
     label: "Phone",
     value: "+91 93988 06613",
-    sub: "For scheduled calls",
     href: "tel:+919398806613",
-    cta: "Call",
+    chip: "bg-violet-500/10 text-violet-400",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "India — remote friendly",
+    chip: "bg-amber-500/10 text-amber-400",
   },
 ]
 
@@ -52,6 +66,11 @@ const socialLinks = [
   { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/kelavathbalajinaik/" },
   { icon: Twitter, label: "Twitter / X", href: "https://x.com/KkBalaji91221" },
 ]
+
+const inputClass =
+  "h-11 rounded-xl bg-background/50 border-border/60 focus-visible:ring-primary"
+const labelClass =
+  "text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", company: "", subject: "", message: "" })
@@ -75,227 +94,210 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen pt-28 md:pt-32 pb-20 px-4 md:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute inset-0 grid-pattern opacity-50 pointer-events-none" />
-      <div className="aurora opacity-60" />
+    <div className="min-h-screen pt-28 md:pt-32 pb-24 px-4 md:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background — restrained */}
+      <div className="absolute inset-0 grid-pattern opacity-40 pointer-events-none" />
+      <div className="aurora opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none">
+        <NeuralCanvas className="absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_80%)]" />
+      </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mb-12 md:mb-16"
-        >
-          <div className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
-            — Let's talk
-          </div>
+        {/* ============ HERO ============ */}
+        <motion.header {...fadeUp(0)} className="mb-14 md:mb-20 pb-10 md:pb-12 border-b border-border/60">
+          <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-5">
+            Contact
+          </p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6 max-w-4xl">
-            Let&apos;s build{" "}
-            <span className="font-serif italic font-normal gradient-text-vivid">
-              something together
-            </span>
-            .
+            Let&apos;s build something{" "}
+            <span className="font-serif italic font-normal gradient-text-aurora">worth</span> shipping.
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
             I build production LLM systems, agentic AI, and the apps around them. If you&apos;d like
             to chat about a project or collaboration, the fastest way to reach me is below.
           </p>
-        </motion.div>
+        </motion.header>
 
-        <div className="grid lg:grid-cols-5 gap-5">
-          {/* Left — contact channels + quick facts */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="lg:col-span-2 flex flex-col gap-5"
-          >
-            {/* Primary: Email CTA */}
-            <a
-              href={channels[0].href}
-              className="bento spotlight group p-8 block relative overflow-hidden"
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center">
-                  <Mail className="h-5 w-5" />
-                </div>
-                <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-              </div>
-              <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1.5">
-                Fastest way
-              </div>
-              <div className="text-2xl md:text-3xl font-semibold mb-1 break-all group-hover:text-primary transition-colors">
-                kbalaji15j@gmail.com
-              </div>
-              <div className="text-sm text-muted-foreground">
-                Best for collaborations, project briefs, and longer messages.
-              </div>
-            </a>
-
-            {/* Secondary channels */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {channels.slice(1).map((c) => (
-                <a
-                  key={c.label}
-                  href={c.href}
-                  {...(c.external && { target: "_blank", rel: "noopener noreferrer" })}
-                  className="bento p-5 group"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <c.icon className="h-4 w-4 text-primary" />
+        <div className="grid lg:grid-cols-5 gap-6 lg:gap-10 items-start">
+          {/* ============ LEFT — contact rows ============ */}
+          <motion.div {...fadeUp(1)} className="lg:col-span-2">
+            <GlowCard className="card-glow rounded-2xl border border-border/60 bg-card overflow-hidden transition-shadow duration-300 hover:shadow-sm">
+              <div className="divide-y divide-border/60">
+                {contactRows.map((row) => {
+                  const inner = (
+                    <>
+                      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${row.chip}`}>
+                        <row.icon className="h-4 w-4" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-0.5">
+                          {row.label}
+                        </span>
+                        <span className="block text-sm font-medium truncate">
+                          {row.value}
+                        </span>
+                      </span>
+                      {row.href && (
+                        <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary transition-all duration-300" />
+                      )}
+                    </>
+                  )
+                  const rowClass = "group flex items-center gap-4 px-5 py-5"
+                  return row.href ? (
+                    <a
+                      key={row.label}
+                      href={row.href}
+                      {...(row.external && { target: "_blank", rel: "noopener noreferrer" })}
+                      className={`${rowClass} transition-colors hover:bg-muted/40`}
+                    >
+                      {inner}
+                    </a>
+                  ) : (
+                    <div key={row.label} className={rowClass}>
+                      {inner}
                     </div>
-                    <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                  </div>
-                  <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1">
-                    {c.label}
-                  </div>
-                  <div className="text-sm font-semibold truncate">{c.value}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">{c.sub}</div>
-                </a>
-              ))}
-            </div>
+                  )
+                })}
 
-            {/* Socials */}
-            <div className="flex gap-2">
-              {socialLinks.map((s) => (
-                <Button key={s.label} variant="outline" size="icon" className="rounded-full flex-1" asChild>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
-                    <s.icon className="h-4 w-4" />
-                  </a>
-                </Button>
-              ))}
-            </div>
+                {/* Socials row */}
+                <div className="px-5 py-5">
+                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-3">
+                    Elsewhere
+                  </p>
+                  <div className="flex gap-2">
+                    {socialLinks.map((s) => (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={s.label}
+                        className="flex h-9 flex-1 items-center justify-center rounded-lg border border-border/60 text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-colors"
+                      >
+                        <s.icon className="h-4 w-4" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </GlowCard>
           </motion.div>
 
-          {/* Right — form */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="lg:col-span-3"
-          >
-            <div className="bento p-6 md:p-10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="relative">
-                <div className="flex items-center gap-2 mb-2">
-                  <Send className="h-4 w-4 text-primary" />
-                  <div className="text-xs font-mono uppercase tracking-widest text-primary">
-                    Send a message
-                  </div>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-2">Tell me about it</h2>
-                <p className="text-sm text-muted-foreground mb-8">
-                  The more context you share, the faster I can get back with something useful.
-                </p>
+          {/* ============ RIGHT — form ============ */}
+          <motion.div {...fadeUp(2)} className="lg:col-span-3">
+            <GlowCard className="card-glow rounded-2xl border border-border/60 bg-card p-6 md:p-10 transition-shadow duration-300 hover:shadow-sm">
+              <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-3">
+                Send a message
+              </p>
+              <p className="text-sm text-muted-foreground mb-8">
+                The more context you share, the faster I can get back with something useful.
+              </p>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <Label htmlFor="name" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                        Name
-                      </Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        placeholder="Jane Doe"
-                        required
-                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label htmlFor="email" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                        Email
-                      </Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="jane@company.com"
-                        required
-                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <Label htmlFor="company" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                        Company <span className="text-muted-foreground/60 normal-case">(optional)</span>
-                      </Label>
-                      <Input
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleInputChange}
-                        placeholder="Acme AI"
-                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label htmlFor="subject" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                        Subject
-                      </Label>
-                      <Input
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        placeholder="Project idea or collaboration"
-                        required
-                        className="h-11 rounded-xl bg-background/50 border-border/60 focus:border-primary"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label htmlFor="message" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                      Message
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className={labelClass}>
+                      Name
                     </Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="What you're building, the stack, timeline, and how I can help…"
+                      placeholder="Jane Doe"
                       required
-                      rows={6}
-                      className="rounded-xl bg-background/50 border-border/60 focus:border-primary resize-none"
+                      className={inputClass}
                     />
                   </div>
-
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-                    <Button
-                      type="submit"
-                      size="lg"
-                      disabled={isSubmitting}
-                      className="rounded-full bg-foreground text-background hover:bg-foreground/90 group flex-1 sm:flex-none sm:px-8"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
-                          Sending…
-                        </>
-                      ) : (
-                        <>
-                          Send message
-                          <Send className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                        </>
-                      )}
-                    </Button>
-                    <div className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5" />
-                      Reply within 24 hours
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className={labelClass}>
+                      Email
+                    </Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="jane@company.com"
+                      required
+                      className={inputClass}
+                    />
                   </div>
-                </form>
-              </div>
-            </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="company" className={labelClass}>
+                      Company <span className="text-muted-foreground/60 normal-case tracking-normal">(optional)</span>
+                    </Label>
+                    <Input
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
+                      placeholder="Acme AI"
+                      className={inputClass}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="subject" className={labelClass}>
+                      Subject
+                    </Label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="Project idea or collaboration"
+                      required
+                      className={inputClass}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message" className={labelClass}>
+                    Message
+                  </Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="What you're building, the stack, timeline, and how I can help…"
+                    required
+                    rows={6}
+                    className="rounded-xl bg-background/50 border-border/60 focus-visible:ring-primary resize-none"
+                  />
+                </div>
+
+                <div className="space-y-3 pt-2">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 group shadow-lg shadow-primary/25"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        Send message
+                        <Send className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      </>
+                    )}
+                  </Button>
+                  <p className="flex items-center justify-center gap-1.5 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                    <Clock className="h-3.5 w-3.5" />
+                    Reply within 24 hours
+                  </p>
+                </div>
+              </form>
+            </GlowCard>
           </motion.div>
         </div>
       </div>
