@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { GlowCard } from "@/components/glow-card"
 import { RevealText } from "@/components/reveal"
 import { TimelineRail } from "@/components/timeline-rail"
+import { Skills } from "@/components/skills"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,46 +15,10 @@ import {
   Mic,
   GraduationCap,
   Users,
-  Mail,
   Award,
-  ArrowUpRight,
   ChevronRight,
 } from "lucide-react"
 import Link from "next/link"
-import {
-  SiPytorch,
-  SiTensorflow,
-  SiScikitlearn,
-  SiPandas,
-  SiNumpy,
-  SiHuggingface,
-  SiOpenai,
-  SiGooglegemini,
-  SiOllama,
-  SiPython,
-  SiFastapi,
-  SiFlask,
-  SiDjango,
-  SiNodedotjs,
-  SiExpress,
-  SiNextdotjs,
-  SiReact,
-  SiTypescript,
-  SiTailwindcss,
-  SiShadcnui,
-  SiFramer,
-  SiPostgresql,
-  SiMongodb,
-  SiMysql,
-  SiRedis,
-  SiSqlite,
-  SiDocker,
-  SiGit,
-  SiGithub,
-  SiLinux,
-  SiVercel,
-  SiJupyter,
-} from "react-icons/si"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -72,50 +37,33 @@ const metricGradients = [
   "gradient-text-vivid",
 ]
 const periodHues = ["text-primary"]
-const groupLabelHues = [
-  "text-emerald-400",
-  "text-violet-400",
-  "text-cyan-400",
-  "text-sky-400",
-  "text-amber-400",
-  "text-rose-400",
-]
-const groupChipHues = [
-  "hover:border-emerald-500/50 hover:text-emerald-400",
-  "hover:border-violet-500/50 hover:text-violet-400",
-  "hover:border-cyan-500/50 hover:text-cyan-400",
-  "hover:border-sky-500/50 hover:text-sky-400",
-  "hover:border-amber-500/50 hover:text-amber-400",
-  "hover:border-rose-500/50 hover:text-rose-400",
-]
 
 // ─────────────── headline impact stats (recruiter scan) ───────────────
 const impactMetrics = [
-  { value: "3+", label: "Yrs building production systems" },
-  { value: "25+", label: "Projects shipped" },
+  { value: "1+", label: "Years in production AI" },
+  { value: "20+", label: "Open-source projects" },
   { value: "2", label: "Invited guest lectures" },
-  { value: "AIR 19,299", label: "GATE 2025 · DA" },
+  { value: "1", label: "IEEE publication" },
 ]
 
 // ─────────────── experience ───────────────
 const experiences = [
   {
-    title: "AI / ML Engineer",
-    company: "Samco Securities Pvt Ltd",
-    location: "Onsite",
+    title: "Applied AI Engineer",
+    company: "Samco Securities Limited",
+    location: "Chennai (Remote)",
     period: "Jul 2025 — Present",
     type: "Full-time",
     current: true,
     description:
-      "Leading production ML initiatives across trading analytics, risk, and recommendation systems. Shipping internal LLM-driven tooling alongside classical ML pipelines.",
+      "Building and operating production AI systems for a fintech brokerage: voice AI, retrieval-augmented generation, LLM infrastructure, MCP tooling and multi-agent automation.",
     achievements: [
-      "Designed and deployed production ML pipelines for trading analytics and risk scoring",
-      "Implemented model monitoring + CI/CD for ML — improved reliability and deployment speed",
-      "Translated product requirements into ML solutions alongside product + engineering",
-      "Mentored interns and onboarded engineers on ML best practices",
-      "Built internal LLM platform: multi-provider gateway, cost controls, circuit breakers",
+      "Voice AI: real-time speech-to-text → LLM → text-to-speech agents and speech-to-speech workers with selectable providers",
+      "RAG: multi-tenant document Q&A with hybrid search, reranking and answer verification",
+      "LLM infrastructure: OpenAI-compatible gateway across 10+ providers with cost control, health checks and fallback",
+      "MCP tooling: turning GraphQL, OpenAPI and SQL schemas into agent tools and publishing them as secured servers",
     ],
-    stack: ["Python", "PyTorch", "FastAPI", "LLMs", "Docker", "PostgreSQL"],
+    stack: ["Python", "FastAPI", "LiveKit", "Qdrant", "LiteLLM", "MCP", "Docker", "Kubernetes"],
   },
   {
     title: "Full-Stack Developer",
@@ -207,79 +155,6 @@ const guestLectures = [
   },
 ]
 
-// ─────────────── tech stack ───────────────
-const techStack = [
-  {
-    title: "AI / ML",
-    items: [
-      { name: "PyTorch", icon: SiPytorch },
-      { name: "TensorFlow", icon: SiTensorflow },
-      { name: "Scikit-learn", icon: SiScikitlearn },
-      { name: "Pandas", icon: SiPandas },
-      { name: "NumPy", icon: SiNumpy },
-      { name: "Hugging Face", icon: SiHuggingface },
-      { name: "Jupyter", icon: SiJupyter },
-    ],
-  },
-  {
-    title: "LLMs · RAG · Agents",
-    items: [
-      { name: "OpenAI", icon: SiOpenai },
-      { name: "Anthropic", icon: null },
-      { name: "Gemini", icon: SiGooglegemini },
-      { name: "Ollama", icon: SiOllama },
-      { name: "LangChain", icon: null },
-      { name: "LangGraph", icon: null },
-      { name: "RAG", icon: null },
-      { name: "Vector DBs", icon: null },
-      { name: "Agents", icon: null },
-      { name: "Fine-tuning", icon: null },
-    ],
-  },
-  {
-    title: "Backend",
-    items: [
-      { name: "Python", icon: SiPython },
-      { name: "FastAPI", icon: SiFastapi },
-      { name: "Flask", icon: SiFlask },
-      { name: "Django", icon: SiDjango },
-      { name: "Node.js", icon: SiNodedotjs },
-      { name: "Express", icon: SiExpress },
-    ],
-  },
-  {
-    title: "Frontend",
-    items: [
-      { name: "Next.js", icon: SiNextdotjs },
-      { name: "React", icon: SiReact },
-      { name: "TypeScript", icon: SiTypescript },
-      { name: "Tailwind CSS", icon: SiTailwindcss },
-      { name: "shadcn/ui", icon: SiShadcnui },
-      { name: "Framer Motion", icon: SiFramer },
-    ],
-  },
-  {
-    title: "Data & Storage",
-    items: [
-      { name: "PostgreSQL", icon: SiPostgresql },
-      { name: "MongoDB", icon: SiMongodb },
-      { name: "MySQL", icon: SiMysql },
-      { name: "Redis", icon: SiRedis },
-      { name: "SQLite", icon: SiSqlite },
-    ],
-  },
-  {
-    title: "DevOps & Tooling",
-    items: [
-      { name: "Docker", icon: SiDocker },
-      { name: "Git", icon: SiGit },
-      { name: "GitHub", icon: SiGithub },
-      { name: "Linux", icon: SiLinux },
-      { name: "Vercel", icon: SiVercel },
-      { name: "CI / CD", icon: null },
-    ],
-  },
-]
 
 export default function ExperiencePage() {
   return (
@@ -567,96 +442,7 @@ export default function ExperiencePage() {
           </div>
         </section>
 
-        {/* ═══════════ TECH STACK ═══════════ */}
-        <section className="py-24 md:py-32 border-t border-border/60">
-          <motion.div {...fadeUp()} className="mb-14 md:mb-16">
-            <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
-              03 — Technical Skills
-            </p>
-            <div className="flex items-center gap-4 md:gap-5">
-              <span
-                aria-hidden
-                className="text-stroke select-none text-5xl md:text-7xl font-bold leading-none"
-              >
-                03
-              </span>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-                Tools I <span className="font-serif italic font-normal">ship</span> with
-              </h2>
-            </div>
-          </motion.div>
-
-          <div className="space-y-10">
-            {techStack.map((group, index) => (
-              <motion.div key={group.title} {...fadeUp(index)}>
-                <p
-                  className={`text-xs font-mono uppercase tracking-[0.25em] mb-4 ${
-                    groupLabelHues[index % groupLabelHues.length]
-                  }`}
-                >
-                  {group.title}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((tool) => {
-                    const Icon = tool.icon
-                    return (
-                      <span
-                        key={tool.name}
-                        className={`inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 py-1 text-xs font-mono text-muted-foreground transition-colors cursor-default ${
-                          groupChipHues[index % groupChipHues.length]
-                        }`}
-                      >
-                        {Icon && <Icon className="h-3.5 w-3.5 shrink-0" />}
-                        {tool.name}
-                      </span>
-                    )
-                  })}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* ═══════════ CTA ═══════════ */}
-        <section className="relative py-24 md:py-32 border-t border-border/60">
-          {/* Background layer */}
-          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-            <div className="aurora opacity-50" />
-          </div>
-          <motion.div {...fadeUp()} className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
-              04 — Contact
-            </p>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4">
-              Ready to work{" "}
-              <span className="font-serif italic font-normal gradient-text-aurora">together</span>?
-            </h2>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
-              I reply within 24 hours. Whether it&apos;s a full-time role, contract, or quick
-              consult — send a note with what you&apos;re building.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full bg-foreground text-background hover:bg-foreground/90"
-              >
-                <Link href="/contact">
-                  <Mail className="mr-2 h-4 w-4" /> Hire me
-                  <ArrowUpRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-full border-border/60"
-              >
-                <Link href="/projects">See the work</Link>
-              </Button>
-            </div>
-          </motion.div>
-        </section>
+        <Skills index="03" eyebrow="Technical skills" title="What I work with" />
       </div>
     </div>
   )

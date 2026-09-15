@@ -10,13 +10,13 @@ import {
   Github,
   Linkedin,
   Mail,
-  Lock,
   Briefcase,
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { CountUp } from "@/components/count-up"
 import { GlowCard } from "@/components/glow-card"
+import { Skills } from "@/components/skills"
 import { Magnetic } from "@/components/magnetic"
 import { Spotlight } from "@/components/spotlight"
 import { RevealText, ImageReveal } from "@/components/reveal"
@@ -26,43 +26,51 @@ const featuredProjects = [
   {
     id: 1,
     index: "01",
-    title: "LLM Platform — Multi-Project Gateway",
+    title: "Agent2Agent — Multi-Agent Orchestration",
     description:
-      "Internal LLM gateway across OpenAI · Anthropic · Gemini · Groq · Ollama. Cost tracking, budget limits, circuit breakers, prompt versioning, and a full analytics dashboard.",
-    tech: ["FastAPI", "React", "TypeScript", "SQLite"],
-    category: "AI Infra",
-    image: "/projects/generated-v2/llm-platform-gateway.png",
-    private: true,
+      "Agent-to-agent communication, tool use, and autonomous task delegation between cooperating LLM agents.",
+    tech: ["Python", "Agents", "LLMs", "Tool Use"],
+    category: "Agentic AI",
+    image: "/projects/generated-v2/agent2agent.png",
+    href: "https://github.com/Balaji91221/Agent2Agent-project",
   },
   {
     id: 2,
     index: "02",
-    title: "Coder Agent",
+    title: "Voice Agent — Retell AI",
     description:
-      "Autonomous coding agent that plans, writes, and iterates on code using tool use and a structured reasoning loop. Built for real developer workflows.",
-    tech: ["Python", "LLMs", "Agents", "Tool Use"],
+      "Real-time conversational voice agent that handles phone-style interactions end-to-end on an LLM-voice platform.",
+    tech: ["TypeScript", "Retell AI", "Voice", "LLM"],
     category: "Agentic AI",
-    image: "/projects/generated-v2/coder-agent.png",
-    private: true,
+    image: "/projects/generated-v2/voice-agent-retell.png",
+    href: "https://retellai-six.vercel.app",
   },
   {
     id: 3,
     index: "03",
-    title: "AI Coder Reviewer",
+    title: "Semantic Search Engine",
     description:
-      "LLM-powered code review agent that inspects diffs, flags regressions, and suggests fixes with context from the surrounding codebase.",
-    tech: ["Python", "LLMs", "Agents", "Code Analysis"],
-    category: "Agentic AI",
-    image: "/projects/generated-v2/ai-coder-reviewer.png",
-    private: true,
+      "Search by meaning, not keywords, with vector embeddings and Next.js. The foundation of a production RAG pipeline.",
+    tech: ["Next.js", "Vector DB", "Embeddings", "RAG"],
+    category: "LLM / RAG",
+    image: "/projects/generated-v2/semantic-search-engine.png",
+    href: "https://search-with-semantic.vercel.app",
   },
 ]
 
+const writingTopics = [
+  { title: "Agentic AI & MCP", desc: "Tool design, multi-agent patterns, what breaks in production." },
+  { title: "RAG that holds up", desc: "Hybrid search, reranking, evaluation and answer grounding." },
+  { title: "LLM infrastructure", desc: "Gateways, cost control, streaming, provider fallback." },
+  { title: "Model landscape", desc: "New releases, open-weight models, running them with Ollama." },
+  { title: "System design for AI", desc: "Full-stack architecture around models, from API to UI." },
+]
+
 const stats = [
-  { value: 25, suffix: "+", label: "Projects shipped" },
-  { value: 3, suffix: "+", label: "Years of experience" },
-  { value: 19299, suffix: "", label: "GATE AIR" },
-  { value: 2, suffix: "", label: "Guest lectures" },
+  { value: 1, suffix: "+", label: "Years in production AI" },
+  { value: 20, suffix: "+", label: "Open-source projects" },
+  { value: 2, suffix: "", label: "Invited guest lectures" },
+  { value: 1, suffix: "", label: "IEEE publication" },
 ]
 
 const reveal = (i = 0) => ({
@@ -105,7 +113,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-8"
               >
-                AI/ML Engineer · Samco Securities · India
+                Applied AI Engineer · Samco Securities · India
               </motion.p>
 
               <h1 className="mask-lines mb-8 select-none">
@@ -133,7 +141,7 @@ export default function HomePage() {
                     style={{ "--line-delay": "0.3s" } as React.CSSProperties}
                     className="text-xl md:text-2xl text-muted-foreground"
                   >
-                    AI / ML Engineer · LLM systems, RAG &amp; agentic AI
+                    Agentic AI · RAG · MCP · Production LLM Systems
                   </span>
                 </span>
               </div>
@@ -144,8 +152,18 @@ export default function HomePage() {
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
                 className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed mb-10"
               >
-                I build production-grade LLM systems, RAG pipelines, and agentic AI — and the
-                full-stack apps that wrap them. VIT-AP 2025 · currently at Samco Securities.
+                GenAI and Applied AI Engineer building and operating production AI systems across
+                voice AI, RAG, LLM infrastructure, MCP tooling and multi-agent automation. I also
+                write about applied AI engineering on{" "}
+                <a
+                  href="https://www.linkedin.com/in/kelavathbalajinaik/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-sweep font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  LinkedIn
+                </a>
+                .
               </motion.p>
 
               <motion.div
@@ -256,13 +274,15 @@ export default function HomePage() {
         </div>
       </section>
 
+      <Skills index="01" eyebrow="Skills" title="What I work with" showLandscape />
+
       {/* ============ SELECTED WORK — sticky stack ============ */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8 relative">
         <div className="container mx-auto max-w-6xl relative">
           <motion.div {...reveal(0)} className="flex items-end justify-between flex-wrap gap-6 mb-16 md:mb-20">
             <div>
               <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-4">
-                01 — Selected Work
+                02 — Selected Work
               </p>
               <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
                 <RevealText>Selected work</RevealText>
@@ -296,14 +316,11 @@ export default function HomePage() {
                       <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-primary border border-primary/30 rounded-full px-3 py-1">
                         {project.category}
                       </span>
-                      {project.private && (
-                        <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
-                          <Lock className="h-3 w-3" /> Private
-                        </span>
-                      )}
                     </div>
                     <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 group-hover:text-primary transition-colors">
-                      {project.title}
+                      <a href={project.href} target="_blank" rel="noopener noreferrer">
+                        {project.title}
+                      </a>
                     </h3>
                     <p className="text-muted-foreground leading-relaxed mb-8">
                       {project.description}
@@ -338,6 +355,79 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ============ WRITING ============ */}
+      <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div {...reveal(0)} className="flex items-end justify-between flex-wrap gap-6 mb-12 md:mb-16">
+            <div>
+              <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-4">
+                03 — Writing
+              </p>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
+                <RevealText>I write about applied AI</RevealText>
+              </h2>
+            </div>
+            <a
+              href="https://www.linkedin.com/in/kelavathbalajinaik/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+            >
+              Follow on LinkedIn
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </motion.div>
+
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-5">
+            <motion.div {...reveal(0)}>
+              <GlowCard className="card-glow card-lift h-full rounded-lg border border-primary/40 bg-card p-8 md:p-10">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 mb-6">
+                  <Linkedin className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">
+                  Content creator on LinkedIn
+                </h3>
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  Regular posts on what it takes to run AI in production: agent design, RAG that
+                  holds up, LLM infrastructure, MCP tooling, and the open-source model landscape.
+                  Written from day-to-day engineering work, not summaries of other people&apos;s
+                  posts.
+                </p>
+                <Button asChild size="lg" className="group btn-shine rounded-full h-12 px-7">
+                  <a
+                    href="https://www.linkedin.com/in/kelavathbalajinaik/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Follow on LinkedIn
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+              </GlowCard>
+            </motion.div>
+
+            <motion.div {...reveal(1)}>
+              <GlowCard className="card-glow card-lift h-full rounded-lg border border-border/60 bg-card p-8 md:p-10">
+                <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-6">
+                  What I write about
+                </p>
+                <ul className="space-y-4">
+                  {writingTopics.map((t) => (
+                    <li key={t.title} className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                      <div>
+                        <p className="font-semibold tracking-tight">{t.title}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </GlowCard>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* ============ CURRENT ROLE ============ */}
       <section className="border-t border-border/60 py-20 md:py-24 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
@@ -351,48 +441,13 @@ export default function HomePage() {
                   Currently
                 </p>
                 <p className="text-xl md:text-2xl font-semibold tracking-tight">
-                  AI/ML Engineer @ Samco Securities
+                  Applied AI Engineer @ Samco Securities
                 </p>
                 <p className="text-muted-foreground leading-relaxed mt-1">
-                  Shipping production ML for trading analytics.
+                  Voice AI, RAG systems, LLM infrastructure and MCP tooling in production.
                 </p>
               </div>
             </GlowCard>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ============ CTA ============ */}
-      <section className="border-t border-border/60 py-28 md:py-40 px-4 md:px-6 lg:px-8 relative overflow-hidden">
-        <div className="container mx-auto max-w-6xl relative">
-          <motion.div {...reveal(0)} className="text-center">
-            <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-8">
-              02 — Contact
-            </p>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.02] mb-8">
-              <RevealText>Let&apos;s work together.</RevealText>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12">
-              Have an idea, a problem, or a project? I&apos;m always up for a conversation.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Magnetic as="span" strength={0.15} className="inline-block">
-                <Button asChild size="lg" className="group btn-shine rounded-full h-12 px-8">
-                  <Link href="/contact">
-                    Get in touch
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-              </Magnetic>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full h-12 px-8"
-              >
-                <Link href="/about">About me</Link>
-              </Button>
-            </div>
           </motion.div>
         </div>
       </section>

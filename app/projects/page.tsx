@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, Lock, ArrowRight } from "lucide-react"
+import { ExternalLink, Github } from "lucide-react"
 import { GlowCard } from "@/components/glow-card"
 import { RevealText, ImageReveal } from "@/components/reveal"
 import Image from "next/image"
@@ -23,44 +23,6 @@ import dashboard from './mauth.png'
 
 const projects =
   [
-  // ═══════════════════════ AI INFRA / PLATFORM ═══════════════════════
-  {
-    "id": 501,
-    "title": "LLM Platform — Multi-Project LLM Gateway",
-    "description": "Internal LLM gateway sitting between apps and providers (OpenAI · Anthropic · Gemini · Groq · Ollama). One OpenAI-compatible endpoint with per-project cost tracking, budget limits, circuit breakers with auto-failover, API key management, prompt template versioning, and a full analytics dashboard + playground.",
-    "image": "/projects/generated-v2/llm-platform-gateway.png",
-    "tech": ["FastAPI", "Python", "React", "TypeScript", "SQLite", "Tailwind", "JWT"],
-    "category": "AI Infra",
-    "liveUrl": "#",
-    "githubUrl": "#",
-    "featured": true,
-    "private": true
-  },
-  {
-    "id": 502,
-    "title": "Coder Agent",
-    "description": "Autonomous coding agent that plans, writes, and iterates on code using tool use and a structured reasoning loop. Built for real developer workflows — not demos.",
-    "image": "/projects/generated-v2/coder-agent.png",
-    "tech": ["Python", "LLMs", "Agents", "Tool Use"],
-    "category": "Agentic AI",
-    "liveUrl": "#",
-    "githubUrl": "#",
-    "featured": true,
-    "private": true
-  },
-  {
-    "id": 503,
-    "title": "AI Coder Reviewer",
-    "description": "LLM-powered code review agent that inspects diffs, flags regressions, and suggests fixes with context from the surrounding codebase. Integrates into the PR workflow.",
-    "image": "/projects/generated-v2/ai-coder-reviewer.png",
-    "tech": ["Python", "LLMs", "Agents", "Code Analysis"],
-    "category": "Agentic AI",
-    "liveUrl": "#",
-    "githubUrl": "#",
-    "featured": true,
-    "private": true
-  },
-
   // ═══════════════════════ AGENTIC AI ═══════════════════════
   {
     "id": 101,
@@ -325,15 +287,11 @@ const projects =
   },
 ]
 
-const categories = ["All", "AI Infra", "Agentic AI", "LLM / RAG", "ML / DL", "NLP", "Full-Stack", "Frontend"]
+const categories = ["All", "Agentic AI", "LLM / RAG", "ML / DL", "NLP", "Full-Stack", "Frontend"]
 
 // Category → hue system. Full class strings are written as literals so the
 // Tailwind compiler can see them (dynamic class construction is invisible to it).
 const categoryStyles: Record<string, { chip: string; ring: string }> = {
-  "AI Infra": {
-    chip: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30",
-    ring: "hover:border-cyan-500/40",
-  },
   "Agentic AI": {
     chip: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30",
     ring: "hover:border-emerald-500/40",
@@ -497,12 +455,6 @@ export default function ProjectsPage() {
                         Featured
                       </span>
                     )}
-                    {project.private && (
-                      <span className="inline-flex items-center gap-1 bg-background/80 backdrop-blur border border-border/60 text-foreground text-[10px] font-mono uppercase tracking-wider rounded-full px-2.5 py-1">
-                        <Lock className="h-2.5 w-2.5" aria-hidden="true" />
-                        Private
-                      </span>
-                    )}
                   </div>
                 </div>
 
@@ -541,34 +493,25 @@ export default function ProjectsPage() {
 
                   {/* Footer */}
                   <div className="mt-auto flex items-center gap-4 pt-4 border-t border-border/40">
-                    {project.private ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
-                        <Lock className="h-3 w-3" aria-hidden="true" />
-                        Private — available on request
-                      </span>
-                    ) : (
-                      <>
-                        {project.liveUrl && project.liveUrl !== "#" && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
-                          >
-                            <ExternalLink className="h-3 w-3" aria-hidden="true" /> Live
-                          </a>
-                        )}
-                        {project.githubUrl && project.githubUrl !== "#" && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
-                          >
-                            <Github className="h-3 w-3" aria-hidden="true" /> Code
-                          </a>
-                        )}
-                      </>
+                    {project.liveUrl && project.liveUrl !== "#" && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        <ExternalLink className="h-3 w-3" aria-hidden="true" /> Live
+                      </a>
+                    )}
+                    {project.githubUrl && project.githubUrl !== "#" && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        <Github className="h-3 w-3" aria-hidden="true" /> Code
+                      </a>
                     )}
                   </div>
                 </div>
@@ -584,33 +527,6 @@ export default function ProjectsPage() {
             <p className="text-sm text-muted-foreground">No projects in this category yet.</p>
           </motion.div>
         )}
-
-        {/* ============ CTA ============ */}
-        <motion.section
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative mt-24 md:mt-28 text-center"
-        >
-          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-40">
-            <div className="aurora" />
-          </div>
-          <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">Next</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-[1.1] mb-4">
-            Need someone who ships AI products{" "}
-            <span className="font-serif italic font-normal gradient-text-aurora">end-to-end</span>?
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-            I architect LLM systems, build the models, and ship the product around them. Let&apos;s talk.
-          </p>
-          <Button size="lg" className="group rounded-full" asChild>
-            <Link href="/contact">
-              Get in touch
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </Button>
-        </motion.section>
       </div>
     </div>
   )

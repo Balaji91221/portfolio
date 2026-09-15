@@ -79,8 +79,8 @@ export function Footer() {
               <span className="font-normal text-muted-foreground"> Naik</span>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-              AI / ML Engineer building LLM systems, RAG, and agentic AI. Currently at Samco
-              Securities. VIT-AP &apos;25.
+              Applied AI Engineer building production voice AI, RAG, LLM infrastructure and
+              agentic systems. Currently at Samco Securities. Writes about applied AI on LinkedIn.
             </p>
           </div>
 
@@ -142,10 +142,6 @@ export function Footer() {
             . All rights reserved.
           </span>
           <div className="flex items-center gap-6">
-            <span className="inline-flex items-center gap-2">
-              <span className="inline-flex h-2 w-2 rounded-full bg-primary" />
-              Available for new opportunities
-            </span>
             <span>Built with Next.js</span>
           </div>
         </motion.div>

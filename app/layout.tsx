@@ -12,9 +12,29 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
 const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", variable: "--font-serif" })
 
+const siteName = "Kelavath Balaji Naik"
+const description =
+  "Applied AI Engineer building production voice AI, RAG, LLM infrastructure, MCP tooling and multi-agent systems. LinkedIn content creator on applied AI."
+
 export const metadata: Metadata = {
-  title: "Kelavath Balaji Naik — AI/ML Engineer",
-  description: "Portfolio of Kelavath Balaji Naik — AI/ML Engineer & Full-Stack Developer. VIT-AP 2025.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  title: {
+    default: `${siteName} — Applied AI Engineer`,
+    template: `%s — ${siteName}`,
+  },
+  description,
+  openGraph: {
+    type: "website",
+    siteName,
+    title: `${siteName} — Applied AI Engineer`,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteName} — Applied AI Engineer`,
+    description,
+    creator: "@KkBalaji91221",
+  },
 }
 
 export default function RootLayout({

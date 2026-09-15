@@ -49,8 +49,8 @@ const contactRows = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 93988 06613",
-    href: "tel:+919398806613",
+    value: "+91 96762 99718",
+    href: "tel:+919676299718",
     chip: "bg-violet-500/10 text-violet-400",
   },
   {

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { CountUp } from "@/components/count-up"
 import { GlowCard } from "@/components/glow-card"
 import { RevealText } from "@/components/reveal"
+import { Skills } from "@/components/skills"
 import {
   GraduationCap,
   Briefcase,
@@ -38,37 +39,37 @@ const fadeUp = (i = 0) => ({
 
 // ─────────────── highlight stats recruiters scan first ───────────────
 const heroStats = [
-  { label: "Years building", value: "3+" },
-  { label: "Projects shipped", value: "25+" },
-  { label: "GATE 2025 AIR", value: "19,299" },
-  { label: "CGPA", value: "8.8" },
+  { label: "Years in production AI", value: "1+" },
+  { label: "Open-source projects", value: "20+" },
+  { label: "Invited guest lectures", value: "2" },
+  { label: "IEEE publication", value: "1" },
 ]
 
 // ─────────────── what I do — the 3-line pitch ───────────────
 const disciplines = [
   {
-    icon: Brain,
-    title: "AI / ML Engineering",
-    desc: "Production ML pipelines, model monitoring, CI/CD for models. From data to deployed endpoint.",
-    stack: ["PyTorch", "TensorFlow", "Scikit-learn", "Pandas"],
+    icon: Bot,
+    title: "Agentic AI & MCP",
+    desc: "Multi-agent systems, tool calling and structured outputs. Turning APIs and schemas into MCP tools agents can use safely.",
+    stack: ["MCP", "A2A", "LangGraph", "LiteLLM"],
   },
   {
     icon: Sparkles,
-    title: "LLMs · RAG · GenAI",
-    desc: "Retrieval pipelines, prompt systems, fine-tuning, eval. Built an internal LLM gateway with cost + failover.",
-    stack: ["LangChain", "OpenAI", "Anthropic", "Vector DBs"],
+    title: "RAG & Retrieval",
+    desc: "Hybrid dense + BM25 search, reciprocal rank fusion and LLM reranking over documents, with answer verification.",
+    stack: ["Qdrant", "fastembed", "LangChain", "Embeddings"],
   },
   {
-    icon: Bot,
-    title: "Agentic AI",
-    desc: "Autonomous coding agents, multi-agent systems, tool use. Agents that actually work, not demos.",
-    stack: ["Agents", "Tool Use", "Planning", "Python"],
+    icon: Brain,
+    title: "LLM Infrastructure & LLMOps",
+    desc: "OpenAI-compatible gateways, streaming, cost tracking, provider health and fallback, observability and deployment.",
+    stack: ["FastAPI", "ClickHouse", "Docker", "Kubernetes"],
   },
   {
     icon: Zap,
-    title: "Full-Stack Engineering",
-    desc: "The product around the model. Next.js + FastAPI + Postgres — shipping real apps end-to-end.",
-    stack: ["Next.js", "FastAPI", "TypeScript", "Postgres"],
+    title: "Voice AI & Full-Stack",
+    desc: "Real-time speech pipelines on LiveKit and SIP, and the React / Next.js products that wrap the models.",
+    stack: ["LiveKit", "STT / TTS", "Next.js", "TypeScript"],
   },
 ]
 
@@ -76,9 +77,9 @@ const disciplines = [
 const timeline = [
   {
     year: "2025 – now",
-    role: "AI / ML Engineer",
+    role: "Applied AI Engineer",
     org: "Samco Securities",
-    note: "Production ML for trading analytics, risk, recommendation systems. Shipping LLM-driven internal tools.",
+    note: "Voice AI, RAG systems, LLM infrastructure and MCP tooling in production.",
     current: true,
   },
   {
@@ -102,45 +103,6 @@ const timeline = [
 ]
 
 // ─────────────── grouped skills ───────────────
-const skillGroups = [
-  {
-    title: "AI / ML",
-    items: ["PyTorch", "TensorFlow", "Scikit-learn", "Pandas", "NumPy", "Hugging Face", "Jupyter"],
-  },
-  {
-    title: "LLMs · RAG · Agents",
-    items: [
-      "OpenAI",
-      "Anthropic",
-      "Gemini",
-      "Ollama",
-      "LangChain",
-      "LangGraph",
-      "RAG",
-      "Vector DBs",
-      "Pinecone",
-      "Prompt Engineering",
-      "Agents",
-      "Fine-tuning",
-    ],
-  },
-  {
-    title: "Backend",
-    items: ["Python", "FastAPI", "Flask", "Django", "Node.js", "Express", "REST APIs", "WebSockets"],
-  },
-  {
-    title: "Frontend",
-    items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Framer Motion"],
-  },
-  {
-    title: "Data & Storage",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "SQLite"],
-  },
-  {
-    title: "DevOps & Tooling",
-    items: ["Docker", "Git", "GitHub", "Linux", "Vercel", "CI / CD"],
-  },
-]
 
 // ─────────────── certs ───────────────
 const certificates = [
@@ -155,7 +117,12 @@ const certificates = [
 
 // ─────────────── achievements ───────────────
 const achievements = [
-  { title: "GATE 2025", description: "All India Rank 19,299 · Data Science & AI", icon: Award },
+  {
+    title: "LinkedIn Content Creator",
+    description: "Regular posts on applied AI engineering, agents, RAG and open-source models",
+    icon: Sparkles,
+  },
+  { title: "Invited Guest Lecturer", description: "Two invited talks on LLMs and GenAI at VIT-AP University", icon: Award },
   { title: "Dean's List × 4", description: "Four consecutive semesters at VIT-AP", icon: Trophy },
   {
     title: "IEEE Publication",
@@ -243,22 +210,24 @@ export default function AboutPage() {
                 </RevealText>
               </h1>
               <p className="font-serif italic text-2xl md:text-3xl text-muted-foreground mb-8">
-                AI engineer who ships the full stack.
+                Agentic AI · RAG · MCP · Production LLM Systems
               </p>
 
               <div className="space-y-4 text-muted-foreground leading-relaxed max-w-xl">
                 <p>
-                  I build production AI — LLM systems, RAG pipelines, agentic AI — and the
-                  full-stack apps around them. Currently at{" "}
-                  <span className="text-foreground font-medium">Samco Securities</span>, shipping
-                  ML for trading analytics and internal LLM platforms.
+                  GenAI and Applied AI Engineer with 1+ years building and operating production AI
+                  systems across voice AI, RAG, LLM infrastructure, MCP tooling and multi-agent
+                  automation. Currently at{" "}
+                  <span className="text-foreground font-medium">Samco Securities</span>. I also
+                  create content on LinkedIn about applied AI engineering, agents, RAG and the
+                  open-source model landscape.
                 </p>
                 <p>
                   B.Tech in CSE with AI / ML specialization from VIT-AP (2025). GATE 2025 AIR
                   19,299 in Data Science &amp; AI. IEEE-published researcher. Dean&apos;s List × 4.
                 </p>
                 <p className="text-foreground/80">
-                  I care about reliability, velocity, and product outcomes — not demo-ware.
+                  I care about reliability, velocity, and measurable product outcomes.
                 </p>
               </div>
 
@@ -269,7 +238,7 @@ export default function AboutPage() {
                   className="group rounded-full bg-foreground text-background hover:bg-foreground/90"
                 >
                   <Link href="/contact">
-                    <Mail className="mr-2 h-4 w-4" /> Hire me
+                    <Mail className="mr-2 h-4 w-4" /> Get in touch
                     <ArrowUpRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </Link>
                 </Button>
@@ -303,12 +272,8 @@ export default function AboutPage() {
               <div className="max-w-sm mx-auto lg:ml-auto mt-4 flex items-baseline justify-between gap-4">
                 <div>
                   <p className="text-sm font-semibold">Kelavath Balaji Naik</p>
-                  <p className="text-xs text-muted-foreground">AI / ML Engineer · VIT-AP &apos;25</p>
+                  <p className="text-xs text-muted-foreground">Applied AI Engineer · VIT-AP &apos;25</p>
                 </div>
-                <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-primary">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                  Open to work
-                </span>
               </div>
             </motion.div>
           </div>
@@ -411,42 +376,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─────────── SKILLS ─────────── */}
-      <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
-        <div className="container mx-auto max-w-6xl">
-          <SectionHeader
-            index="04"
-            eyebrow="Technical skills"
-            title="Tools I ship"
-            accent="with."
-            accentClass="gradient-text-warm"
-          />
-
-          <div className="divide-y divide-border/60">
-            {skillGroups.map((g, i) => (
-              <motion.div
-                key={g.title}
-                {...fadeUp(i)}
-                className="grid md:grid-cols-[220px_1fr] gap-3 md:gap-8 py-7 first:pt-0 last:pb-0"
-              >
-                <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground pt-1.5">
-                  {g.title}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {g.items.map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-full border border-border/60 px-3 py-1 text-xs font-mono text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground cursor-default"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Skills index="04" eyebrow="Technical skills" title="What I work with" />
 
       {/* ─────────── ACHIEVEMENTS ─────────── */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
@@ -508,40 +438,6 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ─────────── CTA ─────────── */}
-      <section className="relative overflow-hidden border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div className="aurora opacity-40" />
-        </div>
-        <div className="relative container mx-auto max-w-6xl">
-          <motion.div {...fadeUp()} className="text-center">
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
-              Let&apos;s build something{" "}
-              <span className="font-serif italic font-normal gradient-text-aurora">that ships.</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-              If you&apos;re hiring an AI engineer who also ships product, I&apos;m the fastest
-              call you&apos;ll make today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="group rounded-full bg-foreground text-background hover:bg-foreground/90"
-              >
-                <Link href="/contact">
-                  <Mail className="mr-2 h-4 w-4" /> Get in touch
-                  <ArrowUpRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-border/60">
-                <Link href="/projects">See the work</Link>
-              </Button>
-            </div>
-          </motion.div>
         </div>
       </section>
     </div>

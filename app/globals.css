@@ -333,3 +333,12 @@ html { scroll-behavior: smooth; }
     transform: none;
   }
 }
+
+/* Skill cards — faint accent wash on primary groups, readable in both themes */
+.skill-card-primary {
+  background-image: linear-gradient(
+    180deg,
+    hsl(var(--primary) / 0.06),
+    transparent 60%
+  );
+}
