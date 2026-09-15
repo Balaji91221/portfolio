@@ -55,7 +55,7 @@ export function ImageReveal({ children, className = "", delay = 0 }: RevealProps
         className="absolute inset-0"
         initial={{ clipPath: "inset(0 100% 0 0)" }}
         animate={inView ? { clipPath: "inset(0 0% 0 0)" } : { clipPath: "inset(0 100% 0 0)" }}
-        transition={{ duration: 0.9, ease: EASE, delay }}
+        transition={{ duration: 0.8, ease: EASE, delay }}
       >
         {children}
       </motion.div>

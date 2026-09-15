@@ -32,8 +32,8 @@ export default function NotFound() {
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed mb-10">
-            It might have been moved, deleted, or you entered the wrong URL. Either way — nothing
-            shipped here.
+            It might have been moved, deleted, or the address has a typo. Head back home or return
+            to the previous page.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

@@ -1,26 +1,20 @@
 "use client"
 
-import type React from "react"
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef, type CSSProperties } from "react"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import {
-  ArrowRight,
-  Github,
-  Linkedin,
-  Mail,
-  Briefcase,
-} from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail, Briefcase } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { CountUp } from "@/components/count-up"
 import { GlowCard } from "@/components/glow-card"
 import { Skills } from "@/components/skills"
 import { Magnetic } from "@/components/magnetic"
 import { Spotlight } from "@/components/spotlight"
 import { RevealText, ImageReveal } from "@/components/reveal"
 import balaji from "../public/Balaji.jpg"
+
+const EASE = [0.22, 1, 0.36, 1] as const
 
 const featuredProjects = [
   {
@@ -31,7 +25,7 @@ const featuredProjects = [
       "Agent-to-agent communication, tool use, and autonomous task delegation between cooperating LLM agents.",
     tech: ["Python", "Agents", "LLMs", "Tool Use"],
     category: "Agentic AI",
-    image: "/projects/generated-v2/agent2agent.png",
+    image: "/projects/generated-v2/agent2agent.webp",
     href: "https://github.com/Balaji91221/Agent2Agent-project",
   },
   {
@@ -42,8 +36,8 @@ const featuredProjects = [
       "Real-time conversational voice agent that handles phone-style interactions end-to-end on an LLM-voice platform.",
     tech: ["TypeScript", "Retell AI", "Voice", "LLM"],
     category: "Agentic AI",
-    image: "/projects/generated-v2/voice-agent-retell.png",
-    href: "https://retellai-six.vercel.app",
+    image: "/projects/generated-v2/voice-agent-retell.webp",
+    href: "https://github.com/Balaji91221/voiceagent-",
   },
   {
     id: 3,
@@ -53,7 +47,7 @@ const featuredProjects = [
       "Search by meaning, not keywords, with vector embeddings and Next.js. The foundation of a production RAG pipeline.",
     tech: ["Next.js", "Vector DB", "Embeddings", "RAG"],
     category: "LLM / RAG",
-    image: "/projects/generated-v2/semantic-search-engine.png",
+    image: "/projects/generated-v2/semantic-search-engine.webp",
     href: "https://search-with-semantic.vercel.app",
   },
 ]
@@ -67,25 +61,54 @@ const writingTopics = [
 ]
 
 const stats = [
-  { value: 1, suffix: "+", label: "Years in production AI" },
-  { value: 20, suffix: "+", label: "Open-source projects" },
-  { value: 2, suffix: "", label: "Invited guest lectures" },
-  { value: 1, suffix: "", label: "IEEE publication" },
+  { value: "1+", label: "Years in production AI" },
+  { value: "20+", label: "Open-source projects" },
+  { value: "2", label: "Invited guest lectures" },
+  { value: "1", label: "IEEE publication" },
 ]
 
-const reveal = (i = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const, delay: i * 0.06 },
-})
+/** Per-line delay for the hero's masked line reveal (see .mask-line in globals.css). */
+type LineDelayStyle = CSSProperties & Record<"--line-delay", string>
+const lineDelay = (seconds: string): LineDelayStyle => ({ "--line-delay": seconds })
 
 export default function HomePage() {
   const heroRef = useRef<HTMLElement>(null)
+  const prefersReduced = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
   const heroTextY = useTransform(scrollYProgress, [0, 1], [0, 120])
   const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 60])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0])
+
+  /** Hero copy rises in on first paint. */
+  const heroIn = (delay: number) =>
+    prefersReduced
+      ? {}
+      : {
+          initial: { opacity: 0, y: 16 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, ease: EASE, delay },
+        }
+
+  /** Portraits move only, never from opacity 0, so the first paint is not delayed. */
+  const portraitIn = (delay: number) =>
+    prefersReduced
+      ? {}
+      : {
+          initial: { y: 24, scale: 0.98 },
+          animate: { y: 0, scale: 1 },
+          transition: { duration: 0.8, ease: EASE, delay },
+        }
+
+  /** Scroll-in entrance for the sections below the fold. */
+  const reveal = (i = 0) =>
+    prefersReduced
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { duration: 0.6, ease: EASE, delay: i * 0.06 },
+        }
 
   return (
     <div className="min-h-screen">
@@ -101,16 +124,29 @@ export default function HomePage() {
         <Spotlight />
 
         <motion.div
-          style={{ y: heroTextY, opacity: heroOpacity }}
+          style={prefersReduced ? undefined : { y: heroTextY, opacity: heroOpacity }}
           className="container mx-auto max-w-7xl relative z-10"
         >
           <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Copy */}
             <div className="col-span-12 lg:col-span-8">
+              {/* Compact portrait for phones and tablets; the full column below is desktop only */}
+              <motion.div
+                {...portraitIn(0)}
+                className="lg:hidden mb-6 h-28 w-28 overflow-hidden rounded-lg ring-1 ring-border bg-card"
+              >
+                <Image
+                  src={balaji}
+                  alt="Kelavath Balaji Naik"
+                  width={112}
+                  height={112}
+                  className="h-full w-full object-cover object-center"
+                  priority
+                />
+              </motion.div>
+
               <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                {...heroIn(0)}
                 className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-8"
               >
                 Applied AI Engineer · Samco Securities · India
@@ -119,7 +155,7 @@ export default function HomePage() {
               <h1 className="mask-lines mb-8 select-none">
                 <span className="mask-line">
                   <span
-                    style={{ "--line-delay": "0.05s" } as React.CSSProperties}
+                    style={lineDelay("0.05s")}
                     className="font-bold tracking-tight leading-[0.95] text-[clamp(3rem,8vw,6.5rem)]"
                   >
                     Kelavath
@@ -127,7 +163,7 @@ export default function HomePage() {
                 </span>
                 <span className="mask-line">
                   <span
-                    style={{ "--line-delay": "0.16s" } as React.CSSProperties}
+                    style={lineDelay("0.16s")}
                     className="font-bold tracking-tight leading-[0.95] text-[clamp(3rem,8vw,6.5rem)]"
                   >
                     Balaji Naik
@@ -138,7 +174,7 @@ export default function HomePage() {
               <div className="mask-lines mb-8">
                 <span className="mask-line">
                   <span
-                    style={{ "--line-delay": "0.3s" } as React.CSSProperties}
+                    style={lineDelay("0.3s")}
                     className="text-xl md:text-2xl text-muted-foreground"
                   >
                     Agentic AI · RAG · MCP · Production LLM Systems
@@ -147,9 +183,7 @@ export default function HomePage() {
               </div>
 
               <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
+                {...heroIn(0.45)}
                 className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed mb-10"
               >
                 GenAI and Applied AI Engineer building and operating production AI systems across
@@ -159,7 +193,7 @@ export default function HomePage() {
                   href="https://www.linkedin.com/in/kelavathbalajinaik/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link-sweep font-medium text-foreground hover:text-primary transition-colors"
+                  className="link-sweep font-medium text-foreground hover:text-primary transition-colors duration-200"
                 >
                   LinkedIn
                 </a>
@@ -167,16 +201,18 @@ export default function HomePage() {
               </motion.p>
 
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}
+                {...heroIn(0.55)}
                 className="flex flex-col sm:flex-row sm:items-center gap-4"
               >
-                <Magnetic as="span" strength={0.15} className="inline-block">
-                  <Button asChild size="lg" className="group btn-shine rounded-full h-12 px-7">
+                <Magnetic strength={0.15} className="w-full sm:w-auto">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="group btn-shine w-full sm:w-auto rounded-full h-12 px-7"
+                  >
                     <Link href="/projects">
                       View my work
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </Link>
                   </Button>
                 </Magnetic>
@@ -184,17 +220,17 @@ export default function HomePage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="rounded-full h-12 px-7"
+                  className="w-full sm:w-auto rounded-full h-12 px-7"
                 >
                   <Link href="/contact">Get in touch</Link>
                 </Button>
-                <div className="flex items-center gap-4 sm:ml-4 text-muted-foreground">
+                <div className="flex items-center gap-1 -ml-3 sm:ml-2 text-muted-foreground">
                   <a
                     href="https://github.com/Balaji91221"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub"
-                    className="hover:text-primary hover:-translate-y-0.5 transition-all"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full hover:text-primary transition-colors duration-200"
                   >
                     <Github className="h-5 w-5" />
                   </a>
@@ -203,14 +239,14 @@ export default function HomePage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
-                    className="hover:text-primary hover:-translate-y-0.5 transition-all"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full hover:text-primary transition-colors duration-200"
                   >
                     <Linkedin className="h-5 w-5" />
                   </a>
                   <a
                     href="mailto:kbalaji15j@gmail.com"
                     aria-label="Email"
-                    className="hover:text-primary hover:-translate-y-0.5 transition-all"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full hover:text-primary transition-colors duration-200"
                   >
                     <Mail className="h-5 w-5" />
                   </a>
@@ -218,20 +254,13 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Portrait */}
+            {/* Portrait (desktop). Parallax on the outer wrapper, entrance on the inner one. */}
             <motion.div
-              style={{ y: heroImageY }}
-              initial={{ opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+              style={prefersReduced ? undefined : { y: heroImageY }}
               className="hidden lg:block col-span-4"
             >
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="relative"
-              >
-                <div className="absolute -inset-6 rounded-xl bg-primary/15 blur-3xl" aria-hidden />
+              <motion.div {...portraitIn(0.3)} className="relative">
+                <div className="absolute -inset-6 rounded-lg bg-primary/15 blur-3xl" aria-hidden />
                 <div className="relative aspect-[4/5] rounded-lg overflow-hidden ring-1 ring-border bg-card">
                   <Image
                     src={balaji}
@@ -257,20 +286,18 @@ export default function HomePage() {
       {/* ============ STATS ============ */}
       <section className="py-24 md:py-28 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <GlowCard className="card-glow grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border/60 rounded-lg border border-border/60 bg-card overflow-hidden">
-            {stats.map((stat, i) => (
-              <motion.div key={stat.label} {...reveal(i)} className="p-8 md:p-10">
-                <div
-                  className="text-4xl md:text-5xl font-bold tracking-tight"
-                >
-                  <CountUp value={stat.value} suffix={stat.suffix} />
+          <motion.div {...reveal(0)}>
+            <GlowCard className="card-glow grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border/60 rounded-lg border border-border/60 bg-card overflow-hidden">
+              {stats.map((stat) => (
+                <div key={stat.label} className="p-8 md:p-10">
+                  <p className="text-4xl md:text-5xl font-bold tracking-tight">{stat.value}</p>
+                  <p className="mt-3 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">
+                    {stat.label}
+                  </p>
                 </div>
-                <div className="mt-3 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </GlowCard>
+              ))}
+            </GlowCard>
+          </motion.div>
         </div>
       </section>
 
@@ -279,7 +306,7 @@ export default function HomePage() {
       {/* ============ SELECTED WORK — sticky stack ============ */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8 relative">
         <div className="container mx-auto max-w-6xl relative">
-          <motion.div {...reveal(0)} className="flex items-end justify-between flex-wrap gap-6 mb-16 md:mb-20">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-16 md:mb-20">
             <div>
               <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-4">
                 02 — Selected Work
@@ -290,12 +317,12 @@ export default function HomePage() {
             </div>
             <Link
               href="/projects"
-              className="group inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+              className="group inline-flex min-h-11 items-center gap-2 text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors duration-200"
             >
               All projects
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
-          </motion.div>
+          </div>
 
           {/* Cards stack over each other as you scroll */}
           <div className="flex flex-col gap-8 md:gap-0">
@@ -305,19 +332,17 @@ export default function HomePage() {
                 className="md:sticky"
                 style={{ top: `calc(7rem + ${i * 2.75}rem)` }}
               >
-                <GlowCard
-                  className="card-glow card-lift group grid md:grid-cols-2 overflow-hidden rounded-xl border border-border/60 bg-card shadow-xl shadow-background/60 md:mb-10"
-                >
+                <GlowCard className="card-glow card-lift group grid md:grid-cols-2 overflow-hidden rounded-lg border border-border/60 bg-card shadow-xl shadow-background/60 md:mb-10">
                   <div className="p-8 md:p-12 flex flex-col order-2 md:order-1">
                     <div className="flex items-center gap-4 mb-6">
                       <span className="text-stroke font-bold text-4xl md:text-5xl leading-none">
                         {project.index}
                       </span>
-                      <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-primary border border-primary/30 rounded-full px-3 py-1">
+                      <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-primary border border-primary/30 rounded-full px-3 py-1">
                         {project.category}
                       </span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 group-hover:text-primary transition-colors">
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 group-hover:text-primary transition-colors duration-200">
                       <a href={project.href} target="_blank" rel="noopener noreferrer">
                         {project.title}
                       </a>
@@ -330,7 +355,7 @@ export default function HomePage() {
                         <Badge
                           key={t}
                           variant="outline"
-                          className="rounded-full border-border/60 text-[10px] font-mono uppercase tracking-wider"
+                          className="rounded-full border-border/60 text-[11px] font-mono uppercase tracking-wider"
                         >
                           {t}
                         </Badge>
@@ -343,7 +368,11 @@ export default function HomePage() {
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="absolute inset-0 h-full w-full object-cover saturate-[0.9] transition-all duration-700 group-hover:scale-105 group-hover:saturate-100"
+                        width={800}
+                        height={486}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                     </ImageReveal>
                     <div className="absolute inset-0 bg-gradient-to-r from-card/40 to-transparent pointer-events-none hidden md:block" />
@@ -358,25 +387,14 @@ export default function HomePage() {
       {/* ============ WRITING ============ */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <motion.div {...reveal(0)} className="flex items-end justify-between flex-wrap gap-6 mb-12 md:mb-16">
-            <div>
-              <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-4">
-                03 — Writing
-              </p>
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
-                <RevealText>I write about applied AI</RevealText>
-              </h2>
-            </div>
-            <a
-              href="https://www.linkedin.com/in/kelavathbalajinaik/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
-            >
-              Follow on LinkedIn
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </motion.div>
+          <div className="mb-12 md:mb-16">
+            <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-4">
+              03 — Writing
+            </p>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
+              <RevealText>I write about applied AI</RevealText>
+            </h2>
+          </div>
 
           <div className="grid md:grid-cols-[1.2fr_1fr] gap-5">
             <motion.div {...reveal(0)}>
@@ -390,17 +408,15 @@ export default function HomePage() {
                 <p className="text-muted-foreground leading-relaxed mb-8">
                   Regular posts on what it takes to run AI in production: agent design, RAG that
                   holds up, LLM infrastructure, MCP tooling, and the open-source model landscape.
-                  Written from day-to-day engineering work, not summaries of other people&apos;s
-                  posts.
                 </p>
-                <Button asChild size="lg" className="group btn-shine rounded-full h-12 px-7">
+                <Button asChild size="lg" className="group rounded-full h-12 px-7">
                   <a
                     href="https://www.linkedin.com/in/kelavathbalajinaik/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     Follow on LinkedIn
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                   </a>
                 </Button>
               </GlowCard>

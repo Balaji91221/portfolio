@@ -13,16 +13,17 @@ import {
   Github,
   Linkedin,
   Twitter,
-  Send,
   ArrowUpRight,
   Clock,
   MapPin,
+  type LucideIcon,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { GlowCard } from "@/components/glow-card"
 import { RevealText } from "@/components/reveal"
 
 const EASE = [0.22, 1, 0.36, 1] as const
+const EMAIL = "kbalaji15j@gmail.com"
 
 const fadeUp = (i = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -30,35 +31,25 @@ const fadeUp = (i = 0) => ({
   transition: { duration: 0.6, ease: EASE, delay: i * 0.06 },
 })
 
-const contactRows = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "kbalaji15j@gmail.com",
-    href: "mailto:kbalaji15j@gmail.com",
-    chip: "bg-emerald-500/10 text-emerald-400",
-  },
+type ContactRow = {
+  icon: LucideIcon
+  label: string
+  value: string
+  href?: string
+  external?: boolean
+}
+
+const contactRows: ContactRow[] = [
+  { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
   {
     icon: Linkedin,
     label: "LinkedIn",
     value: "/in/kelavathbalajinaik",
     href: "https://www.linkedin.com/in/kelavathbalajinaik/",
     external: true,
-    chip: "bg-cyan-500/10 text-cyan-400",
   },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+91 96762 99718",
-    href: "tel:+919676299718",
-    chip: "bg-violet-500/10 text-violet-400",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "India — remote friendly",
-    chip: "bg-amber-500/10 text-amber-400",
-  },
+  { icon: Phone, label: "Phone", value: "+91 93988 06613", href: "tel:+919398806613" },
+  { icon: MapPin, label: "Location", value: "India — remote friendly" },
 ]
 
 const socialLinks = [
@@ -67,14 +58,23 @@ const socialLinks = [
   { icon: Twitter, label: "Twitter / X", href: "https://x.com/KkBalaji91221" },
 ]
 
-const inputClass =
-  "h-11 rounded-xl bg-background/50 border-border/60 focus-visible:ring-primary"
-const labelClass =
-  "text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground"
+const inputClass = "h-11 rounded-lg bg-background/50 border-border/60 focus-visible:ring-primary"
+const labelClass = "text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground"
+const tinyLabelClass = "text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground"
+
+type FormData = { name: string; email: string; company: string; subject: string; message: string }
+
+const emptyForm: FormData = { name: "", email: "", company: "", subject: "", message: "" }
+
+function buildMailto(form: FormData): string {
+  const signature = form.company ? `${form.name}, ${form.company}` : form.name
+  const body = `Hi Balaji,\n\n${form.message}\n\n— ${signature}\n${form.email}`
+  const subject = encodeURIComponent(form.subject || "Hello")
+  return `mailto:${EMAIL}?subject=${subject}&body=${encodeURIComponent(body)}`
+}
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: "", email: "", company: "", subject: "", message: "" })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formData, setFormData] = useState<FormData>(emptyForm)
   const { toast } = useToast()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -82,15 +82,14 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // There is no backend: the form hands the message to the visitor's email app.
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    const body = `Hi Balaji,\n\n${formData.message}\n\n— ${formData.name}${formData.company ? `, ${formData.company}` : ""}\n${formData.email}`
-    const mailto = `mailto:kbalaji15j@gmail.com?subject=${encodeURIComponent(formData.subject || "Hello")}&body=${encodeURIComponent(body)}`
-    window.location.href = mailto
-    await new Promise((r) => setTimeout(r, 600))
-    toast({ title: "Opening your email client…", description: "I'll reply within 24 hours." })
-    setIsSubmitting(false)
+    window.location.href = buildMailto(formData)
+    toast({
+      title: "Your email app should open with the message filled in.",
+      description: `If nothing opened, email ${EMAIL} directly.`,
+    })
   }
 
   return (
@@ -102,18 +101,18 @@ export default function ContactPage() {
       <div className="container mx-auto max-w-6xl relative z-10">
         {/* ============ HERO ============ */}
         <motion.header {...fadeUp(0)} className="mb-14 md:mb-20 pb-10 md:pb-12 border-b border-border/60">
-          <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-5">
+          <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-4">
             Contact
           </p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6 max-w-4xl">
             <RevealText>
-              Let&apos;s build something{" "}
-              <span className="font-serif italic font-normal gradient-text-aurora">worth</span> shipping.
+              Get in <span className="font-serif italic font-normal text-primary">touch</span>.
             </RevealText>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            I build production LLM systems, agentic AI, and the apps around them. If you&apos;d like
-            to chat about a project or collaboration, the fastest way to reach me is below.
+            If you&apos;re hiring for an Applied AI or GenAI engineering role, email me or use the
+            form and I&apos;ll get back to you. I&apos;m also open to collaborating on AI projects
+            and technical content.
           </p>
         </motion.header>
 
@@ -125,16 +124,12 @@ export default function ContactPage() {
                 {contactRows.map((row) => {
                   const inner = (
                     <>
-                      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${row.chip}`}>
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <row.icon className="h-4 w-4" />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-0.5">
-                          {row.label}
-                        </span>
-                        <span className="block text-sm font-medium truncate">
-                          {row.value}
-                        </span>
+                        <span className={`block mb-0.5 ${tinyLabelClass}`}>{row.label}</span>
+                        <span className="block text-sm font-medium truncate">{row.value}</span>
                       </span>
                       {row.href && (
                         <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary transition-all duration-300" />
@@ -146,8 +141,9 @@ export default function ContactPage() {
                     <a
                       key={row.label}
                       href={row.href}
-                      {...(row.external && { target: "_blank", rel: "noopener noreferrer" })}
-                      className={`${rowClass} transition-colors hover:bg-muted/40`}
+                      target={row.external ? "_blank" : undefined}
+                      rel={row.external ? "noopener noreferrer" : undefined}
+                      className={`${rowClass} transition-colors duration-200 hover:bg-muted/40`}
                     >
                       {inner}
                     </a>
@@ -160,9 +156,7 @@ export default function ContactPage() {
 
                 {/* Socials row */}
                 <div className="px-5 py-5">
-                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-3">
-                    Elsewhere
-                  </p>
+                  <p className={`mb-3 ${tinyLabelClass}`}>Elsewhere</p>
                   <div className="flex gap-2">
                     {socialLinks.map((s) => (
                       <a
@@ -171,7 +165,7 @@ export default function ContactPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={s.label}
-                        className="flex h-9 flex-1 items-center justify-center rounded-lg border border-border/60 text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-colors"
+                        className="flex h-11 flex-1 items-center justify-center rounded-lg border border-border/60 text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-colors duration-200"
                       >
                         <s.icon className="h-4 w-4" />
                       </a>
@@ -189,7 +183,7 @@ export default function ContactPage() {
                 Send a message
               </p>
               <p className="text-sm text-muted-foreground mb-8">
-                The more context you share, the faster I can get back with something useful.
+                Tell me about the role or project and I&apos;ll reply by email.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -201,6 +195,7 @@ export default function ContactPage() {
                     <Input
                       id="name"
                       name="name"
+                      autoComplete="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Jane Doe"
@@ -216,6 +211,7 @@ export default function ContactPage() {
                       id="email"
                       name="email"
                       type="email"
+                      autoComplete="email"
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="jane@company.com"
@@ -233,6 +229,7 @@ export default function ContactPage() {
                     <Input
                       id="company"
                       name="company"
+                      autoComplete="organization"
                       value={formData.company}
                       onChange={handleInputChange}
                       placeholder="Acme AI"
@@ -248,7 +245,7 @@ export default function ContactPage() {
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      placeholder="Project idea or collaboration"
+                      placeholder="Role, project or collaboration"
                       required
                       className={inputClass}
                     />
@@ -264,10 +261,10 @@ export default function ContactPage() {
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
-                    placeholder="What you're building, the stack, timeline, and how I can help…"
+                    placeholder="The role or project, the stack, and what you'd like to discuss"
                     required
                     rows={6}
-                    className="rounded-xl bg-background/50 border-border/60 focus-visible:ring-primary resize-none"
+                    className="rounded-lg bg-background/50 border-border/60 focus-visible:ring-primary resize-none"
                   />
                 </div>
 
@@ -275,22 +272,12 @@ export default function ContactPage() {
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={isSubmitting}
-                    className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 group shadow-lg shadow-primary/25"
+                    className="group w-full rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                        Sending…
-                      </>
-                    ) : (
-                      <>
-                        Send message
-                        <Send className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                      </>
-                    )}
+                    Send via email
+                    <Mail className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                   </Button>
-                  <p className="flex items-center justify-center gap-1.5 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                  <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
                     <Clock className="h-3.5 w-3.5" />
                     Reply within 24 hours
                   </p>

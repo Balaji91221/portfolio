@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail, Twitter, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 
 const EASE = [0.22, 1, 0.36, 1] as const
+const EMAIL = "kbalaji15j@gmail.com"
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -15,11 +16,17 @@ const navLinks = [
 ]
 
 const socials = [
-  { icon: Github, href: "https://github.com/Balaji91221", label: "GitHub", hover: "hover:text-primary" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/kelavathbalajinaik/", label: "LinkedIn", hover: "hover:text-primary" },
-  { icon: Twitter, href: "https://x.com/KkBalaji91221", label: "Twitter / X", hover: "hover:text-primary" },
-  { icon: Mail, href: "mailto:kbalaji15j@gmail.com", label: "Email", hover: "hover:text-primary" },
+  { icon: Github, href: "https://github.com/Balaji91221", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/kelavathbalajinaik/", label: "LinkedIn" },
+  { icon: Twitter, href: "https://x.com/KkBalaji91221", label: "Twitter / X" },
+  { icon: Mail, href: `mailto:${EMAIL}`, label: "Email" },
 ]
+
+const columnLabelClass = "text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-2"
+
+// 44 px rows so every link is a comfortable tap target on phones.
+const rowLinkClass =
+  "inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -27,40 +34,29 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-background">
       <div className="h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-      <div className="relative z-10 container mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-20">
+      <div className="relative z-10 container mx-auto max-w-6xl px-4 md:px-6 py-10 md:py-16">
         {/* ============ Zone 1 — CTA ============ */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 pb-14 mb-14 border-b border-border/60"
+          className="flex flex-col gap-3 pb-8 mb-8 border-b border-border/60 md:flex-row md:items-end md:justify-between md:gap-8 md:pb-10 md:mb-10"
         >
           <div>
-            <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
-              Let&apos;s connect
-            </p>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] max-w-3xl">
-              Let&apos;s work together.
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.05]">
+              Let&apos;s talk.
             </h2>
-            <p className="mt-5 text-muted-foreground">
-              Have a project in mind? Drop a line at{" "}
-              <a
-                href="mailto:kbalaji15j@gmail.com"
-                className="link-sweep font-medium text-foreground hover:text-primary transition-colors"
-              >
-                kbalaji15j@gmail.com
-              </a>
+            <p className="mt-3 max-w-xl text-muted-foreground">
+              Open to Applied AI / GenAI engineering roles and collaborations.
             </p>
           </div>
-          <Link
-            href="/contact"
-            className="group inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:self-auto"
+          <a
+            href={`mailto:${EMAIL}`}
+            className="link-sweep inline-flex min-h-11 shrink-0 items-center self-start text-base font-medium text-foreground transition-colors duration-200 hover:text-primary md:self-auto"
           >
-            <Mail className="h-4 w-4" />
-            Get in touch
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </Link>
+            {EMAIL}
+          </a>
         </motion.div>
 
         {/* ============ Zone 2 — brand + link columns ============ */}
@@ -69,10 +65,10 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: EASE, delay: 0.06 }}
-          className="grid gap-10 md:grid-cols-12"
+          className="grid grid-cols-2 gap-x-6 gap-y-6 md:grid-cols-12 md:gap-10"
         >
           {/* Brand */}
-          <div className="md:col-span-6">
+          <div className="col-span-2 md:col-span-6">
             <div className="mb-3 text-xl tracking-tight">
               <span className="font-normal text-muted-foreground">Kelavath </span>
               <span className="font-semibold text-foreground">Balaji</span>
@@ -80,22 +76,17 @@ export function Footer() {
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
               Applied AI Engineer building production voice AI, RAG, LLM infrastructure and
-              agentic systems. Currently at Samco Securities. Writes about applied AI on LinkedIn.
+              agentic systems. Currently at Samco Securities.
             </p>
           </div>
 
           {/* Navigate */}
           <div className="md:col-span-3">
-            <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-5">
-              Navigate
-            </p>
-            <ul className="space-y-3">
+            <p className={columnLabelClass}>Navigate</p>
+            <ul>
               {navLinks.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
+                  <Link href={link.href} className={rowLinkClass}>
                     {link.name}
                   </Link>
                 </li>
@@ -105,23 +96,24 @@ export function Footer() {
 
           {/* Elsewhere */}
           <div className="md:col-span-3">
-            <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-5">
-              Elsewhere
-            </p>
-            <ul className="space-y-3">
-              {socials.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target={s.href.startsWith("http") ? "_blank" : undefined}
-                    rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className={`group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors ${s.hover}`}
-                  >
-                    {s.label}
-                    <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
-                  </a>
-                </li>
-              ))}
+            <p className={columnLabelClass}>Elsewhere</p>
+            <ul>
+              {socials.map((s) => {
+                const external = s.href.startsWith("http")
+                return (
+                  <li key={s.label}>
+                    <a
+                      href={s.href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className={`group gap-2 ${rowLinkClass}`}
+                    >
+                      {s.label}
+                      <ArrowUpRight className="h-3 w-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         </motion.div>
@@ -132,7 +124,7 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: EASE, delay: 0.12 }}
-          className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-border/60 pt-6 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center"
+          className="mt-8 flex flex-col items-start md:mt-10 justify-between gap-3 border-t border-border/60 pt-6 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center"
         >
           <span>
             © {year}{" "}
@@ -141,9 +133,7 @@ export function Footer() {
             </span>
             . All rights reserved.
           </span>
-          <div className="flex items-center gap-6">
-            <span>Built with Next.js</span>
-          </div>
+          <span>Built with Next.js</span>
         </motion.div>
       </div>
     </footer>

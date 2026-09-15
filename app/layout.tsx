@@ -1,12 +1,14 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google"
+import { MotionConfig } from "framer-motion"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { PageTransition } from "@/components/page-transition"
 import { ScrollProgress } from "@/components/scroll-progress"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
@@ -23,6 +25,9 @@ export const metadata: Metadata = {
     template: `%s — ${siteName}`,
   },
   description,
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     type: "website",
     siteName,
@@ -45,15 +50,24 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${jetbrains.variable} ${instrument.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange={false}>
-          <div className="min-h-screen bg-background text-foreground relative">
-            <ScrollProgress />
-            <Navigation />
-            <main>
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <Footer />
-          </div>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-3 focus:text-sm focus:font-medium focus:text-primary-foreground"
+        >
+          Skip to content
+        </a>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <MotionConfig reducedMotion="user">
+            <div className="min-h-screen bg-background text-foreground relative">
+              <ScrollProgress />
+              <Navigation />
+              <main id="main" tabIndex={-1} className="outline-none">
+                <PageTransition>{children}</PageTransition>
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+          </MotionConfig>
         </ThemeProvider>
       </body>
     </html>

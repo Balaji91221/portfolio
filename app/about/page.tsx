@@ -2,17 +2,14 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { CountUp } from "@/components/count-up"
 import { GlowCard } from "@/components/glow-card"
 import { RevealText } from "@/components/reveal"
 import { Skills } from "@/components/skills"
 import {
-  GraduationCap,
   Briefcase,
   Rocket,
   Trophy,
   Download,
-  Star,
   FileText,
   Mail,
   Sparkles,
@@ -36,14 +33,6 @@ const fadeUp = (i = 0) => ({
   viewport: { once: true },
   transition: { duration: 0.6, ease: EASE, delay: i * 0.06 },
 })
-
-// ─────────────── highlight stats recruiters scan first ───────────────
-const heroStats = [
-  { label: "Years in production AI", value: "1+" },
-  { label: "Open-source projects", value: "20+" },
-  { label: "Invited guest lectures", value: "2" },
-  { label: "IEEE publication", value: "1" },
-]
 
 // ─────────────── what I do — the 3-line pitch ───────────────
 const disciplines = [
@@ -106,13 +95,13 @@ const timeline = [
 
 // ─────────────── certs ───────────────
 const certificates = [
-  { title: "Oracle Certified Generative AI Professional", org: "Oracle University", img: "/certificates/oracle-genai-professional.png" },
-  { title: "Oracle Certified Data Science Professional", org: "Oracle University", img: "/certificates/oracle-ds.png" },
-  { title: "Oracle Certified Foundations Associate", org: "Oracle University", img: "/certificates/oracle-foundations.png" },
-  { title: "Microsoft Azure AI Fundamentals", org: "Microsoft", img: "/certificates/azure-ai-fundamentals.png" },
-  { title: "AI/ML Externship", org: "Google Developers × SmartInternz", img: "/certificates/google-externship.png" },
-  { title: "GitHub Certification", org: "GitHub", img: "/certificates/github.png" },
-  { title: "NERD+ (DSA in Java)", org: "iAmNeo NeoColab", img: "/certificates/dsa.png" },
+  { title: "Oracle Certified Generative AI Professional", org: "Oracle University", img: "/certificates/oracle-genai-professional.webp" },
+  { title: "Oracle Certified Data Science Professional", org: "Oracle University", img: "/certificates/oracle-ds.webp" },
+  { title: "Oracle Certified Foundations Associate", org: "Oracle University", img: "/certificates/oracle-foundations.webp" },
+  { title: "Microsoft Azure AI Fundamentals", org: "Microsoft", img: "/certificates/azure-ai-fundamentals.webp" },
+  { title: "AI/ML Externship", org: "Google Developers × SmartInternz", img: "/certificates/google-externship.webp" },
+  { title: "GitHub Certification", org: "GitHub", img: "/certificates/github.webp" },
+  { title: "NERD+ (DSA in Java)", org: "iAmNeo NeoColab", img: "/certificates/dsa.webp" },
 ]
 
 // ─────────────── achievements ───────────────
@@ -131,56 +120,19 @@ const achievements = [
   },
   { title: "Hackathon Finalist", description: "5th place — Great India Hackathon, full-stack project", icon: Rocket },
   { title: "Technical Lead", description: "Led 50-member development team in university CSI club", icon: Briefcase },
-  { title: "Naukri Young Turks", description: "Ranked #10,153 — Coding, Engineering, Data & AI rounds", icon: Star },
   { title: "Open Source", description: "Contributed to 6+ open source projects", icon: Github },
 ]
 
-// ─────────────── literal color rotations (Tailwind-safe) ───────────────
-const statGradients = ["gradient-text-vivid", "gradient-text-aurora", "gradient-text-warm", "gradient-text-vivid"]
-const disciplineChips = [
-  "bg-emerald-500/10 text-emerald-400",
-  "bg-cyan-500/10 text-cyan-400",
-  "bg-violet-500/10 text-violet-400",
-  "bg-amber-500/10 text-amber-400",
-]
-const achievementChips = [
-  "text-emerald-400",
-  "text-cyan-400",
-  "text-violet-400",
-  "text-amber-400",
-  "text-rose-400",
-  "text-sky-400",
-]
-
-// ─────────────── shared section header ───────────────
-function SectionHeader({
-  index,
-  eyebrow,
-  title,
-  accent,
-  accentClass = "gradient-text-vivid",
-}: {
-  index: string
-  eyebrow: string
-  title: string
-  accent: string
-  accentClass?: string
-}) {
+function SectionHeader({ index, eyebrow, title }: { index: string; eyebrow: string; title: string }) {
   return (
-    <motion.div {...fadeUp()} className="mb-12 md:mb-16">
-      <div
-        className="text-stroke text-6xl md:text-8xl font-bold leading-none mb-3 select-none"
-        aria-hidden
-      >
-        {index}
-      </div>
-      <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">
+    <div className="mb-12 md:mb-16">
+      <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary mb-4">
         {index} — {eyebrow}
       </p>
-      <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-        {title} <span className={`font-serif italic font-normal ${accentClass}`}>{accent}</span>
+      <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
+        <RevealText>{title}</RevealText>
       </h2>
-    </motion.div>
+    </div>
   )
 }
 
@@ -223,8 +175,8 @@ export default function AboutPage() {
                   open-source model landscape.
                 </p>
                 <p>
-                  B.Tech in CSE with AI / ML specialization from VIT-AP (2025). GATE 2025 AIR
-                  19,299 in Data Science &amp; AI. IEEE-published researcher. Dean&apos;s List × 4.
+                  B.Tech in CSE with AI / ML specialization from VIT-AP (2025). IEEE-published
+                  researcher. Dean&apos;s List × 4.
                 </p>
                 <p className="text-foreground/80">
                   I care about reliability, velocity, and measurable product outcomes.
@@ -280,41 +232,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─────────── STATS ─────────── */}
-      <section className="border-t border-border/60 px-4 md:px-6 lg:px-8">
-        <div className="container mx-auto max-w-6xl">
-          <GlowCard className="card-glow grid grid-cols-2 md:grid-cols-4 divide-x divide-border/60 rounded-lg border border-border/60 bg-card/30 my-10 md:my-14">
-            {heroStats.map((s, i) => (
-              <motion.div key={s.label} {...fadeUp(i)} className="py-10 md:py-14 px-4 md:px-8">
-                <div className={`text-4xl font-bold tracking-tight leading-none ${statGradients[i]}`}>
-                  <CountUp value={s.value} />
-                </div>
-                <div className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground mt-3">
-                  {s.label}
-                </div>
-              </motion.div>
-            ))}
-          </GlowCard>
-        </div>
-      </section>
-
       {/* ─────────── DISCIPLINES ─────────── */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <SectionHeader
-            index="02"
-            eyebrow="What I do"
-            title="Four disciplines,"
-            accent="one toolkit."
-            accentClass="gradient-text-vivid"
-          />
+          <SectionHeader index="02" eyebrow="What I do" title="Four disciplines, one toolkit." />
 
           <div className="grid md:grid-cols-2 gap-5">
             {disciplines.map((d, i) => (
               <motion.div key={d.title} {...fadeUp(i)}>
                 <GlowCard className="card-glow card-lift h-full rounded-lg border border-border/60 bg-card p-7 md:p-8">
                   <div
-                    className={`flex h-10 w-10 items-center justify-center rounded-lg mb-5 ${disciplineChips[i]}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-lg mb-5 border border-primary/30 bg-primary/10 text-primary"
                   >
                     <d.icon className="h-5 w-5" />
                   </div>
@@ -340,13 +268,7 @@ export default function AboutPage() {
       {/* ─────────── TIMELINE ─────────── */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <SectionHeader
-            index="03"
-            eyebrow="The path"
-            title="How I got"
-            accent="here."
-            accentClass="gradient-text-aurora"
-          />
+          <SectionHeader index="03" eyebrow="The path" title="How I got here." />
 
           <div className="relative max-w-3xl">
             <div
@@ -357,7 +279,7 @@ export default function AboutPage() {
               <motion.div key={t.role} {...fadeUp(i)} className="relative pl-8 md:pl-10 pb-12 last:pb-0">
                 <span
                   className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ${
-                    t.current ? "bg-primary pulse-ring" : "bg-border"
+                    t.current ? "bg-primary" : "bg-border"
                   }`}
                 />
                 <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-2">
@@ -376,28 +298,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Skills index="04" eyebrow="Technical skills" title="What I work with" />
+      <Skills compact index="04" eyebrow="Core stack" title="Core stack" />
 
       {/* ─────────── ACHIEVEMENTS ─────────── */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <SectionHeader
-            index="05"
-            eyebrow="Recognition"
-            title="Things I'm"
-            accent="proud of."
-            accentClass="gradient-text-vivid"
-          />
+          <SectionHeader index="05" eyebrow="Recognition" title="Things I'm proud of." />
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {achievements.map((a, i) => (
               <motion.div key={a.title} {...fadeUp(i)}>
-                <GlowCard className="card-glow h-full rounded-lg border border-border/60 bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
-                  <div
-                    className={`flex h-9 w-9 items-center justify-center rounded-lg bg-foreground/5 mb-4 ${
-                      achievementChips[i % achievementChips.length]
-                    }`}
-                  >
+                <GlowCard className="card-glow card-lift h-full rounded-lg border border-border/60 bg-card p-6">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary mb-4">
                     <a.icon className="h-4 w-4" />
                   </div>
                   <h3 className="text-base font-semibold tracking-tight mb-1">{a.title}</h3>
@@ -412,23 +324,19 @@ export default function AboutPage() {
       {/* ─────────── CERTIFICATIONS ─────────── */}
       <section className="border-t border-border/60 py-24 md:py-32 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <SectionHeader
-            index="06"
-            eyebrow="Verified"
-            title="Certifications that"
-            accent="back it up."
-            accentClass="gradient-text-aurora"
-          />
+          <SectionHeader index="06" eyebrow="Verified" title="Certifications." />
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             {certificates.map((c, i) => (
               <motion.div key={c.title} {...fadeUp(i)} className="group">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border/60 bg-white mb-3 transition-shadow duration-500 hover:ring-1 hover:ring-primary/40">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-border/60 bg-white mb-3 transition-shadow duration-300 hover:ring-1 hover:ring-primary/40">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={c.img}
                     alt={c.title}
-                    className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-[1.03]"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-[1.03]"
                   />
                 </div>
                 <p className="text-sm font-semibold leading-snug line-clamp-2">{c.title}</p>

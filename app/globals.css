@@ -10,19 +10,19 @@
     --card-foreground: 222 40% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 40% 10%;
-    --primary: 160 84% 30%;
+    --primary: 160 84% 27%;
     --primary-foreground: 0 0% 100%;
     --secondary: 214 25% 94%;
     --secondary-foreground: 222 40% 10%;
     --muted: 214 25% 94%;
     --muted-foreground: 218 15% 42%;
-    --accent: 182 80% 32%;
+    --accent: 182 80% 29%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214 22% 88%;
     --input: 214 22% 88%;
-    --ring: 160 84% 30%;
+    --ring: 160 84% 27%;
     --radius: 0.5rem;
   }
 
@@ -62,6 +62,12 @@
       transparent 480px
     );
   }
+  /* Keyboard focus: one ring everywhere. Components that opt into Tailwind's
+     focus-visible:ring-* utilities override this with their own ring. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
 }
 
 /* Ambient tint — single hue, static */
@@ -69,12 +75,7 @@
   position: absolute;
   inset: -10%;
   background: radial-gradient(ellipse 60% 50% at 50% 0%, hsl(var(--primary) / 0.08), transparent 70%);
-  animation: aurora-drift 30s ease-in-out infinite;
   z-index: 0;
-}
-@keyframes aurora-drift {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(4%, 3%); }
 }
 
 /* Cursor-following spotlight — see <Spotlight> */
@@ -142,18 +143,6 @@
 
 html { scroll-behavior: smooth; }
 
-/* Typing cursor */
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-.typing-cursor::after {
-  content: "|";
-  animation: blink 1s infinite;
-  color: hsl(var(--primary));
-  font-weight: bold;
-}
-
 /* Glass */
 .glass {
   background: hsl(var(--card) / 0.5);
@@ -213,14 +202,6 @@ html { scroll-behavior: smooth; }
   transform: translateY(-4px);
   border-color: hsl(var(--primary) / 0.5);
 }
-
-/* Subtle pulse ring */
-@keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.5); }
-  70% { box-shadow: 0 0 0 12px hsl(var(--primary) / 0); }
-  100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0); }
-}
-.pulse-ring { animation: pulse-ring 2s infinite; }
 
 /* Reveal on scroll - base class for items that fade-up */
 @keyframes reveal-up {
@@ -320,10 +301,6 @@ html { scroll-behavior: smooth; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-  .aurora,
-  .pulse-ring {
-    animation: none !important;
   }
   .mask-lines .mask-line > span {
     transform: none;

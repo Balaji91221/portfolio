@@ -169,6 +169,9 @@ export const skillGroups: SkillGroup[] = [
   },
 ]
 
+/** The two highlighted groups, used by the compact "core stack" card. */
+export const coreSkillGroups: SkillGroup[] = skillGroups.filter((group) => group.primary)
+
 export type LandscapeRow = {
   title: string
   icon: LucideIcon
