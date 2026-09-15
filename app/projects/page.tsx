@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github, Lock, ArrowRight } from "lucide-react"
 import { GlowCard } from "@/components/glow-card"
+import { RevealText, ImageReveal } from "@/components/reveal"
 import Image from "next/image"
 import Link from "next/link"
 import resume from './resume.png';
@@ -391,7 +392,9 @@ export default function ProjectsPage() {
           <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-4">Projects</p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
-              Selected <span className="font-serif italic font-normal gradient-text-aurora">work</span>
+              <RevealText>
+                Selected <span className="font-serif italic font-normal gradient-text-aurora">work</span>
+              </RevealText>
             </h1>
             <p className="text-base md:text-lg text-muted-foreground max-w-md md:text-right">
               Agentic systems, RAG pipelines, ML models — and the full-stack apps that wrap them.
@@ -459,18 +462,20 @@ export default function ProjectsPage() {
                 className="group h-full"
               >
                 <GlowCard
-                  className={`card-glow h-full flex flex-col rounded-2xl border border-border/60 bg-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 ${style.ring}`}
+                  className={`card-glow card-lift h-full flex flex-col rounded-lg border border-border/60 bg-card overflow-hidden ${style.ring}`}
                 >
                 {/* Media */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-muted/40">
                   {project.image ? (
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      width={640}
-                      height={400}
-                      className="absolute inset-0 w-full h-full object-cover saturate-[0.8] group-hover:saturate-100 group-hover:scale-[1.04] transition-all duration-700"
-                    />
+                    <ImageReveal>
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={640}
+                        height={400}
+                        className="absolute inset-0 w-full h-full object-cover saturate-[0.8] group-hover:saturate-100 group-hover:scale-[1.04] transition-all duration-700"
+                      />
+                    </ImageReveal>
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="absolute inset-0 grid-pattern opacity-50" />
@@ -488,7 +493,7 @@ export default function ProjectsPage() {
                   {/* Overlay chips */}
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     {project.featured && (
-                      <span className="inline-flex items-center bg-gradient-to-r from-emerald-500 to-cyan-500 text-primary-foreground text-[10px] font-mono uppercase tracking-wider rounded-full px-2.5 py-1">
+                      <span className="inline-flex items-center bg-primary text-primary-foreground text-[10px] font-mono uppercase tracking-wider rounded-full px-2.5 py-1">
                         Featured
                       </span>
                     )}

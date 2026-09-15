@@ -3,8 +3,8 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { CountUp } from "@/components/count-up"
-import { NeuralCanvas } from "@/components/neural-canvas"
 import { GlowCard } from "@/components/glow-card"
+import { RevealText } from "@/components/reveal"
 import {
   GraduationCap,
   Briefcase,
@@ -224,7 +224,6 @@ export default function AboutPage() {
       <section className="relative overflow-hidden px-4 md:px-6 lg:px-8 pb-20 md:pb-28">
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
           <div className="aurora opacity-40" />
-          <NeuralCanvas className="absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_80%)]" />
         </div>
         <div className="relative container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -239,7 +238,9 @@ export default function AboutPage() {
                 01 — About
               </p>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-4">
-                Hi, I&apos;m <span className="gradient-text-aurora">Balaji.</span>
+                <RevealText>
+                  Hi, I&apos;m <span className="gradient-text-aurora">Balaji.</span>
+                </RevealText>
               </h1>
               <p className="font-serif italic text-2xl md:text-3xl text-muted-foreground mb-8">
                 AI engineer who ships the full stack.
@@ -288,8 +289,7 @@ export default function AboutPage() {
               className="lg:col-span-5"
             >
               <div className="relative max-w-sm mx-auto lg:ml-auto">
-                <div className="orbit-ring" aria-hidden />
-                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-border/60 ring-1 ring-border/40 rotate-2 hover:rotate-0 transition-transform duration-500">
+                <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-border/60 ring-1 ring-border/40">
                   <Image
                     src={balaji}
                     alt="Kelavath Balaji Naik"
@@ -318,7 +318,7 @@ export default function AboutPage() {
       {/* ─────────── STATS ─────────── */}
       <section className="border-t border-border/60 px-4 md:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <GlowCard className="card-glow grid grid-cols-2 md:grid-cols-4 divide-x divide-border/60 rounded-2xl border border-border/60 bg-card/30 my-10 md:my-14">
+          <GlowCard className="card-glow grid grid-cols-2 md:grid-cols-4 divide-x divide-border/60 rounded-lg border border-border/60 bg-card/30 my-10 md:my-14">
             {heroStats.map((s, i) => (
               <motion.div key={s.label} {...fadeUp(i)} className="py-10 md:py-14 px-4 md:px-8">
                 <div className={`text-4xl font-bold tracking-tight leading-none ${statGradients[i]}`}>
@@ -347,7 +347,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-5">
             {disciplines.map((d, i) => (
               <motion.div key={d.title} {...fadeUp(i)}>
-                <GlowCard className="card-glow h-full rounded-2xl border border-border/60 bg-card p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
+                <GlowCard className="card-glow card-lift h-full rounded-lg border border-border/60 bg-card p-7 md:p-8">
                   <div
                     className={`flex h-10 w-10 items-center justify-center rounded-lg mb-5 ${disciplineChips[i]}`}
                   >
@@ -385,7 +385,7 @@ export default function AboutPage() {
 
           <div className="relative max-w-3xl">
             <div
-              className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-emerald-400 via-cyan-400/40 to-transparent"
+              className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/40 to-transparent"
               aria-hidden
             />
             {timeline.map((t, i) => (
@@ -462,7 +462,7 @@ export default function AboutPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {achievements.map((a, i) => (
               <motion.div key={a.title} {...fadeUp(i)}>
-                <GlowCard className="card-glow h-full rounded-2xl border border-border/60 bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
+                <GlowCard className="card-glow h-full rounded-lg border border-border/60 bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
                   <div
                     className={`flex h-9 w-9 items-center justify-center rounded-lg bg-foreground/5 mb-4 ${
                       achievementChips[i % achievementChips.length]

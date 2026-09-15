@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jetbrains.variable} ${instrument.variable} font-sans antialiased noise`}>
+      <body className={`${inter.variable} ${jetbrains.variable} ${instrument.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange={false}>
           <div className="min-h-screen bg-background text-foreground relative">
             <ScrollProgress />

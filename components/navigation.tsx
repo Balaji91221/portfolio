@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Menu, X, Github, Linkedin, Download, ArrowUpRight } from "lucide-react"
-import { Magnetic } from "@/components/magnetic"
 import Image from "next/image"
 import balaji from "../public/profile-pic.png"
 
@@ -47,30 +46,21 @@ export function Navigation() {
         <nav
           className={`relative mx-auto flex h-14 items-center justify-between gap-2 rounded-full border pl-2 pr-2 transition-all duration-500 ${
             scrolled
-              ? "max-w-3xl border-primary/25 bg-background/80 shadow-[0_10px_40px_-12px_hsl(var(--primary)/0.4)] backdrop-blur-2xl"
+              ? "max-w-3xl border-border bg-background/85 shadow-md shadow-black/10 backdrop-blur-xl"
               : "max-w-4xl border-border/60 bg-background/55 shadow-lg shadow-black/10 backdrop-blur-xl"
           }`}
         >
           {/* Logo */}
           <Link href="/" className="group flex shrink-0 items-center gap-2.5 rounded-full py-1 pl-1 pr-2">
-            <div className="relative">
-              <div className="h-9 w-9 overflow-hidden rounded-full ring-1 ring-border transition-all group-hover:ring-2 group-hover:ring-primary">
-                <Image
-                  src={balaji}
-                  alt="Kelavath Balaji Naik"
-                  width={36}
-                  height={36}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary ring-2 ring-background" />
-              </span>
+            <div className="h-9 w-9 overflow-hidden rounded-full ring-1 ring-border transition-all group-hover:ring-2 group-hover:ring-primary">
+              <Image
+                src={balaji}
+                alt="Kelavath Balaji Naik"
+                width={36}
+                height={36}
+                className="h-full w-full object-cover"
+              />
             </div>
-            <span className="hidden text-sm font-bold tracking-tight sm:inline">
-              Balaji<span className="text-primary">.</span>
-            </span>
           </Link>
 
           {/* Desktop links */}
@@ -88,7 +78,7 @@ export function Navigation() {
                 {isActive(item.href) && (
                   <motion.span
                     layoutId="activeNavTab"
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 shadow-lg shadow-primary/30"
+                    className="absolute inset-0 rounded-full bg-primary"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -119,19 +109,16 @@ export function Navigation() {
             </a>
             <span className="mx-0.5 hidden h-5 w-px bg-border/60 lg:inline-block" />
             <ThemeToggle />
-            <Magnetic as="span" strength={0.3} className="inline-block">
-              <Button
-                asChild
-                size="sm"
-                className="group h-9 gap-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 px-4 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/25 hover:opacity-90"
-              >
-                <Link href="/contact">
-                  <span className="hidden sm:inline">Hire me</span>
-                  <span className="sm:hidden">Hire</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </Link>
-              </Button>
-            </Magnetic>
+            <Button
+              asChild
+              size="sm"
+              className="group btn-shine h-9 gap-1.5 rounded-full px-4 text-xs font-semibold"
+            >
+              <Link href="/contact">
+                Contact
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+            </Button>
 
             {/* Mobile toggle */}
             <Button
@@ -155,7 +142,7 @@ export function Navigation() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.98 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-3 right-3 top-[72px] z-40 rounded-3xl border border-border/60 bg-background/95 p-3 shadow-2xl backdrop-blur-2xl md:hidden"
+            className="fixed left-3 right-3 top-[72px] z-40 rounded-xl border border-border/60 bg-background/95 p-3 shadow-xl backdrop-blur-xl md:hidden"
           >
             <div className="flex flex-col gap-1">
               {navItems.map((item, i) => (
@@ -168,9 +155,9 @@ export function Navigation() {
                   <Link
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`block rounded-2xl px-4 py-3 text-sm font-medium transition-colors ${
+                    className={`block rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                       isActive(item.href)
-                        ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-primary-foreground"
+                        ? "bg-primary text-primary-foreground"
                         : "text-foreground/80 hover:bg-muted/60"
                     }`}
                   >

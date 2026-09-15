@@ -19,8 +19,8 @@ import {
   MapPin,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { NeuralCanvas } from "@/components/neural-canvas"
 import { GlowCard } from "@/components/glow-card"
+import { RevealText } from "@/components/reveal"
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -98,9 +98,6 @@ export default function ContactPage() {
       {/* Background — restrained */}
       <div className="absolute inset-0 grid-pattern opacity-40 pointer-events-none" />
       <div className="aurora opacity-40 pointer-events-none" />
-      <div className="absolute inset-0 pointer-events-none">
-        <NeuralCanvas className="absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_80%)]" />
-      </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
         {/* ============ HERO ============ */}
@@ -109,8 +106,10 @@ export default function ContactPage() {
             Contact
           </p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6 max-w-4xl">
-            Let&apos;s build something{" "}
-            <span className="font-serif italic font-normal gradient-text-aurora">worth</span> shipping.
+            <RevealText>
+              Let&apos;s build something{" "}
+              <span className="font-serif italic font-normal gradient-text-aurora">worth</span> shipping.
+            </RevealText>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
             I build production LLM systems, agentic AI, and the apps around them. If you&apos;d like
@@ -121,7 +120,7 @@ export default function ContactPage() {
         <div className="grid lg:grid-cols-5 gap-6 lg:gap-10 items-start">
           {/* ============ LEFT — contact rows ============ */}
           <motion.div {...fadeUp(1)} className="lg:col-span-2">
-            <GlowCard className="card-glow rounded-2xl border border-border/60 bg-card overflow-hidden transition-shadow duration-300 hover:shadow-sm">
+            <GlowCard className="card-glow rounded-lg border border-border/60 bg-card overflow-hidden transition-shadow duration-300 hover:shadow-sm">
               <div className="divide-y divide-border/60">
                 {contactRows.map((row) => {
                   const inner = (
@@ -185,7 +184,7 @@ export default function ContactPage() {
 
           {/* ============ RIGHT — form ============ */}
           <motion.div {...fadeUp(2)} className="lg:col-span-3">
-            <GlowCard className="card-glow rounded-2xl border border-border/60 bg-card p-6 md:p-10 transition-shadow duration-300 hover:shadow-sm">
+            <GlowCard className="card-glow rounded-lg border border-border/60 bg-card p-6 md:p-10 transition-shadow duration-300 hover:shadow-sm">
               <p className="text-xs font-mono uppercase tracking-[0.25em] text-primary mb-3">
                 Send a message
               </p>

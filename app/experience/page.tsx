@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion"
 import { GlowCard } from "@/components/glow-card"
+import { RevealText } from "@/components/reveal"
+import { TimelineRail } from "@/components/timeline-rail"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -69,7 +71,7 @@ const metricGradients = [
   "gradient-text-warm",
   "gradient-text-vivid",
 ]
-const periodHues = ["text-emerald-400", "text-cyan-400", "text-violet-400", "text-amber-400"]
+const periodHues = ["text-primary"]
 const groupLabelHues = [
   "text-emerald-400",
   "text-violet-400",
@@ -299,8 +301,10 @@ export default function ExperiencePage() {
               Experience
             </p>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] max-w-3xl">
-              Built, shipped — and invited to{" "}
-              <span className="font-serif italic font-normal gradient-text-aurora">teach</span>.
+              <RevealText>
+                Built, shipped — and invited to{" "}
+                <span className="font-serif italic font-normal gradient-text-aurora">teach</span>.
+              </RevealText>
             </h1>
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
               A compact view of the roles, outcomes, and invited talks that got me here.
@@ -358,7 +362,7 @@ export default function ExperiencePage() {
 
           <div className="relative">
             {/* Timeline rail */}
-            <div className="absolute left-[7px] top-1 bottom-1 w-px bg-gradient-to-b from-emerald-400 via-cyan-400/50 to-transparent" />
+            <TimelineRail className="left-[7px]" />
 
             <div className="space-y-10 md:space-y-12">
               {experiences.map((exp, index) => (
@@ -404,7 +408,7 @@ export default function ExperiencePage() {
 
                   {/* Role card */}
                   <div className="pl-9 md:pl-12">
-                    <GlowCard className="card-glow rounded-2xl border border-border/60 bg-card p-5 md:p-7 transition-colors duration-300 hover:border-primary/40">
+                    <GlowCard className="card-glow card-lift rounded-lg border border-border/60 bg-card p-5 md:p-7">
                       <h3 className="text-lg md:text-xl font-bold tracking-tight leading-snug">
                         {exp.title}
                       </h3>
@@ -484,7 +488,7 @@ export default function ExperiencePage() {
                 {...fadeUp(index)}
                 className="group h-full"
               >
-                <GlowCard className="card-glow flex h-full flex-col rounded-2xl border border-border/60 bg-card p-5 md:p-6 transition-colors duration-300 hover:border-primary/40">
+                <GlowCard className="card-glow flex h-full flex-col rounded-lg border border-border/60 bg-card p-5 md:p-6 transition-colors duration-300 hover:border-primary/40">
                 {/* Poster */}
                 <div className="relative aspect-[4/5] overflow-hidden group rounded-xl border border-border/60 bg-muted/30">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
