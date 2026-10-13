@@ -16,10 +16,42 @@ import balaji from "../public/Balaji.jpg"
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-const featuredProjects = [
+type FeaturedProject = {
+  id: number
+  index: string
+  title: string
+  description: string
+  tech: string[]
+  category: string
+  image: string
+  href: string
+  anchor?: string
+  imageFit?: "contain" | "cover"
+  imageAlt?: string
+  imageCaption?: string
+  installUrl?: string
+}
+
+const featuredProjects: FeaturedProject[] = [
+  {
+    id: 4,
+    index: "01",
+    title: "PromptForge",
+    description:
+      "Refines rough requests into clearer prompts inside browser chats and coding agents. Review the rewrite, see what changed, and use your own model provider.",
+    tech: ["TypeScript", "Chrome MV3", "MCP", "LLMs"],
+    category: "Developer Tools",
+    image: "/projects/promptforge.png",
+    imageFit: "contain",
+    imageAlt: "PromptForge rewriting a request in ChatGPT, with explanations and coaching. Sample output from a test model.",
+    imageCaption: "Browser extension demo · Sample output from a test model",
+    href: "https://github.com/Balaji91221/promptforge",
+    installUrl: "https://github.com/Balaji91221/promptforge#install-in-2-minutes",
+    anchor: "promptforge",
+  },
   {
     id: 1,
-    index: "01",
+    index: "02",
     title: "Agent2Agent — Multi-Agent Orchestration",
     description:
       "Agent-to-agent communication, tool use, and autonomous task delegation between cooperating LLM agents.",
@@ -30,7 +62,7 @@ const featuredProjects = [
   },
   {
     id: 2,
-    index: "02",
+    index: "03",
     title: "Voice Agent — Retell AI",
     description:
       "Real-time conversational voice agent that handles phone-style interactions end-to-end on an LLM-voice platform.",
@@ -41,7 +73,7 @@ const featuredProjects = [
   },
   {
     id: 3,
-    index: "03",
+    index: "04",
     title: "Semantic Search Engine",
     description:
       "Search by meaning, not keywords, with vector embeddings and Next.js. The foundation of a production RAG pipeline.",
@@ -200,6 +232,16 @@ export default function HomePage() {
                 .
               </motion.p>
 
+              <motion.div {...heroIn(0.5)} className="mb-6">
+                <a
+                  href="#promptforge"
+                  className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary hover:underline underline-offset-4"
+                >
+                  Featured project: PromptForge
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </motion.div>
+
               <motion.div
                 {...heroIn(0.55)}
                 className="flex flex-col sm:flex-row sm:items-center gap-4"
@@ -329,7 +371,8 @@ export default function HomePage() {
             {featuredProjects.map((project, i) => (
               <div
                 key={project.id}
-                className="md:sticky"
+                id={project.anchor}
+                className="md:sticky scroll-mt-28"
                 style={{ top: `calc(7rem + ${i * 2.75}rem)` }}
               >
                 <GlowCard className="card-glow card-lift group grid md:grid-cols-2 overflow-hidden rounded-lg border border-border/60 bg-card shadow-xl shadow-background/60 md:mb-10">
@@ -361,21 +404,37 @@ export default function HomePage() {
                         </Badge>
                       ))}
                     </div>
+                    {project.installUrl && (
+                      <div className="flex flex-wrap items-center gap-5 mt-6 text-sm font-medium">
+                        <a href={project.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 hover:text-primary transition-colors" aria-label={`${project.title} — source code on GitHub`}>
+                          <Github className="h-4 w-4" aria-hidden="true" /> Code
+                        </a>
+                        <a href={project.installUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-primary hover:underline underline-offset-4" aria-label={`${project.title} — installation guide`}>
+                          Install <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </a>
+                      </div>
+                    )}
                   </div>
                   <div className="relative aspect-[16/11] md:aspect-auto md:min-h-[22rem] overflow-hidden order-1 md:order-2 border-b md:border-b-0 md:border-l border-border/60">
                     <ImageReveal delay={0.1}>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={project.image}
-                        alt={project.title}
+                        alt={project.imageAlt ?? project.title}
                         width={800}
                         height={486}
                         loading="lazy"
                         decoding="async"
-                        className="absolute inset-0 h-full w-full object-cover"
+                        className={`absolute inset-0 h-full w-full ${project.imageFit === "contain" ? "object-contain bg-white" : "object-cover"}`}
                       />
                     </ImageReveal>
-                    <div className="absolute inset-0 bg-gradient-to-r from-card/40 to-transparent pointer-events-none hidden md:block" />
+                    {project.imageCaption ? (
+                      <p className="absolute inset-x-0 bottom-0 bg-card/95 px-3 py-2 text-[10px] text-muted-foreground">
+                        {project.imageCaption}
+                      </p>
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-r from-card/40 to-transparent pointer-events-none hidden md:block" />
+                    )}
                   </div>
                 </GlowCard>
               </div>

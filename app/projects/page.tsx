@@ -27,6 +27,10 @@ type Project = {
   title: string
   description: string
   image: string | StaticImageData
+  imageFit?: "contain" | "cover"
+  imageAlt?: string
+  imageCaption?: string
+  installUrl?: string
   tech: string[]
   category: string
   // "#" means there is no deployment separate from the repo, so no Live link is shown.
@@ -36,6 +40,22 @@ type Project = {
 }
 
 const projects: Project[] = [
+  {
+    id: 501,
+    title: "PromptForge",
+    description: "Refines rough requests into clearer prompts inside browser chats and coding agents. Review the rewrite, see what changed, and use your own model provider.",
+    image: "/projects/promptforge.png",
+    imageFit: "contain",
+    imageAlt: "PromptForge rewriting a request in ChatGPT, with explanations and coaching. Sample output from a test model.",
+    imageCaption: "Browser extension demo · Sample output from a test model",
+    tech: ["TypeScript", "Chrome MV3", "MCP", "LLMs"],
+    category: "Developer Tools",
+    liveUrl: "#",
+    githubUrl: "https://github.com/Balaji91221/promptforge",
+    installUrl: "https://github.com/Balaji91221/promptforge#install-in-2-minutes",
+    featured: true,
+  },
+
   // ═══════════════════════ AGENTIC AI ═══════════════════════
   {
     id: 101,
@@ -300,7 +320,7 @@ const projects: Project[] = [
   },
 ]
 
-const categories = ["All", "Agentic AI", "LLM / RAG", "ML / DL", "NLP", "Full-Stack", "Frontend"]
+const categories = ["All", "Developer Tools", "Agentic AI", "LLM / RAG", "ML / DL", "NLP", "Full-Stack", "Frontend"]
 
 const MAX_VISIBLE_TECH = 4
 
@@ -346,7 +366,7 @@ export default function ProjectsPage() {
               </RevealText>
             </h1>
             <p className="text-base md:text-lg text-muted-foreground max-w-md md:text-right">
-              Agentic systems, RAG pipelines, ML models — and the full-stack apps that wrap them.
+              Developer tools, agentic systems, RAG pipelines, and the full-stack apps that bring them to life.
             </p>
           </div>
           <p className="mt-6 text-xs font-mono text-muted-foreground">
@@ -424,10 +444,10 @@ export default function ProjectsPage() {
                     <ImageReveal>
                       <Image
                         src={project.image}
-                        alt={project.title}
+                        alt={project.imageAlt ?? project.title}
                         width={640}
                         height={400}
-                        className="absolute inset-0 w-full h-full object-cover saturate-[0.8] group-hover:saturate-100 group-hover:scale-[1.04] transition-all duration-700"
+                        className={`absolute inset-0 w-full h-full ${project.imageFit === "contain" ? "object-contain bg-white" : "object-cover saturate-[0.8] group-hover:saturate-100 group-hover:scale-[1.04] transition-all duration-700"}`}
                       />
                     </ImageReveal>
 
@@ -437,6 +457,12 @@ export default function ProjectsPage() {
                       </span>
                     )}
                   </div>
+
+                  {project.imageCaption && (
+                    <p className="px-6 pt-3 text-[10px] leading-relaxed text-muted-foreground">
+                      {project.imageCaption}
+                    </p>
+                  )}
 
                   {/* Body */}
                   <div className="p-6 flex-1 flex flex-col">
@@ -482,6 +508,17 @@ export default function ProjectsPage() {
                           className={footerLinkClass}
                         >
                           <Github className="h-3 w-3" aria-hidden="true" /> Code
+                        </a>
+                      )}
+                      {project.installUrl && (
+                        <a
+                          href={project.installUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.title} — installation guide`}
+                          className={footerLinkClass}
+                        >
+                          <ExternalLink className="h-3 w-3" aria-hidden="true" /> Install
                         </a>
                       )}
                     </div>
